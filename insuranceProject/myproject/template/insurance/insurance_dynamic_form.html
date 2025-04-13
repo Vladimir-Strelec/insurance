@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="parallax-container">
+    <div class="overlay">
+        <div class="form-wrapper" id="section2">
+            <h2>Подбор страховки</h2>
+
+            <form id="lead-form">
+                <!-- Шаг 1 -->
+                <div class="form-step active" id="step-1">
+                    <label for="main_category">Выберите категорию:</label>
+                    <select id="main_category" class="input" required>
+                        <option value="">— Выберите категорию —</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="submit-btn next-btn">Далее</button>
+                </div>
+
+                <!-- Шаг 2 -->
+                <div class="form-step" id="step-2">
+                    <label for="subcategory">Выберите подкатегорию:</label>
+                    <select id="subcategory" class="input" required>
+                        <option value="">— Подкатегории будут загружены —</option>
+                    </select>
+                    <button type="button" class="submit-btn next-btn">Далее</button>
+                </div>
+
+                <!-- Шаг 3 -->
+                <div class="form-step" id="step-3">
+                    <label for="product">Выберите продукт:</label>
+                    <select id="product" class="input" required>
+                        <option value="">— Продукты будут загружены —</option>
+                    </select>
+                    <button type="button" class="submit-btn next-btn">Далее</button>
+                </div>
+
+                <!-- Шаг 4 -->
+                <div class="form-step" id="step-4">
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" class="input" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" class="input" required>
+                    <label for="phone">Телефон:</label>
+                    <input type="tel" id="phone" class="input" required>
+                    <button type="submit" class="submit-btn">Отправить</button>
+                </div>
+
+                <div id="response-message" class="message"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Title</title>
+</head>
+<!-- Hero Section -->
+
+<div class="hero">
+    <div class="hero-content">
+        <h1>Найдите идеальную страховку для бизнеса и жизни</h1>
+        <p>Подберите страховку под ваш профиль — быстро, просто и с экспертной поддержкой.</p>
+        <button onclick="document.getElementById('section1').scrollIntoView({ behavior: 'smooth' })">
+            Перейти
+        </button>
+
+    </div>
+</div>
+
+
+<!-- About Section -->
+<section class="section about">
+    <h2>Почему выбирают нас?</h2>
+    <div class="container">
+
+
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="{% static 'images/computer_14934272.png' %}" alt="Надежность">
+                    <h3>Надежность</h3>
+                    <p>Краткое описание</p>
+                </div>
+                <div class="card-back">
+
+
+                    <p>Работаем только с проверенными страховыми компаниями и решениями.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="{% static 'images/computer_14934272.png' %}" alt="Надежность">
+                    <h3>Надежность</h3>
+                    <p>Краткое описание</p>
+                </div>
+                <div class="card-back">
+
+
+                    <p>Работаем только с проверенными страховыми компаниями и решениями.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="{% static 'images/people_13838183.png' %}" alt="Быстро">
+                    <h3>Надежность</h3>
+                    <h3>Быстро и удобно</h3>
+                </div>
+                <div class="card-back">
+
+                    <p>Подбор, сравнение и заявка — в одном месте, без лишней бюрократии.</p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Categories Preview -->
+    <section class="section categories" id="section1">
+        <div class="container">
+            <h2>Основные категории</h2>
+            <div class="grid-4">
+                {% for category in categories %}
+
+                <div class="category-card">
+                    <a href="#section2" class="scroll-link">
+                        {% if category.image %}
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                        {% else %}
+                        <img src="{% static 'images/placeholder.jpg' %}" alt="Нет изображения">
+                        {% endif %}
+                        <h4>{{ category.name }}</h4>
+                    </a>
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+</section>
+
+
+<body>
+{% block content %}
+{% endblock %}
+</body>
+<meta name="csrf-token" content="{{ csrf_token }}">
+<script>
+    const steps = document.querySelectorAll('.form-step');
+    const nextBtns = document.querySelectorAll('.next-btn');
+    let currentStep = 0;
+
+    nextBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (validateStep(currentStep)) {
+          steps[currentStep].classList.remove('active');
+          currentStep++;
+          if (currentStep < steps.length) {
+            steps[currentStep].classList.add('active');
+          }
+        }
+      });
+    });
+
+    function validateStep(step) {
+      const inputs = steps[step].querySelectorAll('select, input');
+      for (const input of inputs) {
+        if (!input.value.trim()) {
+          alert('Заполните поле');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Загрузка подкатегорий при выборе главной категории
+    document.getElementById("main_category").addEventListener("change", function () {
+      const categoryId = this.value;
+      const subSelect = document.getElementById("subcategory");
+      const productSelect = document.getElementById("product");
+
+      subSelect.innerHTML = '<option>Загрузка...</option>';
+      productSelect.innerHTML = '<option value="">— Сначала выберите подкатегорию —</option>';
+
+      fetch(`/ajax/load-subcategories/?main_category_id=${categoryId}`)
+        .then(response => response.json())
+        .then(data => {
+          subSelect.innerHTML = '<option value="">— Выберите подкатегорию —</option>';
+          data.forEach(sub => {
+            const option = document.createElement("option");
+            option.value = sub.id;
+            option.textContent = sub.name;
+            subSelect.appendChild(option);
+          });
+        })
+        .catch(error => {
+          console.error("Ошибка загрузки подкатегорий:", error);
+          subSelect.innerHTML = '<option>Ошибка загрузки</option>';
+        });
+    });
+
+    // Загрузка продуктов при выборе подкатегории
+    document.getElementById("subcategory").addEventListener("change", function () {
+      const subcategoryId = this.value;
+      const productSelect = document.getElementById("product");
+      productSelect.innerHTML = '<option>Загрузка...</option>';
+
+      fetch(`/ajax/load-products/?subcategory_id=${subcategoryId}`)
+        .then(response => response.json())
+        .then(data => {
+          productSelect.innerHTML = '<option value="">— Выберите продукт —</option>';
+          data.forEach(product => {
+            const option = document.createElement("option");
+            option.value = product.id;
+            option.textContent = product.name;
+            productSelect.appendChild(option);
+          });
+        })
+        .catch(error => {
+          console.error("Ошибка загрузки продуктов:", error);
+          productSelect.innerHTML = '<option>Ошибка загрузки</option>';
+        });
+    });
+
+    // AJAX отправка формы
+    document.getElementById("lead-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const data = {
+        category: document.getElementById("main_category").value,
+        subcategory: document.getElementById("subcategory").value,
+        product: document.getElementById("product").value,
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      };
+
+      fetch("{% url 'submit_lead' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": data.csrfmiddlewaretoken
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("response-message").textContent = data.message || "Спасибо! Мы свяжемся с вами.";
+        })
+        .catch(error => {
+          document.getElementById("response-message").textContent = "Ошибка отправки.";
+          console.error("Ошибка:", error);
+        });
+    });
+</script>
+
+
+</html>
