@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceProduct
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -10,16 +10,18 @@ from .models import InsuranceLead, InsuranceProduct
 
 class InsuranceAjaxView(View):
     def get(self, request):
-        categories = InsuranceMainCategory.objects.all()
-        subcategories = InsuranceSubCategory.objects.all()
-        products = InsuranceProduct.objects.all()
-        return render(request, 'insurance/insurance_dynamic_form.html',
+        categories = InsuranceMainCategory.objects.prefetch_related('subcategories').all()
+
+        return render(request, 'base.html',
                       {
                           'categories': categories,
-                          'subcategories': subcategories,
-                          'products': products,
 
                        })
+
+
+def subcategory_detail(request, id):
+    subcategory = get_object_or_404(InsuranceSubCategory, id=id)
+    return render(request, 'insurance/subcategory_detail.html', {'subcategory': subcategory})
 
 
 def load_subcategories(request):

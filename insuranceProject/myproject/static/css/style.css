@@ -11,11 +11,10 @@ body, html {
   background: #f7f7f7;
 }
 
-/* Parallax hero */
+/* Hero */
 .hero {
   height: 80vh;
-  background-image: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg'); /* Замени на свою картинку */
-  background-attachment: fixed;
+  background-image: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -39,7 +38,10 @@ body, html {
   position: relative;
   z-index: 2;
   color: white;
-  padding: 0 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .hero-content h1 {
@@ -111,6 +113,7 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: left;
 }
 
 .card-front img {
@@ -125,6 +128,7 @@ body, html {
 
 .card-back {
   transform: rotateY(180deg);
+  background: gray;
 }
 
 /* Сетка карточек */
@@ -155,7 +159,7 @@ body, html {
 }
 
 .category-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-25px);
 }
 
 .category-card img {
@@ -187,13 +191,18 @@ body, html {
 
 /* Форма: шаги, поля, кнопки */
 .form-wrapper {
-  background-color: rgba(255, 255, 255, 0.9);
   padding: 40px;
   border-radius: 16px;
   max-width: 600px;
   margin: 0 auto;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease-in-out;
+}
+
+.form-wrapper:hover {
+  transform: scale(1.05);
 }
 
 .form-wrapper h2 {
@@ -233,78 +242,7 @@ body, html {
   margin-top: 15px;
   text-align: center;
   font-size: 16px;
-  color: #333;
-}
-
-.form-step {
-  display: none;
-  animation: fadeIn 0.5s ease;
-}
-
-.form-step.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Форма: шаги, поля, кнопки */
-.form-wrapper {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 40px;
-  border-radius: 16px;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  backdrop-filter: blur(4px);
-}
-
-.form-wrapper h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.input, select, .submit-btn {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-}
-
-.input:focus, select:focus {
-  border-color: #00aaff;
-  outline: none;
-}
-
-.submit-btn {
-  background-color: #00aaff;
-  color: white;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.submit-btn:hover {
-  background-color: #0077aa;
-}
-
-.message {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 16px;
-  color: #333;
+  color: black;
 }
 
 .form-step {
@@ -336,4 +274,148 @@ body, html {
   .form-wrapper h2 {
     font-size: 22px;
   }
+}
+
+.footer {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.footer a {
+  color: #f1f1f1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #00c9a7;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    font-size: 14px;
+    padding: 30px 15px;
+  }
+}
+
+/* Highlight block */
+.highlight-block {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+}
+
+.highlight-container {
+  background-image: url('../images/man-with-blank-sign.jpg');
+  background-position: center center;   /* центр по X и Y */
+  background-repeat: no-repeat;
+  background-size: cover;
+          /* 🔒 фиксирует фон при прокрутке (опционально) */
+  min-height: 400px;                    /* гарантированная высота */
+  padding: 30px 80px;                   /* добавим отступы */
+
+  display: flex;
+  align-items: stretch;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  border-radius: 12px;                  /* для округлённого вида */
+  overflow: hidden;
+}
+
+
+.highlight-image {
+  flex: 1 1 400px;
+  max-height: 800px;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.highlight-image img {
+  width: 100%;
+  height: 800px;
+  object-fit: cover;
+  display: block;
+}
+
+.highlight-text {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.highlight-text h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.highlight-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.highlight-text .cta-btn {
+  background-color: #00aaff;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.highlight-text .cta-btn:hover {
+  background-color: #0077aa;
+}
+
+.section {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+  .highlight-container {
+    flex-direction: column;
+  }
+
+  .highlight-text {
+    text-align: center;
+    padding: 0;
+  }
+
+  .highlight-text h2 {
+    font-size: 1.5rem;
+  }
+}
+
+.input:hover, select:hover {
+  border-color: #00c9a7;
+  background-color: #f0fbff;
+}
+
+.parallax-container {
+  background: none;
 }

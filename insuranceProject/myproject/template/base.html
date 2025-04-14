@@ -6,7 +6,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>Title</title>
 </head>
-<!-- Hero Section -->
+
+<body>
 
 <div class="hero">
     <div class="hero-content">
@@ -15,13 +16,15 @@
         <button onclick="document.getElementById('section1').scrollIntoView({ behavior: 'smooth' })">
             Перейти
         </button>
-
     </div>
 </div>
 
 
-<!-- About Section -->
-<section class="section about">
+
+
+
+    {% block content %}
+        <section class="section about">
     <h2>Почему выбирают нас?</h2>
     <div class="container">
 
@@ -75,33 +78,58 @@
     </div>
     <!-- Categories Preview -->
     <section class="section categories" id="section1">
+        <h2>Основные категории</h2>
         <div class="container">
-            <h2>Основные категории</h2>
             <div class="grid-4">
                 {% for category in categories %}
 
-                <div class="category-card">
-                    <a href="#section2" class="scroll-link">
-                        {% if category.image %}
-                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                        {% else %}
-                        <img src="{% static 'images/placeholder.jpg' %}" alt="Нет изображения">
-                        {% endif %}
-                        <h4>{{ category.name }}</h4>
-                    </a>
-                </div>
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            {% if category.image %}
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                            {% else %}
+                            <img src="{% static 'images/placeholder.jpg' %}" alt="Нет изображения">
+                            {% endif %}
+                            <h4>{{ category.name }}</h4>
+                        </div>
 
+                        <div class="card-back">
+                            <h4>Подкатегории:</h4>
+                            <ul class="subcategory-list">
+                                {% for sub in category.subcategories.all %}
+
+                                <a href="{% url 'subcategory_detail' sub.id %}"><li>{{ sub.name }}</li></a>
+                                {% empty %}
+                                <li class="empty">Нет подкатегорий</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
     </section>
 
 </section>
+    {% endblock %}
+
+<main class="main">
+<section class="section categories" id="section2">
+    {% include 'insurance/insurance_dynamic_form.html' %}
+</section>
+</main>
 
 
-<body>
-{% block content %}
-{% endblock %}
+<footer class="footer">
+    <div class="container">
+        <p>&copy; {{ year }} МойСайт. Все права защищены.</p>
+        <p><a href="/privacy/">Политика конфиденциальности</a> • <a href="/contacts/">Контакты</a></p>
+    </div>
+</footer>
+
 </body>
 <meta name="csrf-token" content="{{ csrf_token }}">
 <script>

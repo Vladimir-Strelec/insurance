@@ -14,14 +14,13 @@ class InsuranceMainCategory(models.Model):
 
 class InsuranceSubCategory(models.Model):
     """Подкатегории внутри основной категории"""
-    main_category = models.ForeignKey(InsuranceMainCategory, on_delete=models.CASCADE, related_name='subcategories')
+    main_category = models.ManyToManyField(InsuranceMainCategory, related_name='subcategories')
     name = models.CharField(max_length=100)
-
-    class Meta:
-        unique_together = ('main_category', 'name')
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='subcategory_images/', null=True, blank=True)
 
     def __str__(self):
-        return f"{self.main_category.name} → {self.name}"
+        return f"{self.name}"
 
 
 class InsuranceProduct(models.Model):

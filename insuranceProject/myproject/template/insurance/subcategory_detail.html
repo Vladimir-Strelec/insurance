@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="highlight-block">
+    <div class="highlight-container">
+        <div class="highlight-image parallax-bg">
+
+        </div>
+        <div class="highlight-text">
+            <h2>{{ subcategory.name }}</h2>
+            <p>
+                {{subcategory.description}}
+            </p>
+            <a href="#section2" class="cta-btn">Подробнее</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
