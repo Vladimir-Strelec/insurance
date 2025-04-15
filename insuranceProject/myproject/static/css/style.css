@@ -1,23 +1,32 @@
-/* Общие стили */
+:root {
+  --primary-color: #00aaff;
+  --primary-hover: #0077aa;
+  --bg-dark: #1e1e1e;
+  --bg-light: #f7f7f7;
+  --text-light: #f1f1f1;
+  --card-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
 * {
   box-sizing: border-box;
-}
-
-body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  scroll-behavior: smooth;
-  background: #f7f7f7;
 }
 
-/* Hero */
+html, body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg-light);
+  scroll-behavior: smooth;
+  background: transparent;
+}
+
+/* === Hero Section === */
 .hero {
+  position: relative;
+  overflow: hidden;
+
   height: 80vh;
-  background-image: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,9 +36,9 @@ body, html {
 }
 
 .hero::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 0;
 }
@@ -37,11 +46,11 @@ body, html {
 .hero-content {
   position: relative;
   z-index: 2;
-  color: white;
+  color: #fff;
   padding: 20px;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease;
 }
 
 .hero-content h1 {
@@ -55,23 +64,37 @@ body, html {
 }
 
 .hero-content button {
-  background-color: #00aaff;
+  background: var(--primary-color);
   color: white;
   padding: 12px 24px;
   border: none;
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
 }
 
 .hero-content button:hover {
-  background-color: #0077aa;
+  background: var(--primary-hover);
 }
 
-/* Общие секции */
+.background-branches {
+  opacity: 0.3;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("{% static 'images/water-2748660_1920.png' %}") no-repeat center center;
+  background-size: cover;
+  z-index: 0;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* === Reusable Section === */
 .section {
   padding: 60px 20px;
+  margin: 80px 0;
   text-align: center;
 }
 
@@ -80,12 +103,13 @@ body, html {
   margin: 0 auto;
 }
 
-/* Флип-карточки */
+/* === Card Flip Section === */
 .card {
   background: transparent;
   perspective: 1000px;
   width: 300px;
   height: 320px;
+  margin: 20px; /* Добавить отступы для улучшения видимости */
 }
 
 .card-inner {
@@ -100,20 +124,20 @@ body, html {
   transform: rotateY(180deg);
 }
 
-.card-front, .card-back {
+.card-front,
+.card-back {
   position: absolute;
   width: 100%;
   height: 100%;
   padding: 20px;
-  backface-visibility: hidden;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  backface-visibility: hidden;
+  box-shadow: var(--card-shadow);
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: left;
 }
 
 .card-front img {
@@ -122,16 +146,28 @@ body, html {
   margin-bottom: 15px;
 }
 
-.card-front h3, .card-front p {
-  margin: 5px 0;
-}
-
 .card-back {
   transform: rotateY(180deg);
   background: gray;
 }
 
-/* Сетка карточек */
+.card-back a {
+  /* или display: block; */
+  text-align: left;
+  text-decoration: none;
+  color: white; /* Начальный цвет текста */
+  transition: color 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.card-back a:hover {
+  transform: translateY(2px);
+  color: #00aaff;
+}
+
+
+
+/* === Grid Layout === */
 .about .container {
   display: flex;
   flex-wrap: wrap;
@@ -139,23 +175,14 @@ body, html {
   gap: 30px;
 }
 
-/* Категории */
-.grid-4 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 30px;
-}
-
 .category-card {
+  width: 200px;
+  padding: 20px;
   background: white;
   border-radius: 12px;
-  padding: 20px;
-  width: 200px;
   text-align: center;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .category-card:hover {
@@ -168,37 +195,81 @@ body, html {
   margin-bottom: 10px;
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 1.8rem;
-  }
-
-  .card {
-    width: 90%;
-    height: auto;
-  }
-
-  .grid-4, .about .container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .category-card {
-    width: 90%;
-  }
+/* === Highlight Block === */
+.highlight-block {
+  padding: 60px 20px;
+  background: #f9f9f9;
 }
 
-/* Форма: шаги, поля, кнопки */
+.highlight-container {
+  background: url('../images/man-with-blank-sign.jpg') center/cover no-repeat;
+  min-height: 400px;
+  padding: 30px 80px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 80px;
+  align-items: stretch;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.highlight-image {
+  flex: 1 1 400px;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.highlight-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.highlight-text {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.highlight-text h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.highlight-text p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.cta-btn {
+  background: var(--primary-color);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: var(--primary-hover);
+}
+
+/* === Form === */
 .form-wrapper {
-  padding: 40px;
-  border-radius: 16px;
+  width: 30%;
   max-width: 600px;
   margin: 0 auto;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   backdrop-filter: blur(4px);
-  background: rgba(0, 0, 0, 0.6);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease;
 }
 
 .form-wrapper:hover {
@@ -210,32 +281,40 @@ body, html {
   margin-bottom: 20px;
 }
 
-.input, select, .submit-btn {
+.input,
+select,
+.submit-btn {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-.input:focus, select:focus {
-  border-color: #00aaff;
+.input:focus,
+select:focus {
+  border-color: var(--primary-color);
   outline: none;
 }
 
+.input:hover,
+select:hover {
+  border-color: #00c9a7;
+  background-color: #f0fbff;
+}
+
 .submit-btn {
-  background-color: #00aaff;
+  background-color: var(--primary-color);
   color: white;
   font-weight: bold;
   border: none;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
 .submit-btn:hover {
-  background-color: #0077aa;
+  background-color: var(--primary-hover);
 }
 
 .message {
@@ -254,6 +333,31 @@ body, html {
   display: block;
 }
 
+/* === Footer === */
+.footer {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.footer a {
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #00c9a7;
+}
+
+.footer p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* === Animations === */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -265,140 +369,32 @@ body, html {
   }
 }
 
-/* Адаптив для формы */
-@media (max-width: 600px) {
+/* === Responsive === */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .card,
+  .category-card {
+    width: 90%;
+
+  }
+
+  .about .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .form-wrapper {
-    padding: 25px;
+    width: 90%;
+    padding: 20px;
+    transform: translateX(0);
   }
 
-  .form-wrapper h2 {
-    font-size: 22px;
-  }
-}
-
-.footer {
-  background-color: #1e1e1e;
-  color: #f1f1f1;
-  padding: 40px 20px;
-  text-align: center;
-  font-size: 16px;
-}
-
-.footer a {
-  color: #f1f1f1;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer a:hover {
-  color: #00c9a7;
-}
-
-.footer .container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.footer p {
-  margin: 0;
-  line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-  .footer {
-    font-size: 14px;
-    padding: 30px 15px;
-  }
-}
-
-/* Highlight block */
-.highlight-block {
-  padding: 60px 20px;
-  background-color: #f9f9f9;
-}
-
-.highlight-container {
-  background-image: url('../images/man-with-blank-sign.jpg');
-  background-position: center center;   /* центр по X и Y */
-  background-repeat: no-repeat;
-  background-size: cover;
-          /* 🔒 фиксирует фон при прокрутке (опционально) */
-  min-height: 400px;                    /* гарантированная высота */
-  padding: 30px 80px;                   /* добавим отступы */
-
-  display: flex;
-  align-items: stretch;
-  gap: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  border-radius: 12px;                  /* для округлённого вида */
-  overflow: hidden;
-}
-
-
-.highlight-image {
-  flex: 1 1 400px;
-  max-height: 800px;
-  height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.highlight-image img {
-  width: 100%;
-  height: 800px;
-  object-fit: cover;
-  display: block;
-}
-
-.highlight-text {
-  flex: 1 1 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-}
-
-.highlight-text h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.highlight-text p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.highlight-text .cta-btn {
-  background-color: #00aaff;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-
-.highlight-text .cta-btn:hover {
-  background-color: #0077aa;
-}
-
-.section {
-  margin-top: 80px;
-  margin-bottom: 80px;
-}
-
-@media (max-width: 768px) {
   .highlight-container {
     flex-direction: column;
+    padding: 20px;
   }
 
   .highlight-text {
@@ -409,13 +405,14 @@ body, html {
   .highlight-text h2 {
     font-size: 1.5rem;
   }
-}
 
-.input:hover, select:hover {
-  border-color: #00c9a7;
-  background-color: #f0fbff;
-}
+  .footer {
+    font-size: 14px;
+    padding: 30px 15px;
+  }
 
-.parallax-container {
-  background: none;
+  .section.categories .container {
+    padding: 20px;
+  }
+
 }

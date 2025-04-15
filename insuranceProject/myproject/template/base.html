@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,8 +9,11 @@
 
 <body>
 
+
 <div class="hero">
+
     <div class="hero-content">
+        <div class="background-branches"></div>
         <h1>Найдите идеальную страховку для бизнеса и жизни</h1>
         <p>Подберите страховку под ваш профиль — быстро, просто и с экспертной поддержкой.</p>
         <button onclick="document.getElementById('section1').scrollIntoView({ behavior: 'smooth' })">
@@ -78,40 +81,38 @@
     </div>
     <!-- Categories Preview -->
     <section class="section categories" id="section1">
-        <h2>Основные категории</h2>
-        <div class="container">
-            <div class="grid-4">
-                {% for category in categories %}
+    <h2>Основные категории</h2>
+    <div class="container">
+            {% for category in categories %}
+            <div class="card">
+                <div class="card-inner">
 
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            {% if category.image %}
-                            <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                            {% else %}
-                            <img src="{% static 'images/placeholder.jpg' %}" alt="Нет изображения">
-                            {% endif %}
-                            <h4>{{ category.name }}</h4>
-                        </div>
+                    <div class="card-front">
+                        {% if category.image %}
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                        {% else %}
+                        <img src="{% static 'images/placeholder.jpg' %}" alt="Нет изображения">
+                        {% endif %}
+                        <h4>{{ category.name }}</h4>
+                    </div>
 
-                        <div class="card-back">
-                            <h4>Подкатегории:</h4>
-                            <ul class="subcategory-list">
-                                {% for sub in category.subcategories.all %}
-
-                                <a href="{% url 'subcategory_detail' sub.id %}"><li>{{ sub.name }}</li></a>
-                                {% empty %}
-                                <li class="empty">Нет подкатегорий</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-
+                    <div class="card-back">
+                        <h2>Подкатегории:</h2>
+                        <ul class="subcategory-list">
+                            {% for sub in category.subcategories.all %}
+                            <li><a href="{% url 'subcategory_detail' sub.id %}"><h3>{{ sub.name }}</h3></a></li>
+                            {% empty %}
+                            <li class="empty">Нет подкатегорий</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-        </div>
-    </section>
+            {% endfor %}
+
+    </div>
+</section>
+
 
 </section>
     {% endblock %}
