@@ -3,11 +3,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+
     <title>Title</title>
 </head>
 
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="navbar-logo">
+            <div class="logo-circle">ARAG</div>
+        </div>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a aria-current="page" class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                       id="navbarDropdown" role="button">
+                        Insurances
+                    </a>
+
+                    <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                        {% for category in categories %}
+
+                        <li><a class="dropdown-item" href="#section1">{{ category.name }}</a></li>
+
+                        {% endfor %}
+
+                    </ul>
+
+
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+
+                </li>
+                <li class="nav-item">
+                    <a aria-disabled="true" class="nav-link disabled" href="#" tabindex="-1">Disabled</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input aria-label="Search" class="form-control me-2" placeholder="Search" type="search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
 
 
 <div class="hero">
@@ -23,11 +79,8 @@
 </div>
 
 
-
-
-
-    {% block content %}
-        <section class="section about">
+{% block content %}
+<section class="section about">
     <h2>Почему выбирают нас?</h2>
     <div class="container">
 
@@ -35,7 +88,7 @@
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="{% static 'images/computer_14934272.png' %}" alt="Надежность">
+                    <img alt="Надежность" src="{% static 'images/computer_14934272.png' %}">
                     <h3>Надежность</h3>
                     <p>Краткое описание</p>
                 </div>
@@ -51,7 +104,7 @@
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="{% static 'images/computer_14934272.png' %}" alt="Надежность">
+                    <img alt="Надежность" src="{% static 'images/computer_14934272.png' %}">
                     <h3>Надежность</h3>
                     <p>Краткое описание</p>
                 </div>
@@ -66,7 +119,7 @@
         <div class="card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="{% static 'images/people_13838183.png' %}" alt="Быстро">
+                    <img alt="Быстро" src="{% static 'images/people_13838183.png' %}">
                     <h3>Надежность</h3>
                     <h3>Быстро и удобно</h3>
                 </div>
@@ -81,26 +134,26 @@
     </div>
     <!-- Categories Preview -->
     <section class="section categories" id="section1">
-    <h2>Основные категории</h2>
-    <div class="container">
+        <h3>Основные категории</h3>
+        <div class="container">
             {% for category in categories %}
             <div class="card">
                 <div class="card-inner">
 
                     <div class="card-front">
                         {% if category.image %}
-                        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                        <img alt="{{ category.name }}" src="{{ category.image.url }}">
                         {% else %}
-                        <img src="{% static 'images/placeholder.jpg' %}" alt="Нет изображения">
+                        <img alt="Нет изображения" src="{% static 'images/placeholder.jpg' %}">
                         {% endif %}
                         <h4>{{ category.name }}</h4>
                     </div>
 
                     <div class="card-back">
-                        <h2>Подкатегории:</h2>
+                        <h3>Подкатегории:</h3>
                         <ul class="subcategory-list">
                             {% for sub in category.subcategories.all %}
-                            <li><a href="{% url 'subcategory_detail' sub.id %}"><h3>{{ sub.name }}</h3></a></li>
+                            <li><a href="{% url 'subcategory_detail' sub.id %}">{{ sub.name }}</a></li>
                             {% empty %}
                             <li class="empty">Нет подкатегорий</li>
                             {% endfor %}
@@ -110,17 +163,17 @@
             </div>
             {% endfor %}
 
-    </div>
-</section>
+        </div>
+    </section>
 
 
 </section>
-    {% endblock %}
+{% endblock %}
 
 <main class="main">
-<section class="section categories" id="section2">
-    {% include 'insurance/insurance_dynamic_form.html' %}
-</section>
+    <section class="section categories" id="section2">
+        {% include 'insurance/insurance_dynamic_form.html' %}
+    </section>
 </main>
 
 
@@ -131,117 +184,17 @@
     </div>
 </footer>
 
+
+<meta content="{{ csrf_token }}" name="csrf-token">
+<script crossorigin="anonymous"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+
 </body>
-<meta name="csrf-token" content="{{ csrf_token }}">
-<script>
-    const steps = document.querySelectorAll('.form-step');
-    const nextBtns = document.querySelectorAll('.next-btn');
-    let currentStep = 0;
-
-    nextBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (validateStep(currentStep)) {
-          steps[currentStep].classList.remove('active');
-          currentStep++;
-          if (currentStep < steps.length) {
-            steps[currentStep].classList.add('active');
-          }
-        }
-      });
-    });
-
-    function validateStep(step) {
-      const inputs = steps[step].querySelectorAll('select, input');
-      for (const input of inputs) {
-        if (!input.value.trim()) {
-          alert('Заполните поле');
-          return false;
-        }
-      }
-      return true;
-    }
-
-    // Загрузка подкатегорий при выборе главной категории
-    document.getElementById("main_category").addEventListener("change", function () {
-      const categoryId = this.value;
-      const subSelect = document.getElementById("subcategory");
-      const productSelect = document.getElementById("product");
-
-      subSelect.innerHTML = '<option>Загрузка...</option>';
-      productSelect.innerHTML = '<option value="">— Сначала выберите подкатегорию —</option>';
-
-      fetch(`/ajax/load-subcategories/?main_category_id=${categoryId}`)
-        .then(response => response.json())
-        .then(data => {
-          subSelect.innerHTML = '<option value="">— Выберите подкатегорию —</option>';
-          data.forEach(sub => {
-            const option = document.createElement("option");
-            option.value = sub.id;
-            option.textContent = sub.name;
-            subSelect.appendChild(option);
-          });
-        })
-        .catch(error => {
-          console.error("Ошибка загрузки подкатегорий:", error);
-          subSelect.innerHTML = '<option>Ошибка загрузки</option>';
-        });
-    });
-
-    // Загрузка продуктов при выборе подкатегории
-    document.getElementById("subcategory").addEventListener("change", function () {
-      const subcategoryId = this.value;
-      const productSelect = document.getElementById("product");
-      productSelect.innerHTML = '<option>Загрузка...</option>';
-
-      fetch(`/ajax/load-products/?subcategory_id=${subcategoryId}`)
-        .then(response => response.json())
-        .then(data => {
-          productSelect.innerHTML = '<option value="">— Выберите продукт —</option>';
-          data.forEach(product => {
-            const option = document.createElement("option");
-            option.value = product.id;
-            option.textContent = product.name;
-            productSelect.appendChild(option);
-          });
-        })
-        .catch(error => {
-          console.error("Ошибка загрузки продуктов:", error);
-          productSelect.innerHTML = '<option>Ошибка загрузки</option>';
-        });
-    });
-
-    // AJAX отправка формы
-    document.getElementById("lead-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const data = {
-        category: document.getElementById("main_category").value,
-        subcategory: document.getElementById("subcategory").value,
-        product: document.getElementById("product").value,
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        csrfmiddlewaretoken: '{{ csrf_token }}'
-      };
-
-      fetch("{% url 'submit_lead' %}", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": data.csrfmiddlewaretoken
-        },
-        body: JSON.stringify(data)
-      })
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById("response-message").textContent = data.message || "Спасибо! Мы свяжемся с вами.";
-        })
-        .catch(error => {
-          document.getElementById("response-message").textContent = "Ошибка отправки.";
-          console.error("Ошибка:", error);
-        });
-    });
-</script>
 
 
 </html>

@@ -1,24 +1,227 @@
 :root {
-  --primary-color: #00aaff;
-  --primary-hover: #0077aa;
-  --bg-dark: #1e1e1e;
-  --bg-light: #f7f7f7;
-  --text-light: #f1f1f1;
-  --card-shadow: 0 0 15px rgba(0,0,0,0.1);
+    --primary-color: #00aaff;
+    --primary-hover: #0077aa;
+    --bg-dark: #1e1e1e;
+    --bg-light: #f7f7f7;
+    --text-light: #f1f1f1;
+    --card-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html, body {
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--bg-light);
-  scroll-behavior: smooth;
-  background: transparent;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg-light);
+    scroll-behavior: smooth;
+    background: transparent;
 }
+
+/* === Navbar === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e1e1e;
+  color: white;
+  padding: 15px 30px;
+  position: sticky; /* Используем sticky вместо fixed */
+  top: 0; /* Закрепляем в верхней части экрана */
+  left: 0;
+  width: 100%; /* Занимаем всю ширину экрана */
+  z-index: 1000; /* Высокий приоритет для верхнего слоя */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+}
+
+.navbar-logo .logo-circle {
+    background: #ffcc00;
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+}
+
+.navbar-links {
+    display: flex; /* По умолчанию меню горизонтально отображается */
+    gap: 5px;
+}
+
+.navbar-links ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+}
+
+.navbar-links a,
+.dropdown-toggle {
+    color: white;
+    text-decoration: none;
+    background-color: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), 0px 0px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid black;
+    font: inherit;
+    padding: 8px 12px;
+    display: block;
+}
+
+/* === Dropdown контейнер === */
+.dropdown {
+    position: relative; /* Делаем его относительно для абсолютного позиционирования меню */
+}
+
+.dropdown-menu {
+    display: none; /* Скрыто по умолчанию */
+    position: absolute;
+    top: 100%; /* Под кнопкой меню */
+    left: 0;
+    background: #333;
+    border-radius: 8px;
+    min-width: 180px;
+    z-index: 999;
+    padding: 10px 0;
+    list-style: none;
+}
+
+.dropdown-menu li {
+    color: black;
+    padding: 10px 20px;
+}
+
+.dropdown-menu li a {
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu li a:hover {
+    transform: translateY(2px);
+    color: #00aaff;
+}
+
+/* === Горизонтальное отображение подменю (по умолчанию) === */
+.navbar-links ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+/* === Когда навели на Dropdown (или открыли на мобильных) === */
+.dropdown:hover .dropdown-menu {
+    display: block; /* Показываем подменю при наведении на Dropdown */
+}
+
+.dropdown.open .dropdown-menu {
+    display: block; /* Показываем подменю, если добавлен класс .open */
+}
+
+/* === Стиль для мобильных устройств === */
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none; /* Скрыто по умолчанию на мобильных устройствах */
+        flex-direction: column;
+        background: var(--bg-dark);
+        width: 100%;
+        padding: 20px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .navbar-links.open {
+        display: flex; /* Показывается, когда добавлен класс .open */
+    }
+
+    .navbar-links ul {
+        flex-direction: column; /* Меню становится вертикальным на мобильных */
+        gap: 15px;
+    }
+
+    /* Мобильная версию подменю */
+    .dropdown-menu {
+        position: static; /* Не абсолютное, а обычное позиционирование для мобильных */
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .dropdown-menu li a {
+        padding: 8px 0;
+        background: none;
+    }
+}
+
+
+
+
+
+
+.navbar-contact {
+    display: flex;
+    align-items: center;
+}
+
+.phone-icon {
+    font-size: 1.4rem;
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.burger {
+    display: none;
+    background: none;
+    color: white;
+    font-size: 1.6rem;
+    border: none;
+    cursor: pointer;
+}
+
+/* === Mobile === */
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none; /* Скрыто по умолчанию на мобильных устройствах */
+        flex-direction: column;
+        background: var(--bg-dark);
+        width: 100%;
+        padding: 20px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .navbar-links.open {
+        display: flex; /* Показывается, когда добавлен класс .open */
+    }
+
+    .navbar-links ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .dropdown-menu {
+        position: static;
+        background: transparent;
+        padding-left: 10px;
+    }
+
+    .dropdown-menu li a {
+        padding: 8px 0;
+        background: none;
+    }
+}
+
 
 /* === Hero Section === */
 .hero {
@@ -415,4 +618,4 @@ select:hover {
     padding: 20px;
   }
 
-}
+
