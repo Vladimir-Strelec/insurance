@@ -19,8 +19,16 @@ html{
 }
 body {
 
-    background: url('../images/beach-2991021_1920.jpg') no-repeat center center fixed;
+    background: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg') no-repeat center center fixed;
     backdrop-filter: blur(4px)
+
+    position: absolute;
+  inset: 0;
+  /* Тёмный прозрачный слой */
+  backdrop-filter: blur(4px);     /* Эффект размытия */
+
+
+
 }
 /* === Navbar === */
 .navbar {
@@ -276,7 +284,7 @@ body {
 
 .hero-button {
   padding: 12px 30px;
-  background-color: #ff9800;
+  background-color: #ffcc00;
   color: white;
   font-weight: bold;
   border: none;
@@ -286,11 +294,11 @@ body {
 }
 
 .hero-button:hover {
-  background-color: #e68900;
+  color: black;
 }
 
 .hero-img {
-display: flex;
+  display: flex;
   justify-content: flex-start; /* выравнивание по левому краю */
   align-items: center;
 
