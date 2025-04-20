@@ -12,6 +12,7 @@
 
 <body>
 
+
 <nav class="navbar navbar-expand-lg navbar-light bg-black">
     <div class="container-fluid">
         <div class="navbar-logo">
@@ -69,28 +70,9 @@
 </nav>
 
 
-<section class="hero">
-    <div class="leaf leaf1">🍁</div>
-    <div class="leaf leaf2">🍂</div>
-    <div class="leaf leaf3">🍃</div>
+{% include "hero.html" %}
 
-    <div class="hero-overlay">
-        <div class="hero-content">
-            <h1>Ощути магию осени</h1>
-            <p>Теплые цвета. Свежий воздух. Настроение, которое вдохновляет.</p>
-            <a class="hero-button" href="#explore">Исследовать</a>
-        </div>
-    </div>
-    <svg class="wave" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,192L60,202.7C120,213,240,235,360,229.3C480,224,600,192,720,181.3C840,171,960,181,1080,202.7C1200,224,1320,256,1380,272L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z" fill="#ffcc00"
-              fill-opacity="1">
-        </path>
-    </svg>
-
-
-</section>
-
-
+<img class="overlay-image" alt="#" src="{% static 'images/owl-2569202_1920.png' %}">
 {% block content %}
 
 
