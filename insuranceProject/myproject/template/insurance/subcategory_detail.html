@@ -2,10 +2,15 @@
 {% load static %}
 
 {% block content %}
+
 <section class="highlight-block">
+
     <div class="highlight-container">
         <div class="highlight-image parallax-bg">
-            {{ subcategory.image }}
+            <img class="highlight-image" src="{{ subcategory.image.url }}" alt="Some image description">
+
+
+
         </div>
         <div class="highlight-text">
             <h2>{{ subcategory.name }}</h2>

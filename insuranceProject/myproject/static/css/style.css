@@ -18,7 +18,7 @@ html{
 
 }
 body {
-
+    pointer-events: auto;
     background: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg') no-repeat center center fixed;
     backdrop-filter: blur(4px);
 
@@ -30,27 +30,28 @@ body {
 
 .overlay-image {
   position: absolute;
-
-  width: 30%; /* ili konkretnyy razmer */
+  width: 30%;
   height: auto;
+  left: 0;
   background-attachment: fixed;
-  pointer-events: none; /* chtoby izobrazhenie ne meshchalo klikat' skvoz' nego */
-  z-index: 10;
-  animation: moveRight 5s infinite linear;
-  transform: translate(-10%, -117%);
+  pointer-events: none;
+  z-index: 99;
   animation: fadeInLeft 0.6s ease-out forwards;
+  transform: translate(0%, 50%);
+  pointer-events: auto;
 }
 
 @keyframes fadeInLeft {
-  10% {
+  0% {
     opacity: 0;
-    transform: translateX(0);
+    transform: translate(-100%, 50%);
   }
-  30% {
+  100% {
     opacity: 1;
-    transform: translateX(-10);
+    transform: translate(0, 50%);
   }
 }
+
 
 /* === Navbar === */
 .navbar {
@@ -336,6 +337,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  z-index: 99;
+  pointer-events: auto;
+
+
 }
 
 .hero-content {
@@ -344,6 +350,7 @@ body {
   padding: 40px;
   max-width: 700px;
   animation: fadeInUp 2s ease-out forwards;
+
 }
 
 .hero-content h1 {
@@ -368,14 +375,17 @@ body {
   font-weight: bold;
   border: none;
   border-radius: 8px;
+  z-index: 101;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .hero-button:active {
+    position: relative;
     color: white;
     background-color: var(--primary-color);
     animation: pulse 0.6s ease;
+
 }
 
 @keyframes pulse {
@@ -408,7 +418,7 @@ body {
   bottom: 0;
   width: 100%;
   height: auto;
-  z-index: 11;
+  z-index: 100;
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
@@ -419,11 +429,11 @@ body {
 /* Простая анимация */
 @keyframes fadeInUp {
   0% {
-    opacity: 0;
+
     transform: translateY(30px);
   }
   100% {
-    opacity: 3;
+
     transform: translateY(0);
   }
 }
@@ -475,11 +485,13 @@ body {
   margin: 80px 0;
   text-align: center;
 
+
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+
 
 }
 
@@ -567,6 +579,7 @@ body {
 .highlight-block {
   padding: 60px 20px;
   background: #f9f9f9;
+
 }
 
 .highlight-container {
@@ -579,6 +592,7 @@ body {
   align-items: stretch;
   border-radius: 12px;
   overflow: hidden;
+
 }
 
 .highlight-image {
@@ -589,10 +603,11 @@ body {
 
 }
 
-.highlight-image img {
+.highlight-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 15;
 }
 
 .highlight-text {
@@ -664,13 +679,13 @@ select,
 }
 
 .input:focus,
-select:focus {
+  select:focus {
   border-color: var(--primary-color);
   outline: none;
 }
 
 .input:hover,
-select:hover {
+  select:hover {
   border-color: #00c9a7;
   background-color: #f0fbff;
 }
