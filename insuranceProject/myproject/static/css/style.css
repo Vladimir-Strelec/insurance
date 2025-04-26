@@ -66,7 +66,7 @@ body {
   left: 0;
   width: 100%; /* Занимаем всю ширину экрана */
   z-index: 1000; /* Высокий приоритет для верхнего слоя */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Добавляем тень */
 
 }
 
@@ -89,8 +89,10 @@ body {
     color: white;
     font-weight: bold;
 
+
 }
 .container-fluid a:active {
+    background-color: var(--primary-color);
     transform: translateY(5px);
 
 }
@@ -142,8 +144,10 @@ body {
 }
 .dropdown a {
     color: black;
+}
 
-
+.dropdown a:hover {
+    color: white;
 }
 
 
@@ -158,31 +162,35 @@ body {
     z-index: 999;
     padding: 10px 0;
     list-style: none;
-    background: none;
     animation: fadeInUp 0.6s ease-out forwards;
 
 
 }
 
 .dropdown-menu li {
-
+    background-color: #ffcc00;
     padding: 10px 20px;
+
 
 }
 
 .dropdown-menu li a {
     color: black;
-    background: none;
+
     text-decoration: none;
     display: block;
     transition: transform 0.3s ease;
 
 }
 
+.dropdown-menu li a:hover {
+    background-color: #ffcc00;
+}
+
 .dropdown-menu li a:active {
     color: var(--primary-color);
     transform: translateY(5px);
-    background: none;
+
 
 }
 
@@ -206,7 +214,7 @@ body {
 
 .dropdown.open .dropdown-menu {
   display: block;
-  background: none;
+  background: black;
 }
 
 /* === Стиль для мобильных устройств === */
@@ -332,19 +340,22 @@ body {
 .hero-overlay {
   position: absolute;
   inset: 0;
+
   background: rgba(0, 0, 0, 0.4); /* Тёмный прозрачный слой */
   backdrop-filter: blur(4px);     /* Эффект размытия */
   display: flex;
-  align-items: center;
+
+  align-items: flex-start;
   justify-content: center;
 
   z-index: 99;
   pointer-events: auto;
 
-
 }
 
 .hero-content {
+  position: absolute;
+  top: 20%;
   text-align: center;
   color: #fff;
   padding: 40px;
@@ -355,12 +366,12 @@ body {
 
 .hero-content h1 {
   font-size: 3rem;
-  margin-bottom: 20px;
   letter-spacing: 1px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero-content p {
+
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 30px;
@@ -368,29 +379,37 @@ body {
 }
 
 .hero-button {
-  font-weight: bold;
+  margin-top: 30px;
   padding: 12px 30px;
   background-color: #ffcc00;
-  color: black;
   font-weight: bold;
   border: none;
   border-radius: 8px;
   z-index: 101;
+  animation: fadeInUp 2s ease-out forwards;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease; /* <--- добавляем плавность */
 }
 
-.hero-button:active {
-    position: relative;
-    color: white;
-    background-color: var(--primary-color);
-    animation: pulse 0.6s ease;
 
+.hero-button:active {
+  color: white;
+  background-color: var(--primary-color);
+  transform: scale(0.95); /* <--- кнопка немного сжимается */
+}
+
+
+a.hero-button {
+    color: black;
+}
+
+a.hero-button:hover {
+    color:white;
 }
 
 @keyframes pulse {
     0% {
-    box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.5);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
   }
   70% {
     box-shadow: 0 0 0 15px rgba(255, 204, 0, 0);
