@@ -19,9 +19,7 @@ html{
 }
 body {
     pointer-events: auto;
-    background: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg') no-repeat center center fixed;
-    backdrop-filter: blur(4px);
-
+    background: url('../images/pexels-quang-vuong-724225078-27972891.jpg') no-repeat center center fixed;
     position: absolute;
     inset: 0;
     backdrop-filter: blur(4px);     /* Эффект размытия */
@@ -29,26 +27,25 @@ body {
 }
 
 .overlay-image {
-  position: absolute;
   width: 30%;
   height: auto;
-  left: 0;
+
+  transform: translateY(0%); /* Только по оси Y! */
   background-attachment: fixed;
-  pointer-events: none;
+
   z-index: 99;
-  animation: fadeInLeft 0.6s ease-out forwards;
-  transform: translate(0%, 50%);
-  pointer-events: auto;
+  animation: fadeInLeft 1s ease-out forwards;
+
 }
 
 @keyframes fadeInLeft {
   0% {
     opacity: 0;
-    transform: translate(-100%, 50%);
+    transform: translate(-100%, -50%); /* Смещаем и по X, и по Y */
   }
   100% {
     opacity: 1;
-    transform: translate(0, 50%);
+    transform: translate(0, -50%);
   }
 }
 
@@ -104,6 +101,10 @@ body {
     gap: 5px;
 
 
+}
+
+.navbar-links.open {
+        display: flex;
 }
 
 .navbar-links ul {
@@ -218,40 +219,39 @@ body {
 }
 
 /* === Стиль для мобильных устройств === */
+/* === Mobile navbar styles === */
 @media (max-width: 768px) {
+    .navbar {
+        position: relative;
+    }
+
     .navbar-links {
-        display: none; /* Скрыто по умолчанию на мобильных устройствах */
-        flex-direction: column;
-        background: var(--bg-dark);
-        width: 100%;
-        padding: 20px;
         position: absolute;
         top: 100%;
         left: 0;
-        z-index: 1000;
+        width: 100%;
+        background-color: var(--bg-dark);
+        display: none;
+        flex-direction: column;
+        padding: 20px;
+        z-index: 1001; /* больше чем .hero-overlay */
     }
 
     .navbar-links.open {
-        display: flex; /* Показывается, когда добавлен класс .open */
+        display: flex;
     }
 
-    .navbar-links ul {
-        flex-direction: column; /* Меню становится вертикальным на мобильных */
-        gap: 15px;
+    .burger {
+        display: block;
     }
 
-    /* Мобильная версию подменю */
-    .dropdown-menu {
-        position: static; /* Не абсолютное, а обычное позиционирование для мобильных */
+    .hero {
+        position: relative;
 
-        background: transparent;
-    }
-
-    .dropdown-menu show li a {
-        padding: 8px 0;
-        background: none;
+        z-index: 0; /* ниже чем .navbar-links */
     }
 }
+
 
 
 
@@ -283,11 +283,13 @@ body {
     font-size: 1.6rem;
     border: none;
     cursor: pointer;
+    position: absolute;
 }
 
 /* === Mobile === */
 @media (max-width: 768px) {
     .navbar-links {
+        position: relative;
         display: none; /* Скрыто по умолчанию на мобильных устройствах */
         flex-direction: column;
         background: var(--bg-dark);
@@ -327,27 +329,33 @@ body {
 
 /* === Hero Section === */
 .hero {
-  position: relative;
-  height: 100vh;
   background: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
+
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100vh;
+
+
   overflow: hidden;
+
+  z-index: 0;
 }
 
+
+
+
 .hero-overlay {
+  height: 100vh;
   position: absolute;
   inset: 0;
-
   background: rgba(0, 0, 0, 0.4); /* Тёмный прозрачный слой */
   backdrop-filter: blur(4px);     /* Эффект размытия */
   display: flex;
-
   align-items: flex-start;
   justify-content: center;
-
+  flex: 1;
   z-index: 99;
   pointer-events: auto;
 
@@ -419,26 +427,19 @@ a.hero-button:hover {
   }
 }
 
-.hero-img {
-  display: flex;
-  justify-content: flex-start; /* выравнивание по левому краю */
-  align-items: center;
 
-  max-width: 300px;
-  height: auto;
-  display: block;
-  object-fit: cover
-  text-align: left;
-}
 
 
 .wave {
-  position: absolute;
-  bottom: 0;
+
   width: 100%;
-  height: auto;
+  height: 100vh;
+  transform: translateY(0%); /* Только по оси Y! */
+  background-attachment: fixed;
+  pointer-events: none;
   z-index: 100;
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fadeInLeft 1s ease-out forwards;
+  pointer-events: auto;
 }
 
 
@@ -774,14 +775,14 @@ select,
 }
 
 /* === Responsive === */
-@media (max-width: 768px) {
+@media (max-width: 746px) {
   .hero-content h1 {
     font-size: 1.8rem;
   }
 
   .card,
   .category-card {
-    width: 99%;
+    width: 89%;
 
 
   }
@@ -793,7 +794,7 @@ select,
 
   .form-wrapper {
     width: 90%;
-    padding: 20px;
+    padding: 10px;
     transform: translateX(0);
   }
 
