@@ -18,6 +18,8 @@ html{
 
 }
 body {
+    height: 100%;
+    margin: 0;
     pointer-events: auto;
     background: url('../images/pexels-quang-vuong-724225078-27972891.jpg') no-repeat center center fixed;
     position: absolute;
@@ -27,37 +29,20 @@ body {
 }
 
 .overlay-image {
-  width: 30%;
-  height: auto;
-
+  margin-bottom: -20%;
+  width: 40%;
   transform: translateY(0%); /* Только по оси Y! */
-  background-attachment: fixed;
-
-  z-index: 99;
-  animation: fadeInLeft 1s ease-out forwards;
-
+  z-index: 97;
 }
 
-@keyframes fadeInLeft {
-  0% {
-    opacity: 0;
-    transform: translate(-100%, -50%); /* Смещаем и по X, и по Y */
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, -50%);
-  }
-}
+
 
 
 /* === Navbar === */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: #1e1e1e;
   color: white;
-  padding: 15px 30px;
+
   position: sticky; /* Используем sticky вместо fixed */
   top: 0; /* Закрепляем в верхней части экрана */
   left: 0;
@@ -77,11 +62,29 @@ body {
 
 }
 
+.navbar-nav {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+}
+
 .navbar-nav a {
+    margin-left: 25%;
+    text-decoration: none;
     color: white;
+    border-radius: 3px;
     font-weight: bold;
 
+
 }
+
+.container-fluid {
+    display: flex;
+    flex-direction: rows;
+    justify-content: space-around;
+}
+
+
 .container-fluid a {
     color: white;
     font-weight: bold;
@@ -90,7 +93,7 @@ body {
 }
 .container-fluid a:active {
     background-color: var(--primary-color);
-    transform: translateY(5px);
+    transform: translateY(3px);
 
 }
 
@@ -113,11 +116,12 @@ body {
     gap: 25px;
     padding: 0;
     margin: 0;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .navbar-links a,
 .dropdown-toggle {
+    width: 100%;
     color: white;
     text-decoration: none;
     background-color: #ffcc00;
@@ -154,10 +158,9 @@ body {
 
 
 .dropdown-menu {
-    display: none; /* Скрыто по умолчанию */
-    position: absolute;
-    top: 120%; /* Под кнопкой меню */
-    left: 0;
+    display: flex; /* Скрыто по умолчанию */
+    flex-direction: column;
+    align-items: flex-end;
     border-radius: 8px;
     min-width: 180px;
     z-index: 999;
@@ -224,25 +227,36 @@ body {
     .navbar {
         position: relative;
     }
+    .navbar-toggler-icon {
+        background-color: #ffcc00;
+        border-radius: 3px;
+    }
+    .navbar-toggler-icon:active {
+        animation: pulse 0.2s ease;
+        transform: scale(0.95);
+    }
 
     .navbar-links {
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: var(--bg-dark);
+        background-color: white;
         display: none;
-        flex-direction: column;
+        flex-direction: rows;
         padding: 20px;
         z-index: 1001; /* больше чем .hero-overlay */
     }
 
     .navbar-links.open {
         display: flex;
+        color: white;
     }
 
     .burger {
         display: block;
+        color: white;
+        animation: pulse 0.2s ease;
     }
 
     .hero {
@@ -278,7 +292,7 @@ body {
 
 .burger {
     display: none;
-    background: none;
+    background-color: white;
     color: white;
     font-size: 1.6rem;
     border: none;
@@ -289,10 +303,11 @@ body {
 /* === Mobile === */
 @media (max-width: 768px) {
     .navbar-links {
+        text-decoration: none;
         position: relative;
         display: none; /* Скрыто по умолчанию на мобильных устройствах */
         flex-direction: column;
-        background: var(--bg-dark);
+        background-color: white;
         width: 100%;
         padding: 20px;
         position: absolute;
@@ -308,10 +323,6 @@ body {
     .navbar-links ul {
         flex-direction: column;
         gap: 15px;
-    }
-
-    .burger {
-        display: block;
     }
 
     .dropdown-menu {
@@ -332,14 +343,11 @@ body {
   background: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
 
+  height: 93%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100vh;
-
-
+  flex-direction: column-reverse;
+  justify-content: flex-start;
   overflow: hidden;
-
   z-index: 0;
 }
 
@@ -352,16 +360,13 @@ body {
   inset: 0;
   background: rgba(0, 0, 0, 0.4); /* Тёмный прозрачный слой */
   backdrop-filter: blur(4px);     /* Эффект размытия */
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex: 1;
-  z-index: 99;
+  z-index: 96;
   pointer-events: auto;
 
 }
 
 .hero-content {
+  align-self: center;
   position: absolute;
   top: 20%;
   text-align: center;
@@ -369,6 +374,7 @@ body {
   padding: 40px;
   max-width: 700px;
   animation: fadeInUp 2s ease-out forwards;
+  z-index: 98;
 
 }
 
@@ -403,6 +409,7 @@ body {
 .hero-button:active {
   color: white;
   background-color: var(--primary-color);
+  animation: pulse 0.2s ease;
   transform: scale(0.95); /* <--- кнопка немного сжимается */
 }
 
@@ -433,13 +440,10 @@ a.hero-button:hover {
 .wave {
 
   width: 100%;
-  height: 100vh;
   transform: translateY(0%); /* Только по оси Y! */
-  background-attachment: fixed;
   pointer-events: none;
   z-index: 100;
-  animation: fadeInLeft 1s ease-out forwards;
-  pointer-events: auto;
+
 }
 
 
@@ -777,6 +781,7 @@ select,
 /* === Responsive === */
 @media (max-width: 746px) {
   .hero-content h1 {
+    flex: 1;
     font-size: 1.8rem;
   }
 
