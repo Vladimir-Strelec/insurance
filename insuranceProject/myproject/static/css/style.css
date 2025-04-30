@@ -97,19 +97,6 @@ body {
 
 }
 
-
-
-.navbar-links {
-    display: flex; /* По умолчанию меню горизонтально отображается */
-    gap: 5px;
-
-
-}
-
-.navbar-links.open {
-        display: flex;
-}
-
 .navbar-links ul {
     display: flex;
     list-style: none;
@@ -122,18 +109,20 @@ body {
 .navbar-links a,
 .dropdown-toggle {
     width: 100%;
-    color: white;
+    color: black;
     text-decoration: none;
     background-color: #ffcc00;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), 0px 0px 15px rgba(0, 0, 0, 0.15);
-    border: 1px solid black;
+
     border-radius: 9px;
     font-weight: bold;
     padding: 8px 12px;
     display: block;
     transition: background-color 0.3s ease;
+}
 
-
+.dropdown-toggle:hover {
+    color: black;
 }
 .dropdown-toggle:active {
     color: white;
@@ -141,85 +130,43 @@ body {
     animation: pulse 0.2s ease;
 
 }
+
+
 /* === Dropdown контейнер === */
 .dropdown {
     position: relative; /* Делаем его относительно для абсолютного позиционирования меню */
-
-
 }
-.dropdown a {
-    color: black;
-}
-
-.dropdown a:hover {
-    color: white;
-}
-
-
 
 .dropdown-menu {
-    display: flex; /* Скрыто по умолчанию */
-    flex-direction: column;
-    align-items: flex-end;
-    border-radius: 8px;
-    min-width: 180px;
-    z-index: 999;
-    padding: 10px 0;
-    list-style: none;
-    animation: fadeInUp 0.6s ease-out forwards;
+  width: 30vh;
+  display: flex;
+  justify-content: flex-start;
+  list-style: none;
+  background-color: red;
+  padding: 0;
+  margin: 0;
+  gap: 20px;
 
 
 }
 
-.dropdown-menu li {
-    background-color: #ffcc00;
-    padding: 10px 20px;
-
-
-}
 
 .dropdown-menu li a {
-    color: black;
-
     text-decoration: none;
-    display: block;
-    transition: transform 0.3s ease;
-
-}
+    width: 28vh;
+    background-color: #ffcc00;
+    color: black;
+    margin-left: 3%;
+    }
 
 .dropdown-menu li a:hover {
+    color: white;
     background-color: #ffcc00;
-}
+    }
 
 .dropdown-menu li a:active {
-    color: var(--primary-color);
-    transform: translateY(5px);
-
-
-}
-
-
-/* === Горизонтальное отображение подменю (по умолчанию) === */
-.navbar-links ul {
-    display: flex;
-    list-style: none;
-    gap: 25px;
-    background-color: #ffcc00;
-
-}
-
-/* === Когда навели на Dropdown (или открыли на мобильных) === */
-.dropdown-menu {
-    background-color: #ffcc00;
-    border: 8px;
-
-    /* Показываем подменю при наведении на Dropdown */
-}
-
-.dropdown.open .dropdown-menu {
-  display: block;
-  background: black;
-}
+    color: black;
+    }
 
 /* === Стиль для мобильных устройств === */
 /* === Mobile navbar styles === */
@@ -245,7 +192,7 @@ body {
         display: none;
         flex-direction: rows;
         padding: 20px;
-        z-index: 1001; /* больше чем .hero-overlay */
+        z-index: 1001;
     }
 
     .navbar-links.open {
@@ -307,7 +254,7 @@ body {
         position: relative;
         display: none; /* Скрыто по умолчанию на мобильных устройствах */
         flex-direction: column;
-        background-color: white;
+        background-color: #ffcc00;
         width: 100%;
         padding: 20px;
         position: absolute;
@@ -327,13 +274,13 @@ body {
 
     .dropdown-menu {
         position: static;
-        background: transparent;
+
         padding-left: 10px;
     }
 
     .dropdown-menu li a {
-        padding: 8px 0;
-        background: none;
+        margin-left: 2%;
+        background-color: #ffcc00;
     }
 }
 
@@ -343,7 +290,7 @@ body {
   background: url('../images/peter-thomas-5phRQSOixzU-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
 
-  height: 93%;
+  min-height: 93vh;
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-start;
@@ -355,11 +302,13 @@ body {
 
 
 .hero-overlay {
-  height: 100vh;
   position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* Тёмный прозрачный слой */
-  backdrop-filter: blur(4px);     /* Эффект размытия */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   z-index: 96;
   pointer-events: auto;
 
@@ -487,7 +436,7 @@ a.hero-button:hover {
 
 @keyframes fall {
   0% {
-    top: -10%;
+    top: 10%;
     transform: rotate(0deg);
   }
   100% {
@@ -521,7 +470,7 @@ a.hero-button:hover {
 
 /* === Card Flip Section === */
 .card {
-  background: transparent;
+  background-color: transparent;
   position: relative;
   width: 300px;
   height: 320px;
