@@ -33,8 +33,23 @@ body {
   width: 40%;
   transform: translateY(0%); /* Только по оси Y! */
   z-index: 97;
+  animation: fadeInLeft 3s ease-out forwards;
 }
 
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-170px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 2s ease-out forwards;
+}
 
 
 
