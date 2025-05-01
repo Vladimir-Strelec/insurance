@@ -52,11 +52,11 @@
 
     </div>
     <!-- Categories Preview -->
-    <section class="section categories" id="section1">
+    <section class="section categories">
         <h3>Основные категории</h3>
         <div class="container">
             {% for category in categories %}
-            <div class="card">
+            <div class="card" id="{{ forloop.counter0 }}">
                 <div class="card-inner">
 
                     <div class="card-front">

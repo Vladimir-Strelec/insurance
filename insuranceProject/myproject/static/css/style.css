@@ -40,9 +40,10 @@ body {
 
 /* === Navbar === */
 .navbar {
+  display: flex;
+  justify-content: space-between;
   background: #1e1e1e;
   color: white;
-
   position: sticky; /* Используем sticky вместо fixed */
   top: 0; /* Закрепляем в верхней части экрана */
   left: 0;
@@ -63,47 +64,55 @@ body {
 }
 
 .navbar-nav {
-    width: 50%;
+    width: 30%;
+    text-align: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .navbar-nav a {
-    margin-left: 25%;
     text-decoration: none;
     color: white;
-    border-radius: 3px;
+    border-radius: 1px;
     font-weight: bold;
+}
 
+.navbar-nav ul {
+    width: 200%;
+    background-color: #ffcc00;
 
 }
 
+.navbar-nav li {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
 .container-fluid {
+    width: 90%;
     display: flex;
-    flex-direction: rows;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 
 .container-fluid a {
     color: white;
     font-weight: bold;
-
-
 }
+
 .container-fluid a:active {
     background-color: var(--primary-color);
     transform: translateY(3px);
-
 }
 
 .navbar-links ul {
-    display: flex;
+
     list-style: none;
     gap: 25px;
     padding: 0;
     margin: 0;
-    justify-content: flex-start;
+
 }
 
 .navbar-links a,
@@ -146,14 +155,12 @@ body {
   padding: 0;
   margin: 0;
   gap: 20px;
-
-
 }
 
 
 .dropdown-menu li a {
     text-decoration: none;
-    width: 28vh;
+    width: 24vh;
     background-color: #ffcc00;
     color: black;
     margin-left: 3%;
@@ -275,12 +282,26 @@ body {
     .dropdown-menu {
         position: static;
 
-        padding-left: 10px;
+        padding-left: 0;
     }
 
     .dropdown-menu li a {
         margin-left: 2%;
         background-color: #ffcc00;
+
+    }
+    .navbar ul {
+        text-align: left;
+    }
+
+    .navbar-nav {
+        width: 50%;
+        text-align: left;
+
+    }
+
+    .dropdown-item {
+        text-align: left;
     }
 }
 

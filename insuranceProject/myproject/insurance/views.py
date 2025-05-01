@@ -21,7 +21,8 @@ class InsuranceAjaxView(View):
 
 def subcategory_detail(request, id):
     subcategory = get_object_or_404(InsuranceSubCategory, id=id)
-    return render(request, 'insurance/subcategory_detail.html', {'subcategory': subcategory})
+    categories = InsuranceMainCategory.objects.prefetch_related('subcategories').all()
+    return render(request, 'insurance/subcategory_detail.html', {'subcategory': subcategory, 'categories': categories,})
 
 
 def load_subcategories(request):

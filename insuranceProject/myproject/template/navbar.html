@@ -12,11 +12,14 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a aria-current="page" class="nav-links active" href="#">Home</a>
+                <li>
+                    <a aria-current="page" class="dropdown-item" href="#">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-links" href="#">Link</a>
+                <li>
+                    <a class="dropdown-item" href="#">Link</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">Another action</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a aria-expanded="false" class="nav-links dropdown-toggle" data-bs-toggle="dropdown" href="#"
@@ -27,26 +30,27 @@
                     <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
                         {% for category in categories %}
 
-                        <li><a class="dropdown-item" href="#section1">{{ category.name }}</a></li>
+                        <li><a class="dropdown-item" href="#{{ forloop.counter0 }}">{{ category.name }}</a></li>
+
 
                         {% endfor %}
 
                     </ul>
 
 
-                <li><a class="dropdown-item" href="#">Another action</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
 
-                <li class="nav-item">
+
                     <div class="navbar-contact">
-                        <a class="phone-icon" href="tel:+1234567890">📞</a>
+                        <a class="phone-icon" href="tel:+1234567890"></a>
                         <button class="burger" id="burger">&#9776;</button>
                     </div>
+
                 <li>
-                    <p href="#">+4915212464091</p></li>
-                </li>
+                    <p href="#">+4915212464091</p>
+
                 </li>
             </ul>
             <form class="d-flex">
