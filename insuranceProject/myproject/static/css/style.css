@@ -562,7 +562,7 @@ a.hero-button:hover {
 
 }
 
-.card-back a:hover {
+.card-back :hover {
   color: white;
   transform: translateY(2px);
 
@@ -577,7 +577,9 @@ a.hero-button:hover {
 }
 
 .container {
-    background-color: none;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
     display: flex;
     flex-wrap: wrap;
     flex: 1;
@@ -585,8 +587,6 @@ a.hero-button:hover {
     justify-content: center;
 
 }
-
-
 
 /* === Highlight Block === */
 .highlight-block {
@@ -814,8 +814,10 @@ select,
     padding: 30px 15px;
   }
 
-  .section .categories .container {
-
+  .section h2{
+    color: white;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
   }
 
 .label {
