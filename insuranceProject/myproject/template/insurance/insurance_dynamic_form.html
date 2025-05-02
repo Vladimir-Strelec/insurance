@@ -6,19 +6,18 @@
 
         <div class="form-wrapper" id="section2">
 
-            <h2>Подбор страховки</h2>
+            <h2 class="label">Подбор страховки</h2>
 
             <form id="lead-form">
                 <!-- Шаг 1 -->
                 <div class="form-step active" id="step-1">
                     <label for="main_category">Выберите категорию:</label>
                     <select id="main_category" class="input" required>
-    {% for category in categories %}
-        <option value="{{ category.id }}" {% if forloop.first %}selected{% endif %}>
-            {{ category.name }}
-        </option>
-    {% endfor %}
-</select>
+                        <option value="">{{ category_for_option }}</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
                     <button type="button" class="submit-btn next-btn">Далее</button>
                 </div>
 
