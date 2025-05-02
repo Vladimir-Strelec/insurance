@@ -23,18 +23,7 @@ class InsuranceSubCategory(models.Model):
         return f"{self.name}"
 
 
-class InsuranceProduct(models.Model):
-    """Конкретные страховые продукты"""
-    subcategory = models.ForeignKey(InsuranceSubCategory, on_delete=models.CASCADE, related_name='products')
-    name = models.CharField(max_length=150)
-    description = models.TextField(blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class InsuranceLead(models.Model):
-    product = models.ForeignKey(InsuranceProduct, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)

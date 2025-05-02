@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceProduct, InsuranceLead
+from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceLead
 
 
-admin.site.register(InsuranceProduct)
+
 admin.site.register(InsuranceLead)
 
 

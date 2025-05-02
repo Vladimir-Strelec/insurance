@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceProduct
+from .models import InsuranceMainCategory, InsuranceSubCategory
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.http import JsonResponse
 import json
-from .models import InsuranceLead, InsuranceProduct
+
 
 
 class InsuranceAjaxView(View):
@@ -15,6 +15,7 @@ class InsuranceAjaxView(View):
         return render(request, 'base.html',
                       {
                           'categories': categories,
+                          'category_for_option': categories[0],
 
                        })
 
@@ -25,16 +26,14 @@ def subcategory_detail(request, id):
     return render(request, 'insurance/subcategory_detail.html', {'subcategory': subcategory, 'main_category': categories[id], 'categories': categories,})
 
 
+# def load_subcategories(request):
+#     main_category_id = request.GET.get('main_category_id')
+#     subcategories = InsuranceSubCategory.objects.filter(main_category__id=main_category_id)
+#     return JsonResponse(list(subcategories.values('id', 'name')), safe=False)
 def load_subcategories(request):
     main_category_id = request.GET.get('main_category_id')
-    subcategories = InsuranceSubCategory.objects.filter(main_category_id=main_category_id)
+    subcategories = InsuranceSubCategory.objects.filter(main_category__in=[main_category_id])
     return JsonResponse(list(subcategories.values('id', 'name')), safe=False)
-
-
-def load_products(request):
-    subcategory_id = request.GET.get('subcategory_id')
-    products = InsuranceProduct.objects.filter(subcategory_id=subcategory_id)
-    return JsonResponse(list(products.values('id', 'name')), safe=False)
 
 
 @csrf_exempt

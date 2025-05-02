@@ -13,11 +13,12 @@
                 <div class="form-step active" id="step-1">
                     <label for="main_category">Выберите категорию:</label>
                     <select id="main_category" class="input" required>
-                        <option value="">— Выберите категорию —</option>
-                        {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
+    {% for category in categories %}
+        <option value="{{ category.id }}" {% if forloop.first %}selected{% endif %}>
+            {{ category.name }}
+        </option>
+    {% endfor %}
+</select>
                     <button type="button" class="submit-btn next-btn">Далее</button>
                 </div>
 
@@ -25,22 +26,14 @@
                 <div class="form-step" id="step-2">
                     <label for="subcategory">Выберите подкатегорию:</label>
                     <select id="subcategory" class="input" required>
-                        <option value="">— Подкатегории будут загружены —</option>
+                        <option value=""></option>
+
                     </select>
                     <button type="button" class="submit-btn next-btn">Далее</button>
                 </div>
 
                 <!-- Шаг 3 -->
                 <div class="form-step" id="step-3">
-                    <label for="product">Выберите продукт:</label>
-                    <select id="product" class="input" required>
-                        <option value="">— Продукты будут загружены —</option>
-                    </select>
-                    <button type="button" class="submit-btn next-btn">Далее</button>
-                </div>
-
-                <!-- Шаг 4 -->
-                <div class="form-step" id="step-4">
                     <label for="name">Ваше имя:</label>
                     <input type="text" id="name" class="input" required>
                     <label for="email">Email:</label>
@@ -55,4 +48,5 @@
         </div>
     </div>
 </div>
+
 
