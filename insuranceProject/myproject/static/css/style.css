@@ -18,6 +18,7 @@ html{
 
 }
 body {
+
     height: 100%;
     margin: 0;
     pointer-events: auto;
@@ -488,6 +489,74 @@ a.hero-button:hover {
 
 
 /* === Reusable Section === */
+.container-info {
+    margin-top: -1vh;
+    background-color: #ffcc00;
+    backdrop-filter: blur(4px);
+
+}
+
+    .container-info-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        .container-info-block-row {
+            margin: 1vh 0 1% 1%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+            .container-info-block img {
+                width: 30%;
+                height: 30%;
+                margin: 1vh 1% 0 1%;
+            }
+
+            .container-info-block-row p {
+
+                width: 40%;
+                height: 100%;
+                margin: 0;
+
+                font-family: 'Playfair Display', serif;
+                color: #34495e;
+
+        }
+        .container-info-block_text {
+            height: 100%;
+            width: 100%;
+            margin: 1% 0 1% 1%;
+            display: flex;
+            flex-direction: column;
+
+        }
+            .container-info-block_text h3 {
+
+            }
+            .container-info-block_text p {
+                width: 50%;
+                font-family: 'Playfair Display', serif;
+                color: #34495e;
+            }
+
+            .container-info-block_text ul {
+                background-color: red;
+                width: 40%;
+                align-self: center;
+
+            }
+
+                .container-info-block_text li {
+                    text-align: left;
+                }
+
+
+
+
+
 .section {
   position: relative;
   padding: 60px 20px;

@@ -30,9 +30,10 @@
                     <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
                         {% for category in categories %}
                         {% if request.resolver_match.url_name == 'insurance_dynamic' %}
-                            <li><a class="dropdown-item" href="#{{ forloop.counter0 }}">{{ category.name }}</a></li>
+                        <li><a class="dropdown-item" href="#{{ forloop.counter0 }}">{{ category.name }}</a></li>
                         {% else %}
-                            <li><a class="dropdown-item" href="{% url 'insurance_dynamic' %}#{{ forloop.counter0 }}">{{ category.name }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'insurance_dynamic' %}#{{ forloop.counter0 }}">{{
+                            category.name }}</a></li>
                         {% endif %}
                         {% endfor %}
 
@@ -44,13 +45,14 @@
                 </li>
 
 
-                    <div class="navbar-contact">
-                        <a class="phone-icon" href="tel:+1234567890"></a>
-                        <button class="burger" id="burger">&#9776;</button>
-                    </div>
+                <div class="navbar-contact">
+                    <a class="phone-icon" href="tel:+1234567890"></a>
+                    <button class="burger" id="burger">&#9776;</button>
+                </div>
 
                 <li>
-                    <p href="#">+4915212464091</p>
+                    <p href="#">Tel: 0911/4777500
+
 
                 </li>
             </ul>
