@@ -7,7 +7,6 @@ from django.http import JsonResponse
 import json
 
 
-
 class InsuranceAjaxView(View):
     def get(self, request):
         categories = InsuranceMainCategory.objects.prefetch_related('subcategories').all()

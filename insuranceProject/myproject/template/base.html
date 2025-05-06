@@ -14,19 +14,23 @@
 
 {% include "hero/hero.html" %}
 
-{% include "info-about-me/info-about-me.html" %}
+
 
 {% block content %}
-
+{% endblock %}
 
 <main class="main">
-    {% include "section-about.html" %}
-    {% endblock %}
+    {% if request.resolver_match.url_name == 'insurance_dynamic' %}
+        {% include "info-about-me/info-about-me.html" %}
+        {% include "section-about.html" %}
+    {% endif %}
+
+
+    <section class="section categories" id="section2">
+        {% include 'insurance/insurance_dynamic_form.html' %}
+    </section>
 </main>
 
-<section class="section categories" id="section2">
-    {% include 'insurance/insurance_dynamic_form.html' %}
-</section>
 <footer class="footer">
     <div class="container">
         <p>&copy; {{ year }} МойСайт. Все права защищены.</p>

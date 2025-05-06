@@ -14,7 +14,9 @@
     {% elif request.resolver_match.url_name == 'subcategory_detail'%}
         {% include 'hero/hero-details.html' %}
     {% endif %}
-
+    <div class="overlay-image">
+        <img alt="#" src="{% static 'images/owl-2569202_1920.png' %}" width="100%">
+    </div>
     <div class="wave">
         <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
             <path d="M0,192L60,202.7C120,213,240,235,360,229.3C480,224,600,192,720,181.3C840,171,960,181,1080,202.7C1200,224,1320,256,1380,272L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
@@ -24,8 +26,6 @@
 
         </svg>
     </div>
-    <div class="overlay-image">
-        <img alt="#" src="{% static 'images/owl-2569202_1920.png' %}" width="100%">
-    </div>
+
 
 </section>
