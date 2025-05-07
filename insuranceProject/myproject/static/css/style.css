@@ -76,7 +76,6 @@ body {
   width: 100%; /* Занимаем всю ширину экрана */
   z-index: 1000; /* Высокий приоритет для верхнего слоя */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Добавляем тень */
-
 }
 
 .navbar-logo .logo-circle {
@@ -164,7 +163,7 @@ body {
     color: white;
     background-color: var(--primary-color);
     animation: pulse 0.2s ease;
-
+    transform: scale(0.95);
 }
 
 
@@ -204,13 +203,15 @@ body {
 
 /* === Стиль для мобильных устройств === */
 /* === Mobile navbar styles === */
-@media (max-width: 768px) {
+@media (max-width: 990px) {
     .navbar {
         position: absolute;
+        height: 15%;
     }
     .navbar-toggler-icon {
         background-color: #ffcc00;
         border-radius: 3px;
+        height: 15%;
     }
     .navbar-toggler-icon:active {
         animation: pulse 0.2s ease;
@@ -367,11 +368,15 @@ body {
 }
 
 .hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   align-self: center;
   color: #fff;
-
-  max-width: 50%;
+  height: 70%;
+  width: 70%;
   animation: fadeInUp 2s ease-out forwards;
   z-index: 98;
 
@@ -399,7 +404,7 @@ body {
   border: none;
   border-radius: 8px;
   z-index: 101;
-  animation: fadeInUp 2s ease-out forwards;
+
   text-decoration: none;
   transition: all 0.2s ease; /* <--- добавляем плавность */
 }
@@ -408,7 +413,7 @@ body {
 .hero-button:active {
   color: white;
   background-color: var(--primary-color);
-  animation: pulse 0.2s ease;
+  animation: pulse 0.3s ease;
   transform: scale(0.95); /* <--- кнопка немного сжимается */
 }
 
@@ -523,52 +528,68 @@ a.hero-button:hover {
         display: flex;
         flex-direction: column;
         justify-content: center;
-
+        align-items: center;
+        height: auto;
     }
 
+
         .container-info-block-row {
-            margin: 1vh 0 1% 1%;
             display: flex;
-            flex-basis: content;
-            height: 100vh;
+            flex-wrap: wrap;
+            height: 100%;
+            gap: 2%;
+            margin: 1vh 0 1% 1%;
 
         }
 
-            .container-info-block img {
-                width: 30%;
+            .container-info-block-row img {
+                max-width: 30%;
                 height: 30%;
-                margin: 1vh 1% 0 1%;
+                background-color: red;
             }
 
             .container-info-block-row p {
-                display: flex;
-                flex-wrap: wrap;
-                width: 80%;
-                height: 100%;
-                margin: 0;
+                flex: 1 1 60%;
+                max-width: 60%;
 
                 font-family: 'Playfair Display', serif;
                 color: black;
 
+            }
+        @media (max-width: 768px) {
+            .container-info-block-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container-info-block-row img {
+                max-width: 80%;
+                margin: 0 auto;
+            }
+
+            .container-info-block-row p {
+                max-width: 90%;
+                text-align: center;
+            }
         }
+
+
         .container-info-block_text {
-            height: 100%;
-            width: 100%;
-            margin: 1% 0 1% 1%;
+            margin-left: 1%;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
             .container-info-block_text_row {
                 display: flex;
-                flex-wrap: wrap;
                 justify-content: space-between;
 
             }
                 .container-info-block_text_row img {
                     width: 20%;
-                    height: 20%;
+
 
                 }
 
@@ -618,12 +639,40 @@ a.hero-button:hover {
 
 /* === Card Flip Section === */
 .card {
-  background-color: transparent;
+  background-color: #ffcc00;
   position: relative;
   width: 40%;
   height: 320px;
   margin: 20px;
   perspective: 1000px;
+
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 70%;
+        height: 290px;
+    }
+}
+
+.about {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+    justify-content: space-around;
+    gap: 30px;
+
+}
+
+.container {
+    /*background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);*/
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 
 }
 
@@ -640,6 +689,7 @@ a.hero-button:hover {
   transform: rotateY(180deg);
 }
 
+
 .card-front, .card-back {
   position: absolute;
   width: 100%;
@@ -653,7 +703,6 @@ a.hero-button:hover {
   justify-content: center;
 }
 
-
 .card-front img {
   width: 60px;
   height: 60px;
@@ -661,7 +710,6 @@ a.hero-button:hover {
 
 
 }
-
 
 .card-back {
   transform: rotateY(180deg);
@@ -679,26 +727,6 @@ a.hero-button:hover {
 
 .card-back :hover {
   color: white;
-}
-
-.about {
-  display: flex;
-  flex-direction: column;
-  align-items: center
-  justify-content: space-around;
-  gap: 30px;
-}
-
-.container {
-    /*background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);*/
-    border-radius: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-
 }
 
 /* === Highlight Block === */
@@ -772,17 +800,33 @@ a.hero-button:hover {
 
 /* === Form === */
 .form-wrapper {
-  width: 45%;
-
+  width: 55%;
+  text-align: center;
   padding: 40px;
   background: #ffcc00;
   border-radius: 16px;
-
+  margin-top: -15%;
   transition: transform 0.3s ease;
 }
 
 .form-wrapper:hover {
   transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .form-wrapper {
+        width: 45%;
+        text-align: center;
+        padding: 40px;
+        background: #ffcc00;
+        border-radius: 16px;
+        margin-top: -15%;
+        transition: transform 0.3s ease;
+    }
+
+    .form-wrapper:hover {
+      transform: scale(1.05);
+    }
 }
 
 .form-wrapper h2, label {

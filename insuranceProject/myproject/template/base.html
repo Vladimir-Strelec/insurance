@@ -21,8 +21,9 @@
 
 <main class="main">
     {% if request.resolver_match.url_name == 'insurance_dynamic' %}
-        {% include "info-about-me/info-about-me.html" %}
-        {% include "section-about.html" %}
+    {% include "info-about-me/info-about-me.html" %}
+    {% include "section-about.html" %}
+
     {% endif %}
 
 
