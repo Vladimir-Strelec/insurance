@@ -6,7 +6,7 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
-
+    <script src="{% static 'js/script.js' %}"></script>
     <title>Title</title>
 </head>
 {% include "navbar.html" %}
@@ -21,9 +21,8 @@
 
 <main class="main">
     {% if request.resolver_match.url_name == 'insurance_dynamic' %}
-    {% include "info-about-me/info-about-me.html" %}
-    {% include "section-about.html" %}
-
+        {% include "info-about-me/info-about-me.html" %}
+        {% include "section-about.html" %}
     {% endif %}
 
 
@@ -52,80 +51,6 @@
       window.scrollTo(0, 0); // моментально прокрутит в начало
     };
 </script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const mainCategorySelect = document.getElementById('main_category');
-        const subcategorySelect = document.getElementById('subcategory');
-        console.log("Выбранная категория ID:", subcategorySelect);
-        const nextButtons = document.querySelectorAll('.next-btn');
-        const formSteps = document.querySelectorAll('.form-step');
-
-        let currentStep = 0;
-
-        // Функция для анимации переходов
-        function showStep(index) {
-            formSteps.forEach((step, idx) => {
-                step.style.transition = 'opacity 0.4s ease';
-                if (idx === index) {
-                    step.style.display = 'block';
-                    setTimeout(() => step.style.opacity = '1', 10);
-                } else {
-                    step.style.opacity = '0';
-                    setTimeout(() => step.style.display = 'none', 400);
-                }
-            });
-        }
-
-        // Начальный шаг
-        showStep(currentStep);
-
-        // Переход по шагам
-        nextButtons.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                if (currentStep < formSteps.length - 1) {
-                    currentStep++;
-                    showStep(currentStep);
-                }
-            });
-        });
-
-        // Загрузка подкатегорий при выборе основной категории
-        mainCategorySelect.addEventListener('change', function () {
-            const selectedId = this.value;
-            if (selectedId) {
-                fetch(`/load-subcategories/?main_category_id=${selectedId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        subcategorySelect.innerHTML = '';
-
-
-                if (data.length > 0) {
-                    data.forEach((sub, index) => {
-                        const option = document.createElement('option');
-                        option.value = sub.id;
-                        option.textContent = sub.name;
-                        if (index === 0) option.selected = true; // первая — выбранная
-                        subcategorySelect.appendChild(option);
-                    });
-                } else {
-                    const option = document.createElement('option');
-                    option.textContent = 'Нет подкатегорий';
-                    option.disabled = true;
-                    subcategorySelect.appendChild(option);
-                }
-
-                    })
-                    .catch(err => {
-                        console.error('Ошибка при загрузке подкатегорий:', err);
-                    });
-            } else {
-                subcategorySelect.innerHTML = '<option value="">— Сначала выберите категорию —</option>';
-            }
-        });
-    });
-</script>
-
 
 </body>
 

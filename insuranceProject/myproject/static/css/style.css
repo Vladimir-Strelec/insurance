@@ -49,7 +49,7 @@ body {
 
 @keyframes fadeInLeft {
   0% {
-    opacity: 0;
+    opacity: 1;
     transform: translateX(-170px);
   }
   100% {
@@ -485,28 +485,36 @@ a.hero-button:hover {
   pointer-events: none;
 }
 
+.money {
+    height: 100%;
+
+}
+
 .leaf {
   position: absolute;
-  font-size: 2rem;
+  top: -50%;
+  font-size: 12rem;
   opacity: 0.8;
   animation: fall linear infinite;
   pointer-events: none;
 }
 
-.leaf1 { left: 10%; animation-duration: 12s; animation-delay: 0s; }
-.leaf2 { left: 50%; animation-duration: 15s; animation-delay: 2s; }
-.leaf3 { left: 80%; animation-duration: 18s; animation-delay: 1s; }
+.leaf1 { left: 10%; animation-duration: 27s; animation-delay: 0s; }
+.leaf2 { left: 50%; animation-duration: 65s; animation-delay: 1s; }
+.leaf3 { left: 80%; animation-duration: 33s; animation-delay: 0.1s; }
 
 @keyframes fall {
   0% {
-    top: 10%;
-    transform: rotate(0deg);
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
   }
   100% {
-    top: 110%;
-    transform: rotate(360deg);
+    transform: translateY(120vh) rotate(360deg);
+    opacity: 0;
   }
 }
+
+
 
 
 
@@ -805,7 +813,7 @@ a.hero-button:hover {
   padding: 40px;
   background: #ffcc00;
   border-radius: 16px;
-  margin-top: -15%;
+
   transition: transform 0.3s ease;
 }
 

@@ -1,14 +1,12 @@
 from django.urls import path
-from .views import InsuranceAjaxView, load_subcategories, submit_lead_view, subcategory_detail
+from .views import InsuranceAjaxView, get_subcategories, submit_lead_view, subcategory_detail
 
 urlpatterns = [
     path('insurance-dynamic/', InsuranceAjaxView.as_view(), name='insurance_dynamic'),
     path('submit-lead/', submit_lead_view, name='submit_lead'),
-    path('load-subcategories/', load_subcategories, name='load_subcategories'),
-    path('subcategory/<int:id>/', subcategory_detail, name='subcategory_detail'),
-
-
-
+    path('get-subcategories/<int:category_id>/', get_subcategories, name='get_subcategories'),
+    path('subcategory/<int:main_id>/<int:sub_id>/', subcategory_detail, name='subcategory_detail'),
 
 ]
+
 
