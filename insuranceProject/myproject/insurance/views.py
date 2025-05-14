@@ -19,7 +19,7 @@ class InsuranceAjaxView(View):
                       {
                           'main_categories': main_categories,
                           'sub_categories': sub_categories,
-                          'category_for_option': main_categories[0],
+                          'category_for_option': main_categories[0] if main_categories else None
 
                       })
 

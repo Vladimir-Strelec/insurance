@@ -1,50 +1,53 @@
-
 {% load static %}
 
-    <div class="parallax-container">
-        <div class="overlay">
-            <div class="form-wrapper" id="section2">
-                <h2 class="label">Подбор страховки</h2>
-                <form id="lead-form">
-                    <!-- Шаг 1 -->
-                    <div class="form-step active" id="step-1">
-                        <label for="main_category">Выберите категорию:</label>
-                        <select id="main_category" class="input" required>
-                            <option value="">{{ main_categories.0 }}</option>
-                            {% for main in main_categories %}
-                            <option value="{{ main.id }}">{{main.name}}</option>
+<div class="parallax-container">
+    <div class="overlay">
+        <div class="form-wrapper" id="section2">
+            <h2 class="label">Подбор страховки</h2>
+            <form id="lead-form">
+                <!-- Шаг 1 -->
+                <div class="form-step active" id="step-1">
+                    <label for="main_category">Выберите категорию:</label>
+                    <select class="input" id="main_category" required>
+                        {% if main_categories %}
+                        <option value="{{ main_categories.0.id }}">{{ main_categories.0.name }}</option>
+                        {% else %}
+                        <option disabled selected>Нет доступных категорий</option>
+                        {% endif %}
+                        {% for main in main_categories %}
+                        <option value="{{ main.id }}">{{main.name}}</option>
 
-                            {% endfor %}
-                        </select>
-                        <button type="button" class="submit-btn next-btn">Далее</button>
-                    </div>
+                        {% endfor %}
+                    </select>
+                    <button class="submit-btn next-btn" type="button">Далее</button>
+                </div>
 
-                    <!-- Шаг 2 -->
-                    <div class="form-step" id="step-2">
-                        <label for="subcategory">Выберите подкатегорию:</label>
-                        <select id="subcategory" class="input" required>
-                            <option value="">Сначала выберите категорию</option>
-                        </select>
-                        <button type="button" class="submit-btn next-btn">Далее</button>
-                    </div>
+                <!-- Шаг 2 -->
+                <div class="form-step" id="step-2">
+                    <label for="subcategory">Выберите подкатегорию:</label>
+                    <select class="input" id="subcategory" required>
+                        <option value="">Сначала выберите категорию</option>
+                    </select>
+                    <button class="submit-btn next-btn" type="button">Далее</button>
+                </div>
 
-                    <!-- Шаг 3 -->
-                    <div class="form-step" id="step-3">
-                        {% csrf_token %}
-                        <label for="name">Ваше имя:</label>
-                        <input type="text" id="name" class="input" required>
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" class="input" required>
-                        <label for="phone">Телефон:</label>
-                        <input type="tel" id="phone" class="input" required>
-                        <button type="submit" class="submit-btn">Отправить</button>
-                    </div>
+                <!-- Шаг 3 -->
+                <div class="form-step" id="step-3">
+                    {% csrf_token %}
+                    <label for="name">Ваше имя:</label>
+                    <input class="input" id="name" required type="text">
+                    <label for="email">Email:</label>
+                    <input class="input" id="email" required type="email">
+                    <label for="phone">Телефон:</label>
+                    <input class="input" id="phone" required type="tel">
+                    <button class="submit-btn" type="submit">Отправить</button>
+                </div>
 
-                    <div id="response-message" class="message"></div>
-                </form>
-            </div>
+                <div class="message" id="response-message"></div>
+            </form>
         </div>
     </div>
+</div>
 
 <script src="{% static 'js/script.js' %}"></script>
 
