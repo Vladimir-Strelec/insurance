@@ -1,6 +1,6 @@
 services:
   - type: web
     name: myproject
-    env: python
+    env: Python 3.12.3
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn myproject.wsgi:application --bind 0.0.0.0:$PORT
