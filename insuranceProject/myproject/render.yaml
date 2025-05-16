@@ -1,6 +1,9 @@
 services:
   - type: web
-    name: myproject
-    env: Python 3.12.3
+    name: my-django-app
+    env: python 3.12.3
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn myproject.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: gunicorn myproject.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: myproject.settings
