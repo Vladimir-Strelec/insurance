@@ -6,11 +6,14 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-very-secret-key-for-local-dev')
-
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'insurance-1-gt02.onrender.com']
+if DEBUG:
+    SECRET_KEY = os.getenv('django-insecure-very-secret-key-for-local-dev')
+    ALLOWED_HOSTS = ['*']
+elif DEBUG is False:
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    ALLOWED_HOSTS = ['insurance-1-gt02.onrender.com']
 
 
 INSTALLED_APPS = [
