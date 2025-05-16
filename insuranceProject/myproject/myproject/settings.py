@@ -10,7 +10,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://insurance-srok.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://insurance-1-gt02.onrender.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
