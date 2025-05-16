@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
@@ -11,6 +12,7 @@ DEBUG = True
 if DEBUG:
     SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-very-secret-key-for-local-dev')
     ALLOWED_HOSTS = ['*']
+
 elif DEBUG is False:
     SECRET_KEY = os.getenv('SECRET_KEY')
     ALLOWED_HOSTS = ['insurance-1-gt02.onrender.com']
@@ -62,17 +64,25 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 #}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME'),
-        'USER': os.getenv('USER'),
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
-        'PORT': '5432',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('NAME'),
+            'USER': os.getenv('USER'),
+            'PASSWORD': os.getenv('PASSWORD'),
+            'HOST': os.getenv('HOST'),
+            'PORT': '5432',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+        )
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

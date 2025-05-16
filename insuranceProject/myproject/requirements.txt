@@ -12,3 +12,4 @@ sqlparse==0.5.3
 twilio==9.6.0
 python-dotenv==1.1.0
 psycopg2-binary==2.9.10
+dj-database-url
