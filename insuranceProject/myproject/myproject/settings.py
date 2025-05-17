@@ -87,7 +87,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'https://your-static-site.onrender.com/static/'
+STATIC_URL = 'https://insurance-1-gt02.onrender.com/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
