@@ -8,7 +8,7 @@ print("DATABASE_URL:", os.getenv("DATABASE_URL"))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-very-secret-key-for-local-dev')
