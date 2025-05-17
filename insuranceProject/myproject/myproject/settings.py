@@ -2,21 +2,18 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
+
 load_dotenv()
 print("DATABASE_URL:", os.getenv("DATABASE_URL"))
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-if DEBUG:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-very-secret-key-for-local-dev')
-    ALLOWED_HOSTS = ['*']
+SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-very-secret-key-for-local-dev')
 
-elif DEBUG is False:
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    ALLOWED_HOSTS = ['insurance-1-gt02.onrender.com']
+ALLOWED_HOSTS = ["*"] if DEBUG else ["insurance-1-gt02.onrender.com"]
 
 
 INSTALLED_APPS = [
@@ -65,28 +62,13 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 #}
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'myproject_db_ix7j',
-            'USER': 'vladimir',
-            'PASSWORD': 'IMDch5aWYj80xkLYYLyvsHdmUg8b5eOC',
-            'HOST': 'dpg-d0jopo56ubrc73am9370-a.frankfurt-postgres.render.com',
-            'PORT': '5432',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'myproject_db_ix7j',
-            'USER': 'vladimir',
-            'PASSWORD': 'IMDch5aWYj80xkLYYLyvsHdmUg8b5eOC',
-            'HOST': 'dpg-d0jopo56ubrc73am9370-a',
-            'PORT': '5432',
-        }
-    }
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=not DEBUG  # True на проде, False локально
+    )
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
