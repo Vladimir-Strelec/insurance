@@ -103,11 +103,7 @@ STATICFILES_DIRS = [
 ]
 
 # MEDIA_URL = 'https://media-48nf.onrender.com/'
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
-    'API_KEY': os.getenv('API_KEY'),
-    'API_SECRET': os.getenv('API_SECRET'),
-}
+
 try:
     CLOUDINARY_URL = config('CLOUDINARY_URL')
 except UndefinedValueError:
@@ -115,9 +111,8 @@ except UndefinedValueError:
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
