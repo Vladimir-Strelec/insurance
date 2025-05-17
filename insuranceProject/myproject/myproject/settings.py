@@ -2,6 +2,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
+from decouple import config
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import cloudinary_storage
 
 load_dotenv()
 
@@ -24,6 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'insurance',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -96,8 +103,18 @@ STATICFILES_DIRS = [
 ]
 
 # MEDIA_URL = 'https://media-48nf.onrender.com/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
+    'API_KEY': os.getenv('API_KEY'),
+    'API_SECRET': os.getenv('API_SECRET'),
+    'CLOUDINARY_URL': config('CLOUDINARY_URL'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
