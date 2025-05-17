@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import dj_database_url
 
 load_dotenv()
-print("DATABASE_URL:", os.getenv("DATABASE_URL"))
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
