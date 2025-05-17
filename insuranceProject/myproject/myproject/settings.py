@@ -2,8 +2,9 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
-
 load_dotenv()
+print("DATABASE_URL:", os.getenv("DATABASE_URL"))
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -68,19 +69,23 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('NAME'),
-            'USER': os.getenv('USER'),
-            'PASSWORD': os.getenv('PASSWORD'),
-            'HOST': os.getenv('HOST'),
+            'NAME': 'myproject_db_ix7j',
+            'USER': 'vladimir',
+            'PASSWORD': 'IMDch5aWYj80xkLYYLyvsHdmUg8b5eOC',
+            'HOST': 'dpg-d0jopo56ubrc73am9370-a.frankfurt-postgres.render.com',
             'PORT': '5432',
         }
     }
 else:
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'myproject_db_ix7j',
+            'USER': 'vladimir',
+            'PASSWORD': 'IMDch5aWYj80xkLYYLyvsHdmUg8b5eOC',
+            'HOST': 'dpg-d0jopo56ubrc73am9370-a',
+            'PORT': '5432',
+        }
     }
 
 
