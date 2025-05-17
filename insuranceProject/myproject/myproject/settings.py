@@ -63,7 +63,7 @@ DATABASES = {
         ssl_require=not DEBUG  # True на проде, False локально
     )
 }
-
+#
 
 AUTH_PASSWORD_VALIDATORS = [
     {
