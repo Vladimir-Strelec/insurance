@@ -95,7 +95,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # твоя папка со статикой
 ]
 
-MEDIA_URL = 'https://media-48nf.onrender.com/'
+# MEDIA_URL = 'https://media-48nf.onrender.com/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -109,5 +110,3 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',            # НУЖНО добавить
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-DEBUG = False
