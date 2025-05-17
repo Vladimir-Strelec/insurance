@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-very-secret-key-for-local-
 
 ALLOWED_HOSTS = ["*"] if DEBUG else ["insurance-1-gt02.onrender.com"]
 
-
+#
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
