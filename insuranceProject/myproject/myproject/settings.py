@@ -125,4 +125,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',         # НУЖНО добавить
     'django.contrib.messages.middleware.MessageMiddleware',            # НУЖНО добавить
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+
+WHITENOISE_AUTOREFRESH = True
