@@ -95,7 +95,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # твоя папка со статикой
 ]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://media-48nf.onrender.com/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
