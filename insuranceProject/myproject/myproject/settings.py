@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
-from decouple import config
+from decouple import config, UndefinedValueError
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -107,8 +107,11 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUD_NAME'),
     'API_KEY': os.getenv('API_KEY'),
     'API_SECRET': os.getenv('API_SECRET'),
-    'CLOUDINARY_URL': config('CLOUDINARY_URL'),
 }
+try:
+    CLOUDINARY_URL = config('CLOUDINARY_URL')
+except UndefinedValueError:
+    CLOUDINARY_URL = 'cloudinary://dummy:dummy@dummy'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
