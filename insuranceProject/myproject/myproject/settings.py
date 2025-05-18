@@ -102,28 +102,23 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # твоя папка со статикой
 ]
 
-# MEDIA_URL = 'https://media-48nf.onrender.com/'
-
-try:
-    CLOUDINARY_URL = config('CLOUDINARY_URL')
-except UndefinedValueError:
-    CLOUDINARY_URL = 'cloudinary://dummy:dummy@dummy'
-
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
+    'API_KEY': os.getenv('API_KEY'),
+    'API_SECRET': os.getenv('API_SECRET'),
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',           # НУЖНО добавить
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',         # НУЖНО добавить
-    'django.contrib.messages.middleware.MessageMiddleware',            # НУЖНО добавить
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
