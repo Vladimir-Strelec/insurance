@@ -11,7 +11,7 @@
 
                     <div class="card-front">
                         {% if main.image %}
-                        <img alt="{{ main.name }}" src="{{ main.image.url }}">
+                        <img alt="{{ main.name }}" src="{{ main.image.url }}" loading="lazy">
                         {% else %}
                         <img alt="Нет изображения" src="{% static 'images/placeholder.jpg' %}">
                         {% endif %}
