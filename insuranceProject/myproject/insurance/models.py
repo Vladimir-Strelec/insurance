@@ -22,7 +22,12 @@ class InsuranceSubCategory(models.Model):
     main_category = models.ManyToManyField(InsuranceMainCategory, related_name='subcategories')
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='subcategory_images/', null=True, blank=True)
+    image = models.ImageField(
+        storage=MediaCloudinaryStorage(),
+        upload_to='category_images',  # Cloudinary folder
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"{self.name}"

@@ -35,7 +35,7 @@ body {
     display: flex;
     flex: 1;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: url(0, 0, 0, 0.4);
     backdrop-filter: blur(4px);
 }
 
