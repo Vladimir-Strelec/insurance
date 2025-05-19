@@ -10,6 +10,11 @@ import cloudinary_storage
 
 load_dotenv()
 
+cloudinary.config(
+    cloud_name=os.getenv("CLOUD_NAME"),
+    api_key=os.getenv("API_KEY"),
+    api_secret=os.getenv("API_SECRET")
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -104,11 +109,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
-    'API_KEY': os.getenv('API_KEY'),
-    'API_SECRET': os.getenv('API_SECRET'),
-}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

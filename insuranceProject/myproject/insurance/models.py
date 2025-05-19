@@ -1,12 +1,17 @@
 from django.db import models
 
-from django.db import models
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
 class InsuranceMainCategory(models.Model):
     """Основные категории страхования"""
     name = models.CharField(max_length=100, unique=True)
-    image = models.ImageField(upload_to='category_images/', null=True, blank=True)
+    image = models.ImageField(
+        storage=MediaCloudinaryStorage(),
+        upload_to='category_images',  # Cloudinary folder
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.name
