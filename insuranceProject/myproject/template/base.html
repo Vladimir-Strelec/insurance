@@ -15,20 +15,18 @@
 {% include "hero/hero.html" %}
 
 
-
 {% block content %}
 {% endblock %}
 
 <main class="main">
     {% if request.resolver_match.url_name == 'insurance_dynamic' %}
-        {% include "info-about-me/info-about-me.html" %}
-        {% include "section-about.html" %}
-    {% endif %}
-
-
+    {% include "info-about-me/info-about-me.html" %}
+    {% include "section-about.html" %}
     <section class="section categories" id="section2">
         {% include 'insurance/insurance_dynamic_form.html' %}
     </section>
+    {% endif %}
+
 </main>
 
 <footer class="footer">

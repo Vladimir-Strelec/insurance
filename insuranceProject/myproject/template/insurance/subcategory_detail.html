@@ -13,6 +13,9 @@
 
         </div>
         <div class="highlight-text" id="1">
+            {% if message %}
+            <p> Spasibo za vashu zayavku mi s vami svyajemsya v korotkie sroki! </p>
+            {% endif %}
             <h2>{{ subcategory.name }}</h2>
             <p>
                 {{subcategory.description}}
@@ -20,5 +23,6 @@
             <a href="#section2" class="cta-btn">Отправить заявку</a>
         </div>
     </div>
+    {% include "insurance/insurance_dynamic_form.html" %}
 </section>
 {% endblock %}
