@@ -1,14 +1,11 @@
 {% load static %}
-
 <section class="hero">
     <div class="money">
     <img class="leaf leaf1" src="{% static 'images/pngimg.com - money_PNG3521.png' %}" width="20%">
     <img class="leaf leaf2" src="{% static 'images/pngimg.com - money_PNG3521.png' %}" width="20%"/>
     <img class="leaf leaf3" src="{% static 'images/pngimg.com - money_PNG3521.png' %}" width="20%"/>
     </div>
-
     <div class="hero-overlay" id="#"></div>
-
     {% if request.resolver_match.url_name == 'insurance_dynamic' %}
         {% include 'hero/hero-base.html' %}
     {% elif request.resolver_match.url_name == 'subcategory_detail'%}
@@ -23,9 +20,6 @@
                   fill="#ffcc00"
                   fill-opacity="1">
             </path>
-
         </svg>
     </div>
-
-
 </section>

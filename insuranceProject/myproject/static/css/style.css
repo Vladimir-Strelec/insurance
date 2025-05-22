@@ -250,7 +250,7 @@ body {
 
     .hero {
         position: relative;
-
+        height: 69vh;
         z-index: 0; /* ниже чем .navbar-links */
     }
 }
@@ -346,7 +346,7 @@ body {
   background: url('../images/ben-arthur-Q9Ylf-AAD04-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
-  height: 69vh;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -354,8 +354,6 @@ body {
   overflow: hidden;
   z-index: 0;
 }
-
-
 
 
 .hero-overlay {
