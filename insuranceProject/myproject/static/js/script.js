@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Загрузка подкатегорий при выборе категории (обновлено)
+    // Загрузка подкатегорий при выборе категории
     const mainCategorySelect = document.getElementById("main_category");
     const subcategorySelect = document.getElementById("subcategory");
 
@@ -41,19 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Выбрана категория ID:", categoryId);
         if (!categoryId) return;
 
-        // Полностью очищаем select
-        subcategorySelect.innerHTML = "";
-
-        // Добавляем опцию по умолчанию
-        const defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.textContent = "Выберите подкатегорию";
-        subcategorySelect.appendChild(defaultOption);
-
-        // Получаем подкатегории с сервера
         fetch(`/get-subcategories/${categoryId}/`)
             .then(response => response.json())
             .then(data => {
+                subcategorySelect.innerHTML = '<option value="">Выберите подкатегорию</option>';
                 data.subcategories.forEach(sub => {
                     const option = document.createElement("option");
                     option.value = sub.id;
@@ -108,11 +99,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return true;
     }
+
+    // Получение CSRF-токена
+    function getCSRFToken() {
+        let cookieValue = null;
+        const name = "csrftoken";
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split("; ");
+            for (let cookie of cookies) {
+                if (cookie.startsWith(name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.split("=")[1]);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 });
 
-document.addEventListener('livewire:navigated', () => {
-  const dropdownElement = document.querySelector('#dropdown-id');
-  if (dropdownElement) {
-    new bootstrap.Dropdown(dropdownElement);
-  }
-}

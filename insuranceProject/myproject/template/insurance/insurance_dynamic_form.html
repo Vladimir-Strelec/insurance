@@ -15,7 +15,7 @@
                         <option disabled selected>Нет доступных категорий</option>
                         {% endif %}
                         {% for main in main_categories %}
-                        <option value="">{{main.name}}</option>
+                        <option value="{{ main.id }}">{{main.name}}</option>
 
                         {% endfor %}
                     </select>
