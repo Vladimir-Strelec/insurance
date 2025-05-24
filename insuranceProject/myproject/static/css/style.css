@@ -123,6 +123,7 @@ body {
 
 .container-fluid {
     width: 90%;
+    height: 5dvh;
     display: flex;
     justify-content: space-between;
 }
@@ -342,7 +343,7 @@ body {
   background: url('../images/ben-arthur-Q9Ylf-AAD04-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
-  height: 97dvh;
+  height: 93dvh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -371,7 +372,7 @@ body {
 .hero-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   align-self: center;
@@ -453,7 +454,7 @@ a.hero-button:hover {
 
 @media (width: 768px) {
     .hero {
-        height: 70vh;
+        height: 65vh;
 
     }
     .hero-content {
