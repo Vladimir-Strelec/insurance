@@ -117,3 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+document.addEventListener('livewire:navigated', () => {
+  const dropdownElement = document.querySelector('#dropdown-id');
+  if (dropdownElement) {
+    new bootstrap.Dropdown(dropdownElement);
+  }
+});
