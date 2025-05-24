@@ -81,3 +81,6 @@ def send_whatsapp_message(name, phone, main_category, subcategory):
         to=to_whatsapp_number
     )
     return message.sid
+
+def get_policy(requets):
+    return render(requets, 'policy.html', {})
