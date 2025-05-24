@@ -209,6 +209,15 @@ body {
     color: black;
     }
 
+.navbar-toggler-icon{
+    display: inline-block;
+    width: 3.5em;
+    height: 3.5em;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
 /* === Стиль для мобильных устройств === */
 /* === Mobile navbar styles === */
 @media (max-width: 990px) {
