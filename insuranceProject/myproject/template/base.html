@@ -10,13 +10,14 @@
     <title>Title</title>
 </head>
 {% include "navbar.html" %}
-<body>
 <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background: #222; color: #fff; padding: 1rem; z-index: 9999; display: none;">
   <div style="max-width: 960px; margin: auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-    <p style="margin: 0;">Мы используем cookies, чтобы улучшить работу сайта. <a href="{% url 'policy' %}" style="color: #ffcc00;">Политика конфиденциальности</a>.</p>
-    <button onclick="acceptCookies()" style="background: #ffcc00; border: none; padding: 0.5rem 1rem; cursor: pointer;">Принять</button>
+    <p style="margin: 0;">Wir verwenden Cookies, um die Nutzung der Website zu verbessern. <a href="{% url 'policy' %}" style="color: #ffcc00;">Datenschutzerklärung</a>.</p>
+    <button onclick="acceptCookies()" style="background: #ffcc00; border: none; padding: 0.5rem 1rem; cursor: pointer;">Akzeptieren</button>
   </div>
 </div>
+<body>
+
 
 {% include "hero/hero.html" %}
 
