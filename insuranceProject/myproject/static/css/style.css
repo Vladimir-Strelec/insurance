@@ -91,7 +91,7 @@ body {
     font-weight: bold;
     padding: 10px 20px;
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: 2.2rem;
 
 }
 
@@ -156,7 +156,7 @@ body {
     text-decoration: none;
     background-color: #ffcc00;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), 0px 0px 15px rgba(0, 0, 0, 0.15);
-
+    font-size: xx-large;
     border-radius: 9px;
     font-weight: bold;
     padding: 8px 12px;
@@ -219,7 +219,8 @@ body {
     .navbar-toggler-icon {
         background-color: #ffcc00;
         border-radius: 3px;
-        height: 15%;
+        width: 4.5em;
+        height: 4em;
     }
     .navbar-toggler-icon:active {
         animation: pulse 0.2s ease;
@@ -334,6 +335,7 @@ body {
 
     .dropdown-item {
         text-align: left;
+        font-size: xx-large;
     }
 }
 
