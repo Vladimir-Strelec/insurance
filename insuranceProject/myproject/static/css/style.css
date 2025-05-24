@@ -248,11 +248,7 @@ body {
         animation: pulse 0.2s ease;
     }
 
-    .hero {
-        position: relative;
-        height: 70vh;
-        z-index: 0; /* ниже чем .navbar-links */
-    }
+
 }
 
 
@@ -346,7 +342,7 @@ body {
   background: url('../images/ben-arthur-Q9Ylf-AAD04-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
-  height: 97vh;
+  height: 97dvh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -456,6 +452,8 @@ a.hero-button:hover {
 }
 
 @media (width: 768px) {
+    .hero {
+        height: 70vh;
 
     }
     .hero-content {
