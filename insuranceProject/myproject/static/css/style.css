@@ -955,10 +955,6 @@ select,
   }
 }
 
-@media (max-width: 990px) {
-    h1, h2, p, a, li {
-        font-size: xx-large;
-    }
-}
+
 
 
