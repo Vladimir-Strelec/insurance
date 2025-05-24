@@ -214,13 +214,12 @@ body {
 @media (max-width: 990px) {
     .navbar {
         position: absolute;
-        height: 15%;
     }
     .navbar-toggler-icon {
         background-color: #ffcc00;
         border-radius: 3px;
-        width: 4.5em;
-        height: 4em;
+        width: 3.5em;
+        height: 3.5em;
     }
     .navbar-toggler-icon:active {
         animation: pulse 0.2s ease;
