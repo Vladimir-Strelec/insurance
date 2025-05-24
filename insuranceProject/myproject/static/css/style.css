@@ -27,17 +27,6 @@ body {
     inset: 0;
 }
 
-@media(max-width: 990px) {
-    body {
-        height: 100%;
-        margin: 0;
-        pointer-events: auto;
-        background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
-        background-size: cover;
-        inset: 0;
-    }
-}
-
 .main {
     display: flex;
     flex: 1;
@@ -54,16 +43,7 @@ body {
   animation: fadeInLeft 4s ease-out forwards;
 }
 
-@keyframes fadeInLeft {
-  0% {
-    opacity: 1;
-    transform: translateX(-170px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+
 
 .animate-fade-in-left {
   animation: fadeInLeft 2s ease-out forwards;
@@ -156,7 +136,6 @@ body {
     text-decoration: none;
     background-color: #ffcc00;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), 0px 0px 15px rgba(0, 0, 0, 0.15);
-    font-size: xx-large;
     border-radius: 9px;
     font-weight: bold;
     padding: 8px 12px;
@@ -209,55 +188,6 @@ body {
     color: black;
     }
 
-/* === Стиль для мобильных устройств === */
-/* === Mobile navbar styles === */
-@media (max-width: 990px) {
-    .navbar {
-        position: absolute;
-        height: 15%;
-    }
-    .navbar-toggler-icon {
-        background-color: #ffcc00;
-        border-radius: 3px;
-        width: 4.5em;
-        height: 4em;
-    }
-    .navbar-toggler-icon:active {
-        animation: pulse 0.2s ease;
-        transform: scale(0.95);
-    }
-
-    .navbar-links {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: white;
-        display: none;
-        flex-direction: rows;
-        padding: 20px;
-        z-index: 1001;
-    }
-
-    .navbar-links.open {
-        display: flex;
-        color: white;
-    }
-
-    .burger {
-        display: block;
-        color: white;
-        animation: pulse 0.2s ease;
-    }
-
-
-}
-
-
-
-
-
-
 
 .navbar-contact {
     display: flex;
@@ -288,56 +218,6 @@ body {
 }
 
 /* === Mobile === */
-@media (max-width: 768px) {
-    .navbar-links {
-        text-decoration: none;
-        position: absolute;
-        display: none; /* Скрыто по умолчанию на мобильных устройствах */
-        flex-direction: column;
-        background-color: #ffcc00;
-        width: 100%;
-        padding: 20px;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 1000;
-    }
-
-    .navbar-links.open {
-        display: flex; /* Показывается, когда добавлен класс .open */
-    }
-
-    .navbar-links ul {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .dropdown-menu {
-        position: static;
-
-        padding-left: 0;
-    }
-
-    .dropdown-menu li a {
-        margin-left: 2%;
-        background-color: #ffcc00;
-
-    }
-    .navbar ul {
-        text-align: left;
-    }
-
-    .navbar-nav {
-        width: 50%;
-        text-align: left;
-
-    }
-
-    .dropdown-item {
-        text-align: left;
-        font-size: xx-large;
-    }
-}
 
 
 /* === Hero Section === */
@@ -453,19 +333,6 @@ a.hero-button:hover {
   z-index: 100;
 
 }
-
-@media (width: 768px) {
-    .hero {
-        height: 65vh;
-
-    }
-    .hero-content {
-        width: 60%;
-        margin-bottom: 60%;
-    }
-}
-
-
 
 /* Простая анимация */
 @keyframes fadeInUp {
@@ -943,6 +810,117 @@ select,
   }
 }
 
+@keyframes fadeInLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(-170px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
+@media (max-width: 990px) {
+  body {
+    height: 100%;
+    margin: 0;
+    pointer-events: auto;
+    background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
+    background-size: cover;
+    inset: 0;
+  }
 
+  .navbar {
+    position: absolute;
+    height: 15%;
+  }
+
+  .navbar-toggler-icon {
+    background-color: #ffcc00;
+    border-radius: 3px;
+    width: 4.5em;
+    height: 4em;
+  }
+
+  .navbar-toggler-icon:active {
+    animation: pulse 0.2s ease;
+    transform: scale(0.95);
+  }
+
+  .burger {
+    display: block;
+    color: white;
+    animation: pulse 0.2s ease;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    display: none;
+    flex-direction: row;
+    padding: 20px;
+    z-index: 1001;
+  }
+
+  .navbar-links.open {
+    display: flex;
+    color: white;
+  }
+
+  .hero {
+    height: 65vh;
+  }
+
+  .hero-content {
+    width: 60%;
+    margin-bottom: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-links {
+    flex-direction: column;
+    background-color: #ffcc00;
+    padding: 20px;
+    z-index: 1000;
+  }
+
+  .navbar-links ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .dropdown-menu {
+    position: static;
+    font-size: xx-large;
+    padding-left: 0;
+  }
+
+  .dropdown-menu li a {
+    margin-left: 2%;
+    background-color: #ffcc00;
+  }
+
+  .navbar ul,
+  .navbar-nav {
+    text-align: left;
+  }
+
+  .navbar-nav {
+    width: 50%;
+  }
+
+  .dropdown-item {
+    text-align: left;
+    font-size: xx-large;
+  }
+}
 
