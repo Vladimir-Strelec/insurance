@@ -81,8 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
 //            document.activeElement.blur();
             responseMsg.textContent = data.message || "Formular erfolgreich gesendet!";
             setTimeout(() => {
-                location.reload();
-            }, 1000);
+                window.scrollTo(0, 0);
+                document.body.style.height = '100dvh';
+                window.location.href = window.location.href;
+            }, 500);
             form.reset();
             steps.forEach(step => step.classList.remove("active"));
             steps[0].classList.add("active");
