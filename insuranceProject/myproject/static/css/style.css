@@ -385,7 +385,7 @@ body {
 .hero-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   text-align: center;
   align-self: center;
@@ -501,24 +501,6 @@ a.hero-button:hover {
   opacity: 0.3;
   pointer-events: none;
 }
-
-.money {
-    height: 100%;
-
-}
-
-.leaf {
-  position: absolute;
-  top: -50%;
-  font-size: 12rem;
-  opacity: 0.8;
-  animation: fall linear infinite;
-  pointer-events: none;
-}
-
-.leaf1 { left: 10%; animation-duration: 27s; animation-delay: 0s; }
-.leaf2 { left: 50%; animation-duration: 65s; animation-delay: 1s; }
-.leaf3 { left: 80%; animation-duration: 33s; animation-delay: 0.1s; }
 
 @keyframes fall {
   0% {
