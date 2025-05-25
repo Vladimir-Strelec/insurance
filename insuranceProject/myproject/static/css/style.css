@@ -691,7 +691,7 @@ a.hero-button:hover {
 
 .card-inner {
   background-color: #ffcc00;
-  width: 50%;
+  width: 100%;
   height: 50%;
   transition: transform 0.8s;
   transform-style: preserve-3d;
