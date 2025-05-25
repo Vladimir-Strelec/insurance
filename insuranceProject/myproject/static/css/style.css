@@ -155,7 +155,7 @@ body {
 
 }
 
-.navbar-links a,
+
 .dropdown-toggle {
     width: 100%;
     color: black;
@@ -409,7 +409,7 @@ body {
 }
 
 .hero-content p {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   opacity: 0.9;
 }
@@ -480,7 +480,7 @@ a.hero-button:hover {
     }
     .hero-content p{
         max-width: 60%;
-        font-size: 4rem;
+        font-size: 3rem;
     }
 }
 
