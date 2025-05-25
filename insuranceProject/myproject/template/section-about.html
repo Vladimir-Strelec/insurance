@@ -1,9 +1,9 @@
 <section class="section about">
     {% load static %}
 
-    <!-- Categories Preview -->
+    <!-- Kategorien Vorschau -->
     <section class="section categories">
-        <h2>Основные категории</h2>
+        <h2>Hauptkategorien</h2>
         <div class="container">
             {% for main in main_categories %}
             <div class="card" id="{{ forloop.counter0 }}">
@@ -13,27 +13,24 @@
                         {% if main.image %}
                         <img alt="{{ main.name }}" src="{{ main.image.url }}" loading="lazy">
                         {% else %}
-                        <img alt="Нет изображения" src="{% static 'images/placeholder.jpg' %}">
+                        <img alt="Kein Bild vorhanden" src="{% static 'images/placeholder.jpg' %}">
                         {% endif %}
                         <h4>{{ main.name }}</h4>
                     </div>
 
                     <div class="card-back">
-                        <h3>Подкатегории:</h3>
+                        <h3>Unterkategorien:</h3>
                         <ul class="subcategory-list">
                             {% for sub in main.subcategories.all %}
                             <li><a href="{% url 'subcategory_detail' main_id=main.id sub_id=sub.id %}">{{ sub.name }}</a></li>
                             {% empty %}
-                            <li class="empty">Нет подкатегорий</li>
+                            <li class="empty">Keine Unterkategorien vorhanden</li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
             {% endfor %}
-
         </div>
     </section>
-
-
 </section>

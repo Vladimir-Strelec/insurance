@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStep = 0;
 
-    // Переключение шагов
+    // Schrittwechsel
     nextBtns.forEach((btn, index) => {
         btn.addEventListener("click", () => {
             if (validateStep(steps[index])) {
@@ -32,19 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Загрузка подкатегорий при выборе категории
+    // Laden der Unterkategorien bei Auswahl der Hauptkategorie
     const mainCategorySelect = document.getElementById("main_category");
     const subcategorySelect = document.getElementById("subcategory");
 
     mainCategorySelect.addEventListener("change", () => {
         const categoryId = mainCategorySelect.value;
-        console.log("Выбрана категория ID:", categoryId);
+        console.log("Ausgewählte Kategorie ID:", categoryId);
         if (!categoryId) return;
 
         fetch(`/get-subcategories/${categoryId}/`)
             .then(response => response.json())
             .then(data => {
-                subcategorySelect.innerHTML = '<option value="">Выберите подкатегорию</option>';
+                subcategorySelect.innerHTML = '<option value="">Unterkategorie auswählen</option>';
                 data.subcategories.forEach(sub => {
                     const option = document.createElement("option");
                     option.value = sub.id;
@@ -52,10 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     subcategorySelect.appendChild(option);
                 });
             })
-            .catch(error => console.error("Ошибка при загрузке подкатегорий:", error));
+            .catch(error => console.error("Fehler beim Laden der Unterkategorien:", error));
     });
 
-    // Отправка формы
+    // Formular absenden
     form.addEventListener("submit", (e) => {
         e.preventDefault();
 
@@ -77,18 +77,18 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(res => res.json())
         .then(data => {
-            responseMsg.textContent = data.message || "Форма успешно отправлена!";
+            responseMsg.textContent = data.message || "Formular erfolgreich gesendet!";
             form.reset();
             steps.forEach(step => step.classList.remove("active"));
             steps[0].classList.add("active");
         })
         .catch(err => {
-            responseMsg.textContent = "Ошибка при отправке. Попробуйте позже.";
-            console.error("Ошибка:", err);
+            responseMsg.textContent = "Fehler beim Absenden. Bitte versuchen Sie es später erneut.";
+            console.error("Fehler:", err);
         });
     });
 
-    // Проверка заполнения текущего шага
+    // Überprüfung der Eingaben im aktuellen Schritt
     function validateStep(step) {
         const inputs = step.querySelectorAll("select, input");
         for (let input of inputs) {
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     }
 
-    // Получение CSRF-токена
+    // CSRF-Token abrufen
     function getCSRFToken() {
         let cookieValue = null;
         const name = "csrftoken";
@@ -116,4 +116,3 @@ document.addEventListener("DOMContentLoaded", () => {
         return cookieValue;
     }
 });
-
