@@ -652,7 +652,7 @@ a.hero-button:hover {
 
 /* === Card Flip Section === */
 .card {
-  background-color: #ffcc00;
+  background: transparent;
   position: relative;
   width: 40%;
   height: 320px;
