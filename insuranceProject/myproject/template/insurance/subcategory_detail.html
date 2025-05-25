@@ -7,17 +7,17 @@
 
     <div class="highlight-container">
         <div class="highlight-image parallax-bg">
-            <img class="highlight-image" src="{{ subcategory.image.url }}" alt="Some image description" loading="lazy">
+            <img class="highlight-image" src="{{ subcategory.image.url }}" alt="Bildbeschreibung" loading="lazy">
         </div>
         <div class="highlight-text" id="1">
             {% if message %}
-            <p> Spasibo za vashu zayavku mi s vami svyajemsya v korotkie sroki! </p>
+            <p>Vielen Dank für Ihre Anfrage! Wir werden Sie in Kürze kontaktieren.</p>
             {% endif %}
             <h2>{{ subcategory.name }}</h2>
             <p>
-                {{subcategory.description}}
+                {{ subcategory.description }}
             </p>
-            <a href="#section2" class="cta-btn">Отправить заявку</a>
+            <a href="#section2" class="cta-btn">Anfrage senden</a>
         </div>
     </div>
     {% include "insurance/insurance_dynamic_form.html" %}

@@ -3,44 +3,43 @@
 <div class="parallax-container">
     <div class="overlay">
         <div class="form-wrapper" id="section2">
-            <h2 class="label">Подбор страховки</h2>
+            <h2 class="label">Versicherungsvergleich</h2>
             <form id="lead-form">
-                <!-- Шаг 1 -->
+                <!-- Schritt 1 -->
                 <div class="form-step active" id="step-1">
-                    <label for="main_category">Выберите категорию:</label>
+                    <label for="main_category">Kategorie wählen:</label>
                     <select class="input" id="main_category" required>
                         {% if main_categories %}
-                        <option disabled selected value="">Выберите категорию</option>
+                        <option disabled selected value="">Kategorie wählen</option>
                         {% else %}
-                        <option disabled selected>Нет доступных категорий</option>
+                        <option disabled selected>Keine verfügbaren Kategorien</option>
                         {% endif %}
                         {% for main in main_categories %}
-                        <option value="{{ main.id }}">{{main.name}}</option>
-
+                        <option value="{{ main.id }}">{{ main.name }}</option>
                         {% endfor %}
                     </select>
-                    <button class="submit-btn next-btn" type="button">Далее</button>
+                    <button class="submit-btn next-btn" type="button">Weiter</button>
                 </div>
 
-                <!-- Шаг 2 -->
+                <!-- Schritt 2 -->
                 <div class="form-step" id="step-2">
-                    <label for="subcategory">Выберите подкатегорию:</label>
+                    <label for="subcategory">Unterkategorie wählen:</label>
                     <select class="input" id="subcategory" required>
-                        <option value="">Сначала выберите категорию</option>
+                        <option value="">Bitte zuerst eine Kategorie wählen</option>
                     </select>
-                    <button class="submit-btn next-btn" type="button">Далее</button>
+                    <button class="submit-btn next-btn" type="button">Weiter</button>
                 </div>
 
-                <!-- Шаг 3 -->
+                <!-- Schritt 3 -->
                 <div class="form-step" id="step-3">
                     {% csrf_token %}
-                    <label for="name">Ваше имя:</label>
+                    <label for="name">Ihr Name:</label>
                     <input class="input" id="name" required type="text">
-                    <label for="email">Email:</label>
+                    <label for="email">E-Mail:</label>
                     <input class="input" id="email" required type="email">
-                    <label for="phone">Телефон:</label>
+                    <label for="phone">Telefon:</label>
                     <input class="input" id="phone" required type="tel">
-                    <button class="submit-btn" type="submit">Отправить</button>
+                    <button class="submit-btn" type="submit">Absenden</button>
                 </div>
 
                 <div class="message" id="response-message"></div>
@@ -50,6 +49,7 @@
 </div>
 
 <script src="{% static 'js/script.js' %}"></script>
+
 
 
 

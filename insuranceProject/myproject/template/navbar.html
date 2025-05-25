@@ -4,7 +4,7 @@
             <div class="logo-circle">ALEX</div>
         </div>
 
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Navigation umschalten"
                 class="navbar-toggler"
                 data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
@@ -13,18 +13,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li>
-                    <a aria-current="page" class="dropdown-item" href="{% url 'insurance_dynamic' %}">Home</a>
+                    <a aria-current="page" class="dropdown-item" href="{% url 'insurance_dynamic' %}">Startseite</a>
                 </li>
                 <li>
                     <a class="dropdown-item" href="#">Link</a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="#">About us</a>
+                    <a class="dropdown-item" href="#kontakt">Über uns</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a aria-expanded="false" class="nav-links dropdown-toggle" data-bs-toggle="dropdown" href="#"
                        id="navbarDropdown" role="button">
-                        Insurances
+                        Versicherungen
                     </a>
 
                     <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
@@ -32,21 +32,18 @@
                         {% if request.resolver_match.url_name == 'insurance_dynamic' %}
                         <li><a class="dropdown-item" href="#{{ forloop.counter0 }}">{{ main.name }}</a></li>
                         {% else %}
-                        <li><a class="dropdown-item" href="{% url 'insurance_dynamic' %}#{{ forloop.counter0 }}">{{
-                            main.name }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'insurance_dynamic' %}#{{ forloop.counter0 }}">{{ main.name }}</a></li>
                         {% endif %}
                         {% endfor %}
-
                     </ul>
-
 
                 <li>
                     <hr class="dropdown-divider">
                 </li>
             </ul>
             <form class="d-flex">
-                <input aria-label="Search" class="form-control me-2" placeholder="Search" type="search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input aria-label="Suche" class="form-control me-2" placeholder="Suchen" type="search">
+                <button class="btn btn-outline-success" type="submit">Suchen</button>
             </form>
         </div>
     </div>
