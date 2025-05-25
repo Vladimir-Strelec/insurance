@@ -409,10 +409,8 @@ body {
 }
 
 .hero-content p {
-
+  font-size: 3rem;
   font-weight: bold;
-  font-size: large;
-
   opacity: 0.9;
 }
 
@@ -475,9 +473,14 @@ a.hero-button:hover {
         height: 66svh;
 
     }
-    .hero-content {
+    .hero-content h1{
         max-width: 60%;
         margin-bottom: 60%;
+        font-size: 4rem;
+    }
+    .hero-content p{
+        max-width: 60%;
+        font-size: 4rem;
     }
 }
 
