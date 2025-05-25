@@ -15,16 +15,18 @@
 html, body{
     margin: 0;
     padding: 0;
-    height: 100%;
-    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
     font-family: 'Segoe UI', sans-serif;
     overflow-x: hidden;
 
 
 }
 body {
-
-    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
     margin: 0;
     pointer-events: auto;
     background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
@@ -43,12 +45,11 @@ body {
     }
 }
 
-.main {
+main {
     display: flex;
-    flex: 1;
+    flex: 1 0 auto;
     flex-direction: column;
-    background-color: url(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
+    height: 100%;
 }
 
 .overlay-image {
@@ -637,16 +638,7 @@ a.hero-button:hover {
 
 
 
-.section {
-  position: relative;
-  padding: 60px 20px;
-  margin: 80px 0;
-  text-align: center;
-}
 
-.section h2 {
-    color: white;
-}
 
 
 
@@ -668,14 +660,6 @@ a.hero-button:hover {
     }
 }
 
-.about {
-    display: flex;
-    flex-direction: column;
-    align-items: center
-    justify-content: space-around;
-    gap: 30px;
-
-}
 
 .container {
     /*background: rgba(0, 0, 0, 0.6);
@@ -692,7 +676,7 @@ a.hero-button:hover {
 
 .card-inner {
   background-color: #ffcc00;
-  width: 103%;
+  width: 100%;
   height: 67%;
   transition: transform 0.8s;
   transform-style: preserve-3d;
@@ -706,9 +690,9 @@ a.hero-button:hover {
 
 .card-front, .card-back {
   position: absolute;
-  width: 115%;
+  width: 100%;
   height: 100%;
-  padding: 20px;
+
   backface-visibility: hidden;
 
   display: flex;
@@ -910,8 +894,7 @@ select,
 
 /* === Footer === */
 .footer {
-  text-align: center;
-  font-size: 26px;
+  flex-shrink: 0;
 }
 
 .footer a {
