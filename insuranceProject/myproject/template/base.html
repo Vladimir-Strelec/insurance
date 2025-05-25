@@ -10,11 +10,15 @@
     <title>Title</title>
 </head>
 {% include "navbar.html" %}
-<div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background: #222; color: #fff; padding: 1rem; z-index: 9999; display: none;">
-  <div style="max-width: 960px; margin: auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-    <p style="margin: 0;">Wir verwenden Cookies, um die Nutzung der Website zu verbessern. <a href="{% url 'policy' %}" style="color: #ffcc00;">Datenschutzerklärung</a>.</p>
-    <button onclick="acceptCookies()" style="background: #ffcc00; border: none; padding: 0.5rem 1rem; cursor: pointer;">Akzeptieren</button>
-  </div>
+<div id="cookie-banner"
+     style="position: fixed; bottom: 0; left: 0; right: 0; background: #222; color: #fff; padding: 1rem; z-index: 9999; display: none;">
+    <div style="max-width: 960px; margin: auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <p style="margin: 0;">Wir verwenden Cookies, um die Nutzung der Website zu verbessern. <a
+                href="{% url 'policy' %}" style="color: #ffcc00;">Datenschutzerklärung</a>.</p>
+        <button onclick="acceptCookies()"
+                style="background: #ffcc00; border: none; padding: 0.5rem 1rem; cursor: pointer;">Akzeptieren
+        </button>
+    </div>
 </div>
 <body>
 
@@ -37,10 +41,41 @@
 </main>
 
 <footer class="footer">
-    <div class="container">
-        <p>&copy; {{ year }} МойСайт. Все права защищены.</p>
-        <p><a href="{% url 'policy' %}">Политика конфиденциальности</a> • <a href="/contacts/">Контакты</a></p>
+
+    <!-- Подключи Font Awesome в <head> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <section id="kontakt" style="background-color: #000; color: #ffcc00; padding: 2rem 1rem;">
+        <div style="max-width: 960px; margin: auto;">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #ffcc00; display: inline-block;">
+                Kontakt</h2>
+            <p><strong>Adresse:</strong> Musterstraße 12, 12345 Nürnberg, Deutschland</p>
+            <p><strong>Telefon:</strong> <a href="tel:+4915773673851"
+                                            style="color: #ffcc00; text-decoration: underline;">+4915773673851</a></p>
+            <p><strong>E-Mail:</strong> <a href="mailto:alexej.kondraskov@arag-partner.de"
+                                           style="color: #ffcc00; text-decoration: underline;">alexej.kondraskov@arag-partner.de</a>
+            </p>
+
+            <div style="margin-top: 1rem; font-size: 1.5rem;">
+                <a href="#" style="margin-right: 1rem; color: #ffcc00;" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" style="margin-right: 1rem; color: #ffcc00;" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" style="color: #ffcc00;" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+             <div style="margin-top: 1rem; font-size: 1.7rem;">
+      <a href="#" style="color: #ffcc00;" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
     </div>
+        </div>
+    </section>
+
+
 </footer>
 
 
@@ -57,16 +92,16 @@
     };
 </script>
 <script>
-  function acceptCookies() {
-    localStorage.setItem('cookiesAccepted', 'true');
-    document.getElementById('cookie-banner').style.display = 'none';
-  }
-
-  window.addEventListener('load', function () {
-    if (!localStorage.getItem('cookiesAccepted')) {
-      document.getElementById('cookie-banner').style.display = 'block';
+    function acceptCookies() {
+      localStorage.setItem('cookiesAccepted', 'true');
+      document.getElementById('cookie-banner').style.display = 'none';
     }
-  });
+
+    window.addEventListener('load', function () {
+      if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookie-banner').style.display = 'block';
+      }
+    });
 </script>
 </body>
 

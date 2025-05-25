@@ -762,7 +762,7 @@ a.hero-button:hover {
 }
 
 .highlight-container {
-  background-color: #ffcc00;
+
   min-height: 400px;
   padding: 30px 80px;
   display: flex;
@@ -955,6 +955,10 @@ select,
   }
 }
 
-
+@media (max-width: 990px) {
+    h1, h2, p, a, li {
+        font-size: xx-large;
+    }
+}
 
 
