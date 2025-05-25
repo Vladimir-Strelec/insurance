@@ -16,6 +16,7 @@ html, body{
     margin: 0;
     padding: 0;
     height: 100%;
+    max-width: 100%;
     font-family: 'Segoe UI', sans-serif;
     overflow-x: hidden;
 
@@ -23,7 +24,7 @@ html, body{
 }
 body {
 
-    height: 100dvh;
+    height: 100svh;
     margin: 0;
     pointer-events: auto;
     background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
@@ -359,7 +360,7 @@ body {
   background: url('../images/ben-arthur-Q9Ylf-AAD04-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
-  height: 93dvh;
+  height: 93svh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -471,11 +472,11 @@ a.hero-button:hover {
 
 @media (width: 768px) {
     .hero {
-        height: 65vh;
+        height: 66svh;
 
     }
     .hero-content {
-        width: 60%;
+        max-width: 60%;
         margin-bottom: 60%;
     }
 }
