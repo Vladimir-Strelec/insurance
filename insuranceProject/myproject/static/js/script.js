@@ -81,7 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
             form.reset();
             steps.forEach(step => step.classList.remove("active"));
             steps[0].classList.add("active");
-            window.scrollTo({top: 0, behavior: "smooth"})
+            window.scrollTo({top: 0, behavior: "smooth"});
+            document.activeElement.blur();
         })
         .catch(err => {
             responseMsg.textContent = "Fehler beim Absenden. Bitte versuchen Sie es später erneut.";
