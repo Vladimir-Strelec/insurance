@@ -861,7 +861,7 @@ select,
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 26px;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -892,7 +892,7 @@ select,
 .message {
   margin-top: 15px;
   text-align: center;
-  font-size: 16px;
+  font-size: 26px;
   color: black;
 }
 
@@ -908,7 +908,7 @@ select,
 /* === Footer === */
 .footer {
   text-align: center;
-  font-size: 16px;
+  font-size: 26px;
 }
 
 .footer a {
