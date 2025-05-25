@@ -20,7 +20,7 @@ html, body{
 }
 body {
 
-    height: 100%;
+    height: 100dvh;
     margin: 0;
     pointer-events: auto;
     background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
@@ -30,7 +30,7 @@ body {
 
 @media(max-width: 990px) {
     body {
-        height: 100%;
+        height: 100dvh;
         margin: 0;
         pointer-events: auto;
         background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
