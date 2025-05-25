@@ -680,6 +680,7 @@ a.hero-button:hover {
 .container {
     /*background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);*/
+    height: 100dvh;
     border-radius: 12px;
     display: flex;
     flex-wrap: wrap;
