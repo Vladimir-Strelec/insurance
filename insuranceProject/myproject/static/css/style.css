@@ -646,9 +646,9 @@ a.hero-button:hover {
 .card {
   background: transparent;
   position: relative;
-  width: 60%;
-  height: 40%;
-  margin: 20px;
+  width: 80%;
+  height: 50%;
+
   perspective: 1000px;
 
 }
