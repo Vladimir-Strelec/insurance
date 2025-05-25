@@ -77,9 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(res => res.json())
         .then(data => {
-            window.scrollTo({top: 0, behavior: "smooth"});
-            document.activeElement.blur();
+//            window.scrollTo({top: 0, behavior: "smooth"});
+//            document.activeElement.blur();
             responseMsg.textContent = data.message || "Formular erfolgreich gesendet!";
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
             form.reset();
             steps.forEach(step => step.classList.remove("active"));
             steps[0].classList.add("active");
