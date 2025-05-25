@@ -829,7 +829,7 @@ a.hero-button:hover {
     .form-wrapper {
         width: 45%;
         text-align: center;
-
+        padding: 40px;
         background: #ffcc00;
         border-radius: 16px;
         margin-top: -15%;
@@ -844,7 +844,7 @@ a.hero-button:hover {
 .form-wrapper h2, label {
   color: black;
   text-align: center;
-
+  margin-bottom: 20px;
 }
 
 .overlay {
