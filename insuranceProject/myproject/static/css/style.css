@@ -476,7 +476,7 @@ footer {
         flex: 1 1 300px; /* будет стараться быть 300px, но сжиматься */
         max-width: 100%; /* не выходить за родителя */
         aspect-ratio: 3 / 4; /* сохраняет пропорции */
-        min-width: 200px;
+        min-width: 210px;
         border-radius: 25px;
         overflow: hidden
     }
