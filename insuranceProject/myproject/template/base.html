@@ -33,15 +33,18 @@
 <main class="main">
     {% if request.resolver_match.url_name == 'insurance_dynamic' %}
         {% include "info-about-me/info-about-me.html" %}
+        {% include "section-about.html" %}
+        {% include "insurance/insurance_dynamic_form.html" %}
     {% endif %}
+    {% block content %}
+    {% endblock %}
 
-    {% block content %}{% endblock %}
-    {% include "section-about.html" %}
+
 </main>
 
 <!-- Footer -->
 <footer class="footer">
-    <section id="kontakt" style="background-color: #000; color: #ffcc00; padding: 2rem 1rem;">
+    <section id="kontakt" style="color: #ffcc00; padding: 2rem 1rem;">
         <div style="max-width: 960px; margin: auto;">
             <p><strong>Adresse:</strong> ARAG Nürnberg Süd, Rothenburgerstr. 245, 90439 Nürnberg, Deutschland</p>
             <p><strong>Telefon:</strong> <a href="tel:+4915773673851" style="color: #ffcc00; text-decoration: none;">+49 1577 3673851</a></p>
@@ -56,7 +59,7 @@
                 <a href="https://www.facebook.com/profile.php?id=100077205721116" style="margin-right: 1rem; color: #ffcc00;" title="Facebook" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="https://www.google.com/maps/place/ARAG+Versicherung+N%C3%BCrnberg-Sued/@49.4405635,11.0362701,17z" target="_blank" rel="noopener noreferrer" style="display: inline-block; text-decoration: none;" aria-label="Standort auf Google Maps öffnen">
+                <a href="https://maps.app.goo.gl/qTMrT81MqE95Zcw57" target="_blank" rel="noopener noreferrer" style="display: inline-block; text-decoration: none;" aria-label="Standort auf Google Maps öffnen">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffcc00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z"/>
                         <circle cx="12" cy="10" r="3"/>

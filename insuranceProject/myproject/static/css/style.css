@@ -44,6 +44,7 @@ main {
     display: flex;
     flex: 1 0 auto;
     flex-direction: column;
+    gap: 10rem;
 }
 
 footer {
@@ -55,9 +56,11 @@ footer {
     text-align: center;
     flex-shrink: 0;
     text-decoration: none;
+    flex-shrink: 0;
 }
    .footer a {
       text-decoration: none;
+      background: none;
     }
 
 .navbar{
@@ -67,11 +70,14 @@ footer {
     left: 0;
     width: 100%; /* Занимаем всю ширину экрана */
     z-index: 1000; /* Высокий приоритет для верхнего слоя */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Добавляем тень */
-
+    box-shadow: 0.5px 0.5px 15px grey;
+    display-flex;
+        justify-content: space-between;
 }
     .container-fluid {
         text-decoration: none;
+
+
     }
 
         .navbar-logo {
@@ -81,19 +87,22 @@ footer {
             padding: 10px 20px;
             border-radius: 50%;
             font-size: 2.2rem;
+            box-shadow: 0.5px 0.5px 15px grey;
 
         }
         .navbar-nav a {
             text-decoration: none;
             color: white;
-            border-radius: 1px;
+            border-radius: 23px;
             font-weight: bold;
             font-size: large;
+            box-shadow: 5px 4px 4px grey;
         }
 
         .navbar-nav ul {
             background-color: var(--color-border);
             color: var(--color-bg);
+
 
         }
 
@@ -144,6 +153,8 @@ footer {
                 background-color: #ffcc00;
                 color: black;
                 margin-left: 3%;
+
+                box-shadow: none;
             }
 
             .dropdown-menu li a:hover {
@@ -218,6 +229,7 @@ footer {
   justify-content: flex-end;
   overflow: hidden;
   z-index: 0;
+  gap: 5rem;
 }
 
     .hero-overlay {
@@ -274,6 +286,7 @@ footer {
 
           text-decoration: none;
           transition: all 0.2s ease; /* <--- добавляем плавность */
+          box-shadow: 0.5px 0.5px 15px grey;
         }
 
         .hero-button:active {
@@ -351,6 +364,7 @@ footer {
 .container-info {
     background-color: #ffcc00;
     z-index: 200;
+    gap: 5rem;
 }
 
     .container-info-block {
@@ -479,6 +493,7 @@ footer {
         min-width: 210px;
         border-radius: 25px;
         overflow: hidden
+        perspective: 1000px;
     }
 
         .card-inner {
@@ -504,6 +519,8 @@ footer {
                 justify-content: center;
                 background-color: #ffcc00;
                 z-index: 2;
+
+
             }
                 .card-front img {
                     width: 50%;
@@ -512,9 +529,10 @@ footer {
 
             .card-back {
                 display: flex;
-                transform: rotateY(180deg);
                 background-color: var(--primary-color);
                 color: black;
+                transform: rotateY(180deg);
+                backface-visibility: hidden;
             }
                 .subcategory-list {
                     height: 70%;
@@ -534,6 +552,107 @@ footer {
                 .card-back :hover {
                   color: white;
                 }
+
+/*-------------------------------------------------------FORM-----------------------------------------------------*/
+/* === Form === */
+.form-wrapper {
+  width: 55%;
+  text-align: center;
+  padding: 40px;
+  background: #ffcc00;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+  box-shadow: 10px 10px 20px grey;
+}
+
+.form-wrapper:hover {
+  transform: scale(1.05);
+}
+
+    .form-wrapper h2, label {
+      color: black;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .overlay {
+        display: flex;
+        justify-content: center;
+    }
+
+    .input,
+    select,
+    .submit-btn {
+      text-align: center;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 26px;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .input:focus,
+      select:focus {
+      border-color: black;
+      outline: none;
+    }
+
+    .input:hover,
+      select:hover {
+      border-color: black;
+      background-color: #f0fbff;
+    }
+
+    .submit-btn {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: var(--color-bg);
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 26px;
+      color: black;
+    }
+
+    .form-step {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+/*------------------------------------------------------subcategory_detail---------------------------------------*/
+.highlight-block {
+
+  background-color: #ffcc00;
+}
+
+    .highlight-container {
+      min-height: 400px;
+      padding: 30px 80px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 80px;
+      align-items: stretch;
+      border-radius: 12px;
+      overflow: hidden;
+
+    }
+
+
+
 
 
 h1, h2, h3 {
