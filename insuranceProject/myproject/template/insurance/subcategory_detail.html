@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Unfallversicherung in Nürnberg | ARAG Partner{% endblock %}
+{% block meta_description %}Individuelle Beratung zur Unfallversicherung bei Alexej Kondraskov – ARAG Partner in Nürnberg.{% endblock %}
 {% block content %}
 
 <section class="highlight-block">
 
     <div class="highlight-container">
         <div class="highlight-image parallax-bg">
-            <img class="highlight-image" src="{{ subcategory.image.url }}" alt="Bildbeschreibung" loading="lazy">
+            <img class="highlight-image" src="{{ subcategory.image.url }}" alt="Versicherungsberater Alexej Kondraskov in Nürnberg" loading="lazy">
         </div>
         <div class="highlight-text" id="1">
             {% if message %}
@@ -24,3 +26,9 @@
 </section>
 
 {% endblock %}
+
+
+
+
+
+

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'insurance',
     'cloudinary',
     'cloudinary_storage',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
