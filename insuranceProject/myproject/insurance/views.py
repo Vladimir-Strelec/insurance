@@ -7,7 +7,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 from twilio.rest import Client
-
+from django.http import HttpResponse
 from .models import InsuranceMainCategory, InsuranceSubCategory
 
 load_dotenv()
@@ -85,3 +85,12 @@ def send_whatsapp_message(name, phone, main_category, subcategory):
 
 def get_policy(requets):
     return render(requets, 'policy.html', {})
+
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Disallow:",
+        "Sitemap: https://insurance-1-gt02.onrender.com/sitemap.xml"
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")

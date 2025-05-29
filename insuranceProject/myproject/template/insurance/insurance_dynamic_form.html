@@ -18,7 +18,8 @@
                         <option value="{{ main.id }}">{{ main.name }}</option>
                         {% endfor %}
                     </select>
-                    <button class="submit-btn next-btn" type="button">Weiter</button>
+                    <a class="submit-btn next-btn" href="#explore" aria-label="Kostenlose Beratung anfordern" type="button">Beratung erhalten</a>
+
                 </div>
 
                 <!-- Schritt 2 -->
@@ -27,7 +28,7 @@
                     <select class="input" id="subcategory" required>
                         <option value="">Bitte zuerst eine Kategorie wählen</option>
                     </select>
-                    <button class="submit-btn next-btn" type="button">Weiter</button>
+                    <a class="submit-btn next-btn" href="#explore" aria-label="Kostenlose Beratung anfordern" type="button">Beratung erhalten</a>
                 </div>
 
                 <!-- Schritt 3 -->
@@ -39,7 +40,7 @@
                     <input class="input" id="email" required type="email">
                     <label for="phone">Telefon:</label>
                     <input class="input" id="phone" required type="tel">
-                    <button class="submit-btn" type="submit">Absenden</button>
+                    <a class="submit-btn next-btn" href="#explore" aria-label="Kostenlose Beratung anfordern" type="button">Beratung erhalten</a>
                 </div>
 
                 <div class="message" id="response-message"></div>

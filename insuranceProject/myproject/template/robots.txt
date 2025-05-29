@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://insurance-1-gt02.onrender.com/sitemap.xml
