@@ -91,6 +91,6 @@ def robots_txt(request):
     lines = [
         "User-agent: *",
         "Disallow:",
-        "Sitemap: https://www.inschurance.de/sitemap.xml"
+        "Sitemap: https://inschurance.de/sitemap.xml"
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
