@@ -35,7 +35,7 @@ html, body {
 }*/
 body {
     font-family: var(--font-family);
-    height: 100%;
+    height: 100vh;
     background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
     background-size: cover;
 }
@@ -57,7 +57,7 @@ footer {
     text-align: center;
     flex-shrink: 0;
     text-decoration: none;
-    flex-shrink: 0;
+
 }
    .footer a {
       text-decoration: none;
@@ -96,9 +96,12 @@ footer {
             color: white;
             border-radius: 23px;
             font-weight: bold;
-            font-size: large;
+            font-size: var(--font-size-lg);
             box-shadow: 5px 4px 4px grey;
+            font-size: clamp(24px, 2vw, 18px);
         }
+
+
 
         .navbar-nav ul {
             background-color: var(--color-border);
@@ -137,36 +140,45 @@ footer {
             background-color: var(--primary-color);
             animation: pulse 0.2s ease;
             transform: scale(0.95);
+            font-size: var(--font-size-lg);
         }
 
             .dropdown-menu {
-                width: 30vh;
+                color: black;
+                width: 100%;
                 justify-content: flex-start;
                 list-style: none;
                 padding: 0;
                 margin: 0;
                 gap: 20px;
+                border-radius: 25px;
+                font-size: clamp(14px, 2vw, 18px);
             }
 
-            .dropdown-menu li a {
+            .dropdown-menu li,
+            .dropdown-menu a {
                 text-decoration: none;
-                width: 24vh;
+                width: 100%;
                 background-color: #ffcc00;
                 color: black;
-                margin-left: 3%;
-
                 box-shadow: none;
+                font-size: clamp(14px, 2vw, 18px);
+
             }
 
             .dropdown-menu li a:hover {
                 color: white;
                 background-color: #ffcc00;
+
             }
 
             .dropdown-menu li a:active {
-                color: black;
+                color: white;
+                font-size: var(--font-size-xxl);
             }
-
+            .dropdown-item {
+                font-size: clamp(20px, 2vw, 18px);
+            }
             .navbar-toggler-icon {
                 display: inline-block;
                 width: 3.5em;
@@ -202,6 +214,7 @@ footer {
                     flex-direction: rows;
                     padding: 20px;
                     z-index: 1001;
+
                 }
 
                 .navbar-links.open {
@@ -262,18 +275,21 @@ footer {
         animation: fadeInUp 4s ease-out forwards;
         z-index: 98;
 
+
     }
 
         .hero-content h1 {
           font-size: var(--font-size-xxl);
           letter-spacing: 1px;
           text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+          font-size: clamp(44px, 2vw, 18px);
 
         }
 
         .hero-content p {
           font-size: var(--font-size-lg);
           opacity: 0.9;
+          font-size: clamp(34px, 2vw, 18px);
         }
 
         .hero-button {
@@ -284,7 +300,7 @@ footer {
           border: none;
           border-radius: 8px;
           z-index: 101;
-
+          font-size: var(--font-size-xxl);
           text-decoration: none;
           transition: all 0.2s ease; /* <--- добавляем плавность */
           box-shadow: 0.5px 0.5px 15px grey;
@@ -295,6 +311,7 @@ footer {
           background-color: var(--primary-color);
           animation: pulse 0.3s ease;
           transform: scale(0.95); /* <--- кнопка немного сжимается */
+          font-size: var(--font-size-xl);
         }
 
         a.hero-button {
@@ -303,6 +320,7 @@ footer {
 
         a.hero-button:hover {
             color:white;
+
         }
 
             @keyframes pulse {
@@ -378,23 +396,25 @@ footer {
 
         .container-info-block-row {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             height: 100%;
             gap: 2%;
         }
 
             .container-info-block-row img {
-                max-width: 30%;
-                height: 30%;
+                max-width: 50%;
+                height: 40%;
                 background-color: red;
             }
 
             .container-info-block-row p {
                 flex: 1 1 60%;
-                max-width: 60%;
-
+                max-width: 80%;
                 font-family: 'Playfair Display', serif;
                 color: black;
+                font-size: clamp(34px, 2vw, 18px);
 
             }
         @media (max-width: 768px) {
@@ -411,6 +431,7 @@ footer {
             .container-info-block-row p {
                 max-width: 90%;
                 text-align: center;
+                font-size: clamp(24px, 2vw, 18px);
             }
         }
 
@@ -426,6 +447,7 @@ footer {
             .container-info-block_text_row {
                 display: flex;
                 justify-content: space-between;
+                font-size: clamp(24px, 2vw, 18px);
 
             }
                 .container-info-block_text_row img {
@@ -455,6 +477,10 @@ footer {
 
                 .container-info-block_text li {
                     text-align: left;
+                    font-size: clamp(24px, 2vw, 18px);
+                }
+                .container-info-block_text p {
+                    font-size: clamp(24px, 2vw, 18px);
                 }
 
 
@@ -489,7 +515,7 @@ footer {
         background: transparent;
         position: relative;
         flex: 1 1 300px; /* будет стараться быть 300px, но сжиматься */
-        max-width: 100%; /* не выходить за родителя */
+        max-width: 50%; /* не выходить за родителя */
         aspect-ratio: 3 / 4; /* сохраняет пропорции */
         min-width: 210px;
         border-radius: 25px;

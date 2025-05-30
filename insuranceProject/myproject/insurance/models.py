@@ -12,6 +12,7 @@ class InsuranceMainCategory(models.Model):
         blank=True,
         null=True
     )
+    private = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -28,6 +29,7 @@ class InsuranceSubCategory(models.Model):
         blank=True,
         null=True
     )
+    private = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}"

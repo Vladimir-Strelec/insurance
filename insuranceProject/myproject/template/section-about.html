@@ -1,6 +1,6 @@
 <section class="section about">
     {% load static %}
-
+    {% load cloudinary_filters %}
     <!-- Kategorien Vorschau -->
 
         <h2>Hauptkategorien</h2>
@@ -11,7 +11,7 @@
 
                     <div class="card-front">
                         {% if main.image %}
-                        <img alt="{{ main.name }}" src="{{ main.image.url }}" loading="lazy">
+                        <img alt="{{ main.name }}" src="{{ main.image.url|optimize_cloudinary }}">
                         {% else %}
                         <img alt="Kein Bild vorhanden" src="{% static 'images/placeholder.jpg' %}">
                         {% endif %}

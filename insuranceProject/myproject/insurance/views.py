@@ -15,8 +15,8 @@ load_dotenv()
 
 class InsuranceAjaxView(View):
     def get(self, request):
-        main_categories = InsuranceMainCategory.objects.all()
-        sub_categories = InsuranceSubCategory.objects.all()
+        main_categories = InsuranceMainCategory.objects.filter(private=False)
+        sub_categories = InsuranceSubCategory.objects.filter(private=False)
 
         return render(request, 'base.html',
                       {
@@ -28,7 +28,7 @@ class InsuranceAjaxView(View):
 
 
 def get_subcategories(request, category_id):
-    subcategories = InsuranceSubCategory.objects.filter(main_category=category_id)
+    subcategories = InsuranceSubCategory.objects.filter(main_category=category_id, private=False)
     data = {"subcategories": list(subcategories.values("id", "name"))}
     return JsonResponse(data)
 
@@ -36,8 +36,8 @@ def get_subcategories(request, category_id):
 def subcategory_detail(request, main_id, sub_id):
     main_category = get_object_or_404(InsuranceMainCategory, id=main_id)
     subcategory = get_object_or_404(InsuranceSubCategory, id=sub_id)
-    main_categories = InsuranceMainCategory.objects.all()
-    sub_categories = InsuranceSubCategory.objects.all()
+    main_categories = InsuranceMainCategory.objects.filter(private=False)
+    sub_categories = InsuranceSubCategory.objects.filter(private=False)
     return render(request, 'insurance/subcategory_detail.html',
                   {'subcategory': subcategory, 'main_category': main_category, 'main_categories': main_categories,
                    'sub_categories': sub_categories})

@@ -4,7 +4,6 @@ from django.utils.html import format_html
 from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceLead
 
 
-
 admin.site.register(InsuranceLead)
 
 
