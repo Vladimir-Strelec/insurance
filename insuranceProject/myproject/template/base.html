@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>{% block title %}Versicherung in Nürnberg | Alexej Kondraskov{% endblock %}</title>
+    <title>{% block title %}Versicherung in Nürnberg{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Professionelle Versicherungsdienstleistungen von Alexej Kondraskov, offizieller Partner von ARAG in Nürnberg.{% endblock %}">
     <meta name="robots" content="index, follow">
 
@@ -25,34 +25,32 @@
     <meta name="twitter:image" content="https://res.cloudinary.com/du08um3mi/image/upload/v1747675280/category_images/c22aed97af71608984866e0ada609d06_zhgpua.png">
     <meta name="twitter:title" content="Versicherung in Nürnberg | Alexej Kondraskov">
     <meta name="twitter:description" content="ARAG Partner – Versicherung und persönliche Beratung">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
 </head>
 
 <body style="font-family: 'Poppins', sans-serif;">
-
-
-<nav>
+    <nav>
     {% include "navbar.html" %}
     {% include "hero/hero.html" %}
-</nav>
+    </nav>
+    <main class="main">
 
-<main class="main">
-    {% if request.resolver_match.url_name == 'insurance_dynamic' %}
-        {% include "info-about-me/info-about-me.html" %}
-        {% include "section-about.html" %}
-    {% endif %}
+        {% if request.resolver_match.url_name == 'insurance_dynamic' %}
+            {% include "info-about-me/info-about-me.html" %}
+            {% include "section-about.html" %}
+        {% endif %}
 
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
 
-    {% include "insurance/insurance_dynamic_form.html" %}
+        {% include "insurance/insurance_dynamic_form.html" %}
 
-</main>
+    </main>
 
-<!-- Footer -->
-<footer class="footer">
+    <footer class="footer">
     <section id="kontakt" style="color: #ffcc00; padding: 2rem 1rem;">
         <div style="max-width: 960px; margin: auto;">
             <p><strong>Adresse:</strong> ARAG Nürnberg Süd, Rothenburgerstr. 245, 90439 Nürnberg, Deutschland</p>
@@ -87,29 +85,29 @@
     </div>
 </footer>
 
-<!-- Scripts -->
-<script src="{% static 'js/script.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <!-- Scripts -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-<script>
-    // Scroll to top on load
-    window.onload = function () {
-        window.scrollTo(0, 0);
-    };
+    <script>
+        // Scroll to top on load
+        window.onload = function () {
+            window.scrollTo(0, 0);
+        };
 
-    // Cookie banner logic
-    function acceptCookies() {
-        localStorage.setItem('cookiesAccepted', 'true');
-        document.getElementById('cookie-banner').style.display = 'none';
-    }
-
-    window.addEventListener('load', function () {
-        if (!localStorage.getItem('cookiesAccepted')) {
-            document.getElementById('cookie-banner').style.display = 'block';
+        // Cookie banner logic
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookie-banner').style.display = 'none';
         }
-    });
-</script>
+
+        window.addEventListener('load', function () {
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookie-banner').style.display = 'block';
+            }
+        });
+    </script>
 
 </body>
 </html>

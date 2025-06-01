@@ -145,7 +145,7 @@ footer {
 
             .dropdown-menu {
                 color: black;
-                width: 100%;
+                width: 50dvh;
                 justify-content: flex-start;
                 list-style: none;
                 padding: 0;
@@ -270,8 +270,8 @@ footer {
         text-align: center;
         align-self: center;
         color: #fff;
-        height: 70%;
-        width: 70%;
+        height: 60%;
+        width: 80%;
         animation: fadeInUp 4s ease-out forwards;
         z-index: 98;
 
@@ -404,8 +404,8 @@ footer {
         }
 
             .container-info-block-row img {
-                max-width: 50%;
-                height: 40%;
+                max-width: 50dvh;
+                height: 40dvh;
                 background-color: red;
             }
 
@@ -519,7 +519,7 @@ footer {
         flex: 1 1 300px; /* будет стараться быть 300px, но сжиматься */
         max-width: 50%; /* не выходить за родителя */
         aspect-ratio: 3 / 4; /* сохраняет пропорции */
-        min-width: 210px;
+        min-width: 300px;
         border-radius: 25px;
         overflow: hidden;
         perspective: 1000px;
@@ -642,15 +642,26 @@ footer {
     }
 
     .submit-btn {
-      background-color: var(--primary-color);
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
+        width: 70%;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 2rem;
     }
 
     .submit-btn:hover {
-      background-color: var(--color-bg);
+        color: white;
+        background-color: var(--color-bg);
+    }
+
+    .submit-btn:active {
+        width: 60%;
+        color: white;
+        background-color: var(--color-bg);
+        font-size: 1.5rem;
     }
 
     .message {
@@ -727,7 +738,147 @@ footer {
 
 
 
-h1, h2, h3, h4 {
-  font-weight: 600; /* полужирный */
+@media (max-width: 576px) {
+  .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: 90%;
+  }
+
+  .form-wrapper {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .highlight-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .highlight-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .highlight-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .highlight-text p {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    width: 90%;
+  }
+
+  .navbar-nav a {
+    font-size: clamp(18px, 4vw, 20px);
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-button {
+    padding: 10px 20px;
+  }
+
+  .container-info-block-row {
+    gap: 2rem;
+  }
+
+  .container-info-block-row p {
+    font-size: 1rem;
+  }
+
+  .container-info-block_text_row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .container-info-block_text_row img {
+    width: 40%;
+  }
+
+  .container-info-block_text_row ul {
+    margin: 0 auto;
+  }
 }
 
+/* Средние экраны: планшеты от 577px до 991px */
+@media (min-width: 577px) and (max-width: 991px) {
+  .card {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+
+  .form-wrapper {
+    width: 80%;
+  }
+
+  .highlight-container {
+    flex-direction: column;
+    padding: 40px;
+  }
+
+  .highlight-image {
+    width: 80%;
+  }
+
+  .highlight-text h2 {
+    font-size: 1.8rem;
+  }
+
+  .highlight-text p {
+    font-size: 1.1rem;
+  }
+
+  .cta-btn {
+    width: 80%;
+  }
+
+  .hero-content h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .hero-content p {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* Большие экраны: ≥ 992px */
+@media (min-width: 992px) {
+  .card {
+    flex: 1 1 30%;
+  }
+
+  .form-wrapper {
+    width: 55%;
+  }
+
+  .highlight-container {
+    flex-direction: row;
+    padding: 50px 80px;
+  }
+
+  .highlight-image {
+    width: 50%;
+  }
+
+  .highlight-text h2 {
+    font-size: 2rem;
+  }
+
+  .highlight-text p {
+    font-size: 1.2rem;
+  }
+
+  .cta-btn {
+    width: 70%;
+  }
+}
