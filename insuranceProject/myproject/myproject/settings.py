@@ -10,11 +10,11 @@ import cloudinary_storage
 
 load_dotenv()
 
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-#
-# PREPEND_WWW = False
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+PREPEND_WWW = False
 
 cloudinary.config(
     cloud_name=os.getenv("CLOUD_NAME"),
@@ -106,9 +106,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-#STATIC_URL = 'https://insurance-2-1hsc.onrender.com/'
+STATIC_URL = 'https://insurance-2-1hsc.onrender.com/'
 
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
