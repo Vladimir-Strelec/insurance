@@ -1,14 +1,16 @@
 import json
 import os
 
+from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 from twilio.rest import Client
-from django.http import HttpResponse
+
 from .models import InsuranceMainCategory, InsuranceSubCategory
+from .models import Story
 
 load_dotenv()
 
@@ -17,11 +19,14 @@ class InsuranceAjaxView(View):
     def get(self, request):
         main_categories = InsuranceMainCategory.objects.filter(private=False)
         sub_categories = InsuranceSubCategory.objects.filter(private=False)
+        stories = Story.objects.all().order_by('-created_at')
+
 
         return render(request, 'base.html',
                       {
                           'main_categories': main_categories,
                           'sub_categories': sub_categories,
+                          'stories': stories,
                           'category_for_option': main_categories[0] if main_categories else None
 
                       })
@@ -85,6 +90,16 @@ def send_whatsapp_message(name, phone, main_category, subcategory):
 
 def get_policy(requets):
     return render(requets, 'policy.html', {})
+
+
+def story_list(request):
+    stories = Story.objects.all().order_by('-created_at')
+    return render(request, 'story_list.html', {'stories': stories})
+
+
+def story_detail(request, slug):
+    story = get_object_or_404(Story, slug=slug)
+    return render(request, 'story_detail.html', {'story': story})
 
 
 def robots_txt(request):

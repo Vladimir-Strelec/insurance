@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceLead
-
+from .models import Story, Category, Tag, ExternalLink
 
 admin.site.register(InsuranceLead)
 
@@ -29,3 +29,21 @@ class InsuranceMainCategoryAdmin(admin.ModelAdmin):
         return "Нет изображения"
 
     image_preview.short_description = 'Превью'
+
+
+class ExternalLinkInline(admin.TabularInline):
+    model = ExternalLink
+    extra = 1
+
+
+@admin.register(Story)
+class StoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+    list_display = ('title', 'category', 'created_at')
+    search_fields = ('title', 'snippet')
+    list_filter = ('category', 'tags')
+    inlines = [ExternalLinkInline]
+
+
+admin.site.register(Category)
+admin.site.register(Tag)

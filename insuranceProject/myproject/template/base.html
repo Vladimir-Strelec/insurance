@@ -34,19 +34,20 @@
 <body style="font-family: 'Poppins', sans-serif;">
     <nav>
     {% include "navbar.html" %}
+
     {% include "hero/hero.html" %}
     </nav>
     <main class="main">
-
         {% if request.resolver_match.url_name == 'insurance_dynamic' %}
-            {% include "info-about-me/info-about-me.html" %}
-            {% include "section-about.html" %}
+        {% include "info-about-me/info-about-me.html" %}
+        {% include "section-about.html" %}
         {% endif %}
 
         {% block content %}
         {% endblock %}
 
         {% include "insurance/insurance_dynamic_form.html" %}
+        {% include "story_list.html" %}
 
     </main>
 

@@ -10,7 +10,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('insurance.urls')),
 
-
 ]
 
 if settings.DEBUG:
