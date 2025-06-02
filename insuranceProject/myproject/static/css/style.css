@@ -36,6 +36,7 @@ html, body {
 body {
     font-family: var(--font-family);
     height: 100vh;
+    width: 100%;
     background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
     background-size: cover;
 }
@@ -181,8 +182,8 @@ footer {
             }
             .navbar-toggler-icon {
                 display: inline-block;
-                width: 3.5em;
-                height: 3.5em;
+                width: 2.5em;
+                height: 2.5em;
                 vertical-align: middle;
                 background-repeat: no-repeat;
                 background-position: center;
@@ -196,8 +197,8 @@ footer {
                 .navbar-toggler-icon {
                     background-color: #ffcc00;
                     border-radius: 3px;
-                    width: 3.5em;
-                    height: 3.5em;
+                    width: 2.5em;
+                    height: 2.5em;
                 }
                 .navbar-toggler-icon:active {
                     animation: pulse 0.2s ease;
@@ -210,8 +211,7 @@ footer {
                     left: 0;
                     width: 100%;
                     background-color: white;
-                    display: none;
-                    flex-direction: rows;
+
                     padding: 20px;
                     z-index: 1001;
 
@@ -393,6 +393,9 @@ footer {
         align-items: center;
         height: auto;
     }
+        .container-info-block p {
+            width: 90%;
+        }
 
         .container-info-block-row {
             display: flex;
@@ -404,17 +407,16 @@ footer {
         }
 
             .container-info-block-row img {
-                max-width: 50dvh;
-                height: 40dvh;
-                background-color: red;
+                width: 30vh;
+                height: 20vh;
             }
 
             .container-info-block-row p {
                 flex: 1 1 60%;
-                max-width: 80%;
+                width: 80%;
                 font-family: 'Playfair Display', serif;
                 color: black;
-                font-size: clamp(34px, 2vw, 18px);
+                font-size: 2rem;
 
 
             }
@@ -422,6 +424,7 @@ footer {
             .container-info-block-row {
                 flex-direction: column;
                 align-items: center;
+
             }
 
             .container-info-block-row img {
@@ -433,7 +436,7 @@ footer {
             .container-info-block-row p {
                 max-width: 90%;
                 text-align: center;
-                font-size: clamp(24px, 2vw, 18px);
+                font-size: 2rem;
             }
         }
 
@@ -449,7 +452,7 @@ footer {
             .container-info-block_text_row {
                 display: flex;
                 justify-content: space-between;
-                font-size: clamp(24px, 2vw, 18px);
+                font-size: 1.5rem;
 
             }
                 .container-info-block_text_row img {
@@ -462,7 +465,6 @@ footer {
                     margin-left: 10%;
                     width: 90%;
                     align-self: flex-start;
-
 
                 }
 
@@ -479,10 +481,10 @@ footer {
 
                 .container-info-block_text li {
                     text-align: left;
-                    font-size: clamp(24px, 2vw, 18px);
+                    font-size: 1.5rem;
                 }
                 .container-info-block_text p {
-                    font-size: clamp(24px, 2vw, 18px);
+                    font-size: 1.5rem;
                 }
 
 
@@ -649,7 +651,7 @@ footer {
         border: none;
         cursor: pointer;
         text-decoration: none;
-        font-size: 2rem;
+        font-size: 1rem;
     }
 
     .submit-btn:hover {
@@ -661,7 +663,7 @@ footer {
         width: 60%;
         color: white;
         background-color: var(--color-bg);
-        font-size: 1.5rem;
+        font-size: 0.5rem;
     }
 
     .message {
@@ -786,6 +788,12 @@ footer {
 
   .hero-button {
     padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .hero-button:active {
+    padding: 10px 20px;
+    font-size: 0.5rem;
   }
 
   .container-info-block-row {
@@ -793,7 +801,7 @@ footer {
   }
 
   .container-info-block-row p {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 
   .container-info-block_text_row {
@@ -807,6 +815,7 @@ footer {
 
   .container-info-block_text_row ul {
     margin: 0 auto;
+    width: 90%;
   }
 }
 
