@@ -3,9 +3,12 @@ from django.utils.text import slugify
 from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
-class InsuranceMainCategory(models.Model):
-    """Основные категории страхования"""
-    name = models.CharField(max_length=100, unique=True)
+from django.db import models
+from django.urls import reverse
+
+
+class MainCategory(models.Model):
+    name = models.CharField(max_length=100)
     image = models.ImageField(
         storage=MediaCloudinaryStorage(),
         upload_to='category_images',  # Cloudinary folder
@@ -13,14 +16,20 @@ class InsuranceMainCategory(models.Model):
         null=True
     )
     private = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        verbose_name_plural = "Main Categories"
 
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('subcategory_list', args=[self.slug])
 
-class InsuranceSubCategory(models.Model):
-    """Подкатегории внутри основной категории"""
-    main_category = models.ManyToManyField(InsuranceMainCategory, related_name='subcategories')
+
+class SubCategory(models.Model):
+    main_category = models.ManyToManyField(MainCategory, related_name='subcategories')
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     image = models.ImageField(
@@ -30,21 +39,27 @@ class InsuranceSubCategory(models.Model):
         null=True
     )
     private = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.main_category.name} → {self.name}"
+
+    def get_absolute_url(self):
+        return reverse('lead_create', args=[self.main_category.slug, self.slug])
 
 
 class InsuranceLead(models.Model):
-    name = models.CharField(max_length=100)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='leads')
+    full_name = models.CharField(max_length=200)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
+    message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.email}"
+        return f"{self.full_name} ({self.subcategory})"
 
-
-from django.db import models
+##################################################################################################
 
 
 class Category(models.Model):

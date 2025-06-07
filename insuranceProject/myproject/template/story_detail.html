@@ -1,11 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
 {% load static %}
+{% load cloudinary_filters %}
 
 <div class="story-container">
-  <h1>{{ story.title }}</h1>
   <img src="{{ story.image.url }}" alt="{{ story.title }}" />
+  <div class="story-container-text">
+  <h1>{{ story.title }}</h1>
+
   <p>{{ story.snippet }}</p>
   <div>{{ story.content|safe }}</div>
-sddddddddddddddddddddddddddddddddddddddddddddd
+
   {% if story.external_links.all %}
     <h3>Ссылки по теме:</h3>
     <ul>
@@ -14,4 +21,7 @@ sddddddddddddddddddddddddddddddddddddddddddddd
       {% endfor %}
     </ul>
   {% endif %}
+  </div>
 </div>
+
+{% endblock %}

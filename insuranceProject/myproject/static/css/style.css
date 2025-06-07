@@ -32,10 +32,10 @@ html, body {
 /* {
     box-sizing: border-box;
     outline: 1px solid red;
-}*/
+}
+*/
 body {
     font-family: var(--font-family);
-    height: 100vh;
     width: 100%;
     background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
     background-size: cover;
@@ -46,7 +46,9 @@ main {
     display: flex;
     flex: 1 0 auto;
     flex-direction: column;
-    gap: 10rem;
+    align-items: center;
+    justify-content: space-around;
+
 }
 
 footer {
@@ -71,6 +73,384 @@ footer {
     }
 
 .navbar{
+
+
+        .container-info-block_text {
+            margin-top: 3rem;
+            margin-left: 1%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+            .container-info-block_text_row {
+                display: flex;
+                justify-content: space-between;
+                font-size: 1.5rem;
+
+            }
+                .container-info-block_text_row img {
+                    width: 20%;
+
+
+                }
+
+                .container-info-block_text_row ul {
+                    margin-left: 10%;
+                    width: 90%;
+                    align-self: flex-start;
+
+                }
+
+            .container-info-block_text h3 {
+                align-self: flex-start;
+                font-size: 2rem;
+
+            }
+            .container-info-block_text p {
+                width: 100%;
+                font-family: 'Playfair Display', serif;
+                color: #34495e;
+
+            }
+
+                .container-info-block_text li {
+                    text-align: left;
+                    font-size: 1.5rem;
+                }
+                .container-info-block_text p {
+                    font-size: 1.7rem;
+                }
+
+
+            .container-info-block-text img {
+                width: 20%;
+                align-self: flex-end;
+            }
+/*--------------------------------------------------CARD------------------------------------------------*/
+.section {
+  display: flex;
+  flex: 1 0 auto;     /* Без запятых */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10rem;
+}
+.section h2{
+    color: white;
+}
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      max-width: 1000px;
+      margin: 0 auto;
+}
+
+.card {
+  display: flex;
+  background: transparent;
+  position: relative;
+  flex: 1 1 300px;
+  max-width: 50%;
+  min-width: 400px;
+  min-height: 700px;
+  aspect-ratio: 3 / 4;
+  border-radius: 25px;
+  overflow: hidden;
+
+}
+
+        .card-inner {
+          background-color: #ffcc00;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.8s;
+          transform-style: preserve-3d;
+          position: relative;
+          border-radius: 25px;
+        }
+            .card:hover .card-inner {
+              transform: rotateY(180deg);
+            }
+
+            .card-front, .card-back {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                backface-visibility: hidden;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                background-color: #ffcc00;
+                z-index: 2;
+                border-radius: 25px;
+                gap: 2rem;
+
+
+            }
+                .card-front img {
+                    width: 50%;
+                    height: 40%;
+                }
+
+            .card-back {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                background-color: var(--primary-color);
+                color: black;
+                transform: rotateY(180deg);
+                backface-visibility: hidden;
+
+            }
+                .subcategory-list {
+                    height: 100%;
+                    width: 80%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+
+                }
+
+                .subcategory-list a {
+                    font-size: 1.5rem;
+                    background-color: black;
+                    text-decoration: none;
+                    text-align: center;
+                    color: white;
+                    transition: all 0.2s ease;
+                }
+
+                .subcategory-list a:active {
+                    font-size: 1rem;
+                    background-color: black;
+                    color: white;
+                }
+
+
+                .card-back li {
+                  text-decoration: none;
+                  text-align: left;
+                  color: black;
+                  font-size: 1.5rem;
+                  transition: color 0.3s ease, transform 0.3s ease;
+
+                }
+
+                .card-back p :hover {
+                  color: white;
+                }
+
+                .sub-button {
+                  width: 50%;
+                  color: white;
+                  background-color: black;
+                  font-weight: bold;
+                  border: none;
+                  border-radius: 8px;
+                  z-index: 101;
+                  font-size: 1.5rem;
+                  text-decoration: none;
+
+                  box-shadow: 0.5px 0.5px 15px grey;
+                  transition: all 0.2s ease;
+                }
+                .sub-button:hover {
+                    color: white;
+                }
+                .sub-button:active {
+                    color: white;
+                    background-color: black;
+                    font-size: 1.8rem;
+                }
+
+                .sub-button-lead {
+                  width: 100%;
+                  height: 15%
+                  color: black;
+                  background-color: black;
+                  font-weight: bold;
+                  border: none;
+                  border-radius: 8px;
+                  z-index: 101;
+                  font-size: 2rem;
+                  text-decoration: none;
+
+                  box-shadow: 0.5px 0.5px 15px grey;
+                  transition: all 0.2s ease;
+                }
+                .sub-button-lead:hover {
+                    color: white;
+                }
+                .sub-button-lead:active {
+                    color: white;
+                    background-color: black;
+                    font-size: 1.8rem;
+                }
+
+/*-------------------------------------------------------FORM-----------------------------------------------------*/
+/* === Form === */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 55%;
+  text-align: center;
+  padding: 40px;
+  background: #ffcc00;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+  box-shadow: 10px 10px 20px grey;
+}
+
+.form-wrapper:hover {
+  transform: scale(1.05);
+}
+
+    .form-wrapper h2, label {
+      color: black;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .overlay {
+        display: flex;
+        justify-content: center;
+    }
+
+    .input,
+    select,
+    .submit-btn {
+      text-align: center;
+      width: 80%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1.5rem;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .input:focus,
+      select:focus {
+      border-color: black;
+      outline: none;
+    }
+
+    .input:hover,
+      select:hover {
+      border-color: black;
+      background-color: #f0fbff;
+    }
+
+    .submit-btn {
+        width: 70%;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .submit-btn:hover {
+        color: white;
+        background-color: var(--color-bg);
+    }
+
+    .submit-btn:active {
+        width: 60%;
+        color: white;
+        background-color: var(--color-bg);
+        font-size: 0.5rem;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 26px;
+      color: black;
+    }
+
+    .form-step {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+/*------------------------------------------------------subcategory_detail---------------------------------------*/
+.highlight-block {
+
+    background-color: #ffcc00;
+}
+
+    .highlight-container {
+      min-height: 400px;
+      padding: 30px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+        .highlight-image {
+            width: 50%;
+            height: 50%;
+            object-fit: cover;
+            z-index: 15;
+        }
+
+        .highlight-text {
+            display: flex;
+            flex: 1 1 400px;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .highlight-text h2 {
+              font-size: 2rem;
+              margin-bottom: 20px;
+            }
+
+            .highlight-text p {
+              font-size: 1.5rem;
+              margin-bottom: 20px;
+            }
+
+            .cta-btn {
+                width: 30%;
+                background-color: black;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 10px;
+                font-weight: bold;
+                text-decoration: none;
+                text-align: center;
+                transition: background-color 0.3s ease;
+                align-self: center;
+
+            }
+
+            .cta-btn:active {
+                width: 30%;
+                background-color: black;
+                color: white;
+
+            }
     background-color: var(--color-bg);
     position: sticky; /* Используем sticky вместо fixed */
     top: 0; /* Закрепляем в верхней части экрана */
@@ -234,21 +614,23 @@ footer {
                 }
 
 
+
             }
-/* ---------------------------------------------NAVBAR -------------------------------------------------------*/
+/* ---------------------------------------------HERO -------------------------------------------------------*/
 
 .hero {
   background: url('../images/ben-arthur-Q9Ylf-AAD04-unsplash.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
-  height: 100svh;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: anchor-center;
   justify-content: flex-end;
   overflow: hidden;
   z-index: 0;
-  gap: 5rem;
+
 }
 
     .hero-overlay {
@@ -275,19 +657,17 @@ footer {
         text-align: center;
         align-self: center;
         color: #fff;
-        height: 60%;
-        width: 80%;
+        height: 40%;
+        width: 50%;
         animation: fadeInUp 4s ease-out forwards;
         z-index: 98;
-
-
     }
 
         .hero-content h1 {
           font-size: 2rem;
           letter-spacing: 1px;
           text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-          font-size: clamp(44px, 2vw, 18px);
+
 
         }
 
@@ -352,18 +732,33 @@ footer {
             transform: translateY(0);
           }
         }
+        .owl-form-container {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+
         .overlay-image {
-            position: absolute;
-            width: 40%;
-            transform: translateY(0%); /* Только по оси Y! */
+            width: 20%;
+            height: 50%;
+            transform: translateY(0%);
             z-index: 97;
             animation: fadeInLeft 4s ease-out forwards;
+        }
+
+        /* Работает при ширине экрана 800px и меньше */
+        @media (max-width: 800px) {
+            .overlay-image {
+                width: 35% !important; /* Временно добавим !important для отладки */
+            }
         }
 
         @keyframes fadeInLeft {
           0% {
             opacity: 1;
-            transform: translateX(-170px);
+            transform: translateX(-770px);
           }
           100% {
             opacity: 1;
@@ -456,313 +851,12 @@ footer {
         }
 
 
-        .container-info-block_text {
-            margin-top: 3rem;
-            margin-left: 1%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
-
-            .container-info-block_text_row {
-                display: flex;
-                justify-content: space-between;
-                font-size: 1.5rem;
-
-            }
-                .container-info-block_text_row img {
-                    width: 20%;
-
-
-                }
-
-                .container-info-block_text_row ul {
-                    margin-left: 10%;
-                    width: 90%;
-                    align-self: flex-start;
-
-                }
-
-            .container-info-block_text h3 {
-                align-self: flex-start;
-                font-size: 2rem;
-
-            }
-            .container-info-block_text p {
-                width: 100%;
-                font-family: 'Playfair Display', serif;
-                color: #34495e;
-
-            }
-
-                .container-info-block_text li {
-                    text-align: left;
-                    font-size: 1.5rem;
-                }
-                .container-info-block_text p {
-                    font-size: 1.7rem;
-                }
-
-
-            .container-info-block-text img {
-                width: 20%;
-                align-self: flex-end;
-            }
-/*--------------------------------------------------CARD------------------------------------------------*/
-.section {
-  display: flex;
-  flex: 1 0 auto;     /* Без запятых */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center
-}
-.section h2{
-    color: white;
-}
-
-    .container {
-        display: flex;
-        flex: 1 0 auto;
-        flex-wrap: wrap;
-        max-width: 1000px;
-        justify-content: center;
-        gap: 3rem;
-
-    }
-
-    .card {
-        display: flex;
-        background: transparent;
-        position: relative;
-        flex: 1 1 300px; /* будет стараться быть 300px, но сжиматься */
-        max-width: 50%; /* не выходить за родителя */
-        aspect-ratio: 3 / 4; /* сохраняет пропорции */
-        min-width: 300px;
-        border-radius: 25px;
-        overflow: hidden;
-        perspective: 1000px;
-    }
-
-        .card-inner {
-          background-color: #ffcc00;
-          width: 99%;
-          height: 100%;
-          transition: transform 0.8s;
-          transform-style: preserve-3d;
-          position: relative;
-          border-radius: 25px;
-        }
-            .card:hover .card-inner {
-              transform: rotateY(180deg);
-            }
-
-            .card-front, .card-back {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                backface-visibility: hidden;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                justify-content: center;
-                background-color: #ffcc00;
-                z-index: 2;
-                border-radius: 25px;
-                gap: 2rem;
-
-
-            }
-                .card-front img {
-                    width: 50%;
-                    height: 40%;
-                }
-
-            .card-back {
-                display: flex;
-                background-color: var(--primary-color);
-                color: black;
-                transform: rotateY(180deg);
-                backface-visibility: hidden;
-            }
-                .subcategory-list {
-                    height: 100%;
-                    width: 98%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
-                }
-
-
-                .card-back a, li {
-                  text-decoration: none;
-                  text-align: left;
-                  color: black;
-                  font-size: larger;
-                  transition: color 0.3s ease, transform 0.3s ease;
-
-                }
-
-                .card-back :hover {
-                  color: white;
-                }
-
-/*-------------------------------------------------------FORM-----------------------------------------------------*/
-/* === Form === */
-.form-wrapper {
-  width: 55%;
-  text-align: center;
-  padding: 40px;
-  background: #ffcc00;
-  border-radius: 16px;
-  transition: transform 0.3s ease;
-  box-shadow: 10px 10px 20px grey;
-}
-
-.form-wrapper:hover {
-  transform: scale(1.05);
-}
-
-    .form-wrapper h2, label {
-      color: black;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .overlay {
-        display: flex;
-        justify-content: center;
-    }
-
-    .input,
-    select,
-    .submit-btn {
-      text-align: center;
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1.5rem;
-      transition: border-color 0.3s ease, background-color 0.3s ease;
-    }
-
-    .input:focus,
-      select:focus {
-      border-color: black;
-      outline: none;
-    }
-
-    .input:hover,
-      select:hover {
-      border-color: black;
-      background-color: #f0fbff;
-    }
-
-    .submit-btn {
-        width: 70%;
-        background-color: var(--primary-color);
-        color: white;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-        text-decoration: none;
-        font-size: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    .submit-btn:hover {
-        color: white;
-        background-color: var(--color-bg);
-    }
-
-    .submit-btn:active {
-        width: 60%;
-        color: white;
-        background-color: var(--color-bg);
-        font-size: 0.5rem;
-    }
-
-    .message {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 26px;
-      color: black;
-    }
-
-    .form-step {
-      display: none;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .form-step.active {
-      display: block;
-    }
-
-/*------------------------------------------------------subcategory_detail---------------------------------------*/
-.highlight-block {
-
-    background-color: #ffcc00;
-}
-
-    .highlight-container {
-      min-height: 400px;
-      padding: 30px 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-        .highlight-image {
-            width: 50%;
-            height: 50%;
-            object-fit: cover;
-            z-index: 15;
-        }
-
-        .highlight-text {
-            display: flex;
-            flex: 1 1 400px;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-            .highlight-text h2 {
-              font-size: 2rem;
-              margin-bottom: 20px;
-            }
-
-            .highlight-text p {
-              font-size: 1.5rem;
-              margin-bottom: 20px;
-
-            }
-
-            .cta-btn {
-                width: 70%;
-                background-color: var(--primary-color);
-                color: black;
-                padding: 12px 24px;
-                border-radius: 10px;
-                font-weight: bold;
-                text-decoration: none;
-                text-align: center;
-                transition: background-color 0.3s ease;
-                align-self: center;
-            }
-
-
-
-@media (max-width: 576px) {
+@media (min-width: 726px){
   .card {
     flex: 1 1 100%;
     max-width: 100%;
-    min-width: 90%;
+    min-width: unset;
+    min-height: 400px; /* или на твой вкус */
   }
 
   .form-wrapper {
@@ -927,8 +1021,7 @@ footer {
 /* styles.css */
 
 .story-container {
-  width: 60%;
-  height: 80%;
+
   margin: 2rem auto;
   padding: 1.5rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -941,6 +1034,15 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.story-container-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .story-container h1 {

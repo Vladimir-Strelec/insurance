@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% load static %}
+{% load cloudinary_filters %}
+
+<section class="section about">
+        <h2>Hauptkategorien</h2>
+        <div class="container">
+            {% for main in main_categories %}
+            <div class="card" id="{{ forloop.counter0 }}">
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        {% if main.image %}
+                        <img alt="{{ main.name }}" src="{{ main.image.url|optimize_cloudinary }}">
+                        {% else %}
+                        <img alt="Kein Bild vorhanden" src="{% static 'images/placeholder.jpg' %}">
+                        {% endif %}
+                        <h4>{{ main.name }}</h4>
+                    </div>
+
+                    <div class="card-back">
+                        <h3>Unterkategorien:</h3>
+                        <ul class="subcategory-list">
+                            {% for sub in main.subcategories.all %}
+                            <li>{{ sub.name }}</li>
+                            {% empty %}
+                            <li class="empty">Keine Unterkategorien vorhanden</li>
+                            {% endfor %}
+                            <a href="{% url 'subcategory_list' main.slug %}" class="submit-btn">press</a>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+</section>
+
+{% endblock %}

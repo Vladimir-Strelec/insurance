@@ -1,39 +1,34 @@
 from django import forms
-from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceProduct
+from .models import InsuranceLead
 
-
-class MainCategoryForm(forms.Form):
-    main_category = forms.ModelChoiceField(
-        queryset=InsuranceMainCategory.objects.all(),
-        label="Основная категория",
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
-
-class SubCategoryForm(forms.Form):
-    subcategory = forms.ModelChoiceField(
-        queryset=InsuranceSubCategory.objects.none(),
-        label="Подкатегория",
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
-    def __init__(self, *args, **kwargs):
-        main_category = kwargs.pop('main_category', None)
-        super().__init__(*args, **kwargs)
-        if main_category:
-            self.fields['subcategory'].queryset = InsuranceSubCategory.objects.filter(main_category=main_category)
-
-
-class ProductForm(forms.Form):
-    product = forms.ModelChoiceField(
-        queryset=InsuranceProduct.objects.none(),
-        label="Продукт",
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
-    def __init__(self, *args, **kwargs):
-        subcategory = kwargs.pop('subcategory', None)
-        super().__init__(*args, **kwargs)
-        if subcategory:
-            self.fields['product'].queryset = InsuranceProduct.objects.filter(subcategory=subcategory)
-
+class LeadForm(forms.ModelForm):
+    class Meta:
+        model = InsuranceLead
+        fields = ['full_name', 'email', 'phone', 'message']
+        labels = {
+            'full_name': 'Vollständiger Name',
+            'email': 'E-Mail',
+            'phone': 'Telefonnummer',
+            'message': 'Nachricht',
+        }
+        error_messages = {
+            'full_name': {
+                'required': 'Bitte geben Sie Ihren vollständigen Namen ein.',
+            },
+            'email': {
+                'required': 'Bitte geben Sie Ihre E-Mail-Adresse ein.',
+                'invalid': 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+            },
+            'phone': {
+                'required': 'Bitte geben Sie Ihre Telefonnummer ein.',
+            },
+            'message': {
+                'required': 'Bitte schreiben Sie eine Nachricht.',
+            },
+        }
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'w-full rounded-md border border-gray-300 p-2'}),
+            'email': forms.EmailInput(attrs={'class': 'w-full rounded-md border border-gray-300 p-2'}),
+            'phone': forms.TextInput(attrs={'class': 'w-full rounded-md border border-gray-300 p-2'}),
+            'message': forms.Textarea(attrs={'class': 'w-full rounded-md border border-gray-300 p-2', 'rows': 4}),
+        }

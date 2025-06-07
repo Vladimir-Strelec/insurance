@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cloudinary_filters %}
+
+
+{% block content %}
+
+<section class="highlight-block">
+
+    <div class="highlight-container">
+        <div class="highlight-image parallax-bg">
+            <img class="highlight-image" src="{{ sub_category.image.url|optimize_cloudinary }}" alt="Versicherungsberater Alexej Kondraskov in Nürnberg">
+        </div>
+        <div class="highlight-text" id="1">
+            {% if message %}
+            <p>Vielen Dank für Ihre Anfrage! Wir werden Sie in Kürze kontaktieren.</p>
+            {% endif %}
+            <h2>{{ sub_category.name }}</h2>
+            <p>
+                {{ sub_category.description }}
+            </p>
+            <a href="{% url 'lead_create' main_category.slug sub_category.slug %}" class="cta-btn">Anfrage senden</a>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+
+
+
+

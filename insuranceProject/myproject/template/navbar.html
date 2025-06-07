@@ -1,3 +1,5 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-black">
     <div class="container-fluid">
         <div class="navbar-logo">
@@ -13,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li>
-                    <a aria-current="page" class="dropdown-item" href="{% url 'insurance_dynamic' %}">Startseite</a>
+                    <a aria-current="page" class="dropdown-item" href="{% url 'home' %}">Startseite</a>
                 </li>
 
                 <li>
@@ -27,17 +29,13 @@
 
                     <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
                         {% for main in main_categories %}
-                        {% if request.resolver_match.url_name == 'insurance_dynamic' %}
-                        <li><a class="dropdown-item" href="#{{ forloop.counter0 }}">{{ main.name }}</a></li>
-                        {% else %}
-                        <li><a class="dropdown-item" href="{% url 'insurance_dynamic' %}#{{ forloop.counter0 }}">{{ main.name }}</a></li>
-                        {% endif %}
+
+                            <li><a class="dropdown-item" href="{% url 'main_category_list' %}">{{main.slug}}</a></li>
+
                         {% endfor %}
                     </ul>
                 </li>
-                <li>
-                    <a href="{% url 'story_list' %}">stories</a>
-                </li>
+
                 <li>
                     <hr class="dropdown-divider">
                 </li>

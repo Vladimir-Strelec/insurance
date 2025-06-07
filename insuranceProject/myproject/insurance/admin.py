@@ -1,13 +1,13 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import InsuranceMainCategory, InsuranceSubCategory, InsuranceLead
+from .models import MainCategory, SubCategory, InsuranceLead
 from .models import Story, Category, Tag, ExternalLink
 
 admin.site.register(InsuranceLead)
 
 
-@admin.register(InsuranceSubCategory)
+@admin.register(SubCategory)
 class InsuranceSubCategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'image_preview')
 
@@ -19,7 +19,7 @@ class InsuranceSubCategoryAdmin(admin.ModelAdmin):
     image_preview.short_description = 'Превью'
 
 
-@admin.register(InsuranceMainCategory)
+@admin.register(MainCategory)
 class InsuranceMainCategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'image_preview')
 

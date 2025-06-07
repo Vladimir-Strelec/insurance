@@ -98,7 +98,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de'
+
 
 TIME_ZONE = 'UTC'
 
