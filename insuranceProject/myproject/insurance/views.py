@@ -47,10 +47,11 @@ class HomeView(ListView):
                 subcategory=None
             )
             messages.success(request, "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.")
-            return self.get(request)  # повторный GET для рендера страницы с сообщением
-        else:
-            self.form = form
             return self.get(request)
+        else:
+            context = self.get_context_data()
+            context['form'] = form
+            return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
