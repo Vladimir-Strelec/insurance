@@ -3,6 +3,12 @@
 
 {% block content %}
 
+        <!-- Плавающая кнопка -->
+    {% if main_category.slug and subcategory.slug %}
+        <a class="form-icon" href="{% url 'lead_create' main_category.slug subcategory.slug %}">
+            <i class="fas fa-comment-dots"></i>
+        </a>
+    {% endif %}
 
     {% include "hero/hero.html" %}
 

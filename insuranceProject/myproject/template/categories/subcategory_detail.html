@@ -1,9 +1,13 @@
+{% extends "base.html" %}
+
+
+
 
 {% load static %}
 {% load cloudinary_filters %}
 
 
-
+{% block content %}
 
 <section class="highlight-block">
 
@@ -19,13 +23,13 @@
             <p>
                 {{ sub_category.description }}
             </p>
-            <a href="{% url 'lead_create' main_category.slug sub_category.slug %}" class="cta-btn">Anfrage senden</a>
+            <a href="{% url 'lead_create' main_category.slug sub_category.slug %}" class="black-button">Anfrage senden</a>
         </div>
     </div>
 
 </section>
 
-
+{% endblock %}
 
 
 

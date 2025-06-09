@@ -22,8 +22,9 @@
           <img src="{{ story.image.url }}" class="d-block mx-auto" alt="{{ story.title }}" style="max-height: 400px;" />
 
           <h1>{{ story.title }}</h1>
-          <h2>{{ story.snippet|truncatewords:10 }}</h2>
-          <h3>{{ story.content|truncatewords:20 }}</h3>
+          <h2>{{ story.snippet|truncatewords:30 }}</h2>
+          <h3>{{ story.content|truncatewords:50 }}</h3>
+
         </div>
       </div>
     {% endfor %}

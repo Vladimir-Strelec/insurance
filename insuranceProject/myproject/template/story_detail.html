@@ -8,19 +8,17 @@
 <div class="story-container">
   <img src="{{ story.image.url }}" alt="{{ story.title }}" />
   <div class="story-container-text">
-  <h1>{{ story.title }}</h1>
-
-  <p>{{ story.snippet }}</p>
-  <div>{{ story.content|safe }}</div>
-
-  {% if story.external_links.all %}
-    <h3>Ссылки по теме:</h3>
-    <ul>
-      {% for link in story.external_links.all %}
-        <li><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.title }}</a></li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+    <h1>{{ story.title }}</h1>
+    <p>{{ story.snippet }}</p>
+    <p>{{ story.content|safe }}</p>
+    {% if story.external_links.all %}
+      <h3>Thematisch verwandte Links:</h3>
+      <ul>
+        {% for link in story.external_links.all %}
+          <li><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
   </div>
 </div>
 

@@ -23,7 +23,7 @@
                         <h3>Unterkategorien:</h3>
                         <ul class="subcategory-list">
                             {% for sub in main.subcategories.all %}
-                            <li><a href="{% url 'subcategory_detail' main_id=main.id sub_id=sub.id %}">{{ sub.name }}</a></li>
+                            <li><a href="">{{ sub.name }}</a></li>
                             {% empty %}
                             <li class="empty">Keine Unterkategorien vorhanden</li>
                             {% endfor %}

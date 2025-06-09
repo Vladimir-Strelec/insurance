@@ -1,9 +1,14 @@
+{% extends "base.html" %}
+
+
+
 
 {% load static %}
 {% load cloudinary_filters %}
 
 
 
+{% block content %}
 
 <section class="section about">
 
@@ -22,12 +27,13 @@
                     </div>
                     <div class="card-back">
                         <h1>{{ sub.name }}</h1>
-                        <p>{{ sub.description|truncatewords:10 }}</p>
-                        <a href="{% url 'subcategory_detail' main_category.slug sub.slug %}" class="sub-button">Noch Info</a>
-                        <ul class="subcategory-list">
+                        <p>{{ sub.description|truncatewords:15 }}</p>
 
-                            <a href="{% url 'lead_create' main_category.slug sub.slug %}" class="sub-button-lead">Beratung anfordern</a>
-                        </ul>
+
+                        <a href="{% url 'subcategory_detail' main_category.slug sub.slug %}" class="black-button">Noch Info</a>
+
+                        <a href="{% url 'lead_create' main_category.slug sub.slug %}" class="black-button" style="width: 80%; font-size: 1.3rem;">Beratung anfordern</a>
+
                     </div>
                 </div>
             </div>
@@ -36,3 +42,4 @@
 
 </section>
 
+{% endblock %}
