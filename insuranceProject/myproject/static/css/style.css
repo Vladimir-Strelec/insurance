@@ -188,7 +188,7 @@ footer {
 /*--------------------------------------------------HERO--------------------------------------------------------------*/
 
 .hero {
-  background: url('../images/ben-arthur-Q9Ylf-AAD04-unsplash.jpg') no-repeat center center fixed;
+  background: url('../images/luca-bravo-9l_326FISzk-unsplash (1).jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
   width: 100%;
@@ -421,7 +421,7 @@ footer {
 
             .container-info-block-row img {
                 max-width: 30%;
-                height: 30%;
+                height: 30svh;
                 background-color: red;
             }
 
@@ -550,11 +550,12 @@ footer {
         position: relative;
         flex: 1 1 300px; /* будет стараться быть 300px, но сжиматься */
         max-width: 50%; /* не выходить за родителя */
-        aspect-ratio: 3 / 4; /* сохраняет пропорции */
-        min-width: 300px;
+        height: 50vh;
+        aspect-ratio: 5 / 4; /* сохраняет пропорции */
+        min-width: 208px;
         border-radius: 25px;
         overflow: hidden;
-        perspective: 1000px;
+
     }
 .card-inner {
           background-color: #ffcc00;
@@ -587,8 +588,10 @@ footer {
 
             }
                 .card-front img {
-                    width: 50%;
-                    height: 40%;
+                    padding-top: 1rem;
+                    max-width: 60%;
+                    max-height: 40vh;
+
                 }
 
             .card-back {
@@ -608,7 +611,9 @@ footer {
 
                 }
 
-
+                .card-back h1 {
+                    font-size: 1.7rem;
+                }
 
                 .card-back li {
                   text-decoration: none;
@@ -636,6 +641,9 @@ footer {
                 }
 
                 .black-button{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
                     text-decoration: none;
                     align-self: center;
                     width: 70%;
@@ -661,6 +669,27 @@ footer {
                   transform: scale(0.96);
                   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
                 }
+                @media (max-width: 756px) {
+                    .black-button{
+                        font-size: 1rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
+                    .card {
+                        display: flex;
+                        background: transparent;
+                        position: relative;
+                        flex: 1 1 208px; /* будет стараться быть 300px, но сжиматься */
+                        max-width: 50%; /* не выходить за родителя */
+                        height: 30vh;
+                        aspect-ratio: 3 / 4; /* сохраняет пропорции */
+                        min-width: 208px;
+                        border-radius: 25px;
+                        overflow: hidden;
+
+                    }
+                }
 /*------------------------------------------------------SUB-DETAILS--------------------------------------------------*/
 .highlight-block {
     margin-top: 7rem;
@@ -673,6 +702,7 @@ footer {
       min-height: 400px;
       padding: 30px 80px;
       display: flex;
+      flex-direction: rows;
       align-items: center;
       justify-content: center;
       border-radius: 12px;
@@ -680,8 +710,7 @@ footer {
     }
 
         .highlight-image {
-            width: 50%;
-            height: 50%;
+            width: 70%;
             object-fit: cover;
             z-index: 15;
         }
@@ -705,6 +734,7 @@ footer {
             }
 
             .highlight-text p {
+
               font-family: 'Playfair Display', serif;
               letter-spacing: 1px;
               font-size: 1.5rem;
@@ -725,13 +755,20 @@ footer {
                 align-self: center;
             }
 
-
+            @media (max-width: 760px) {
+                    .highlight-container {
+                      flex-direction: column;
+                    }
+                    .highlight-image {
+                        width: 100%;
+                    }
+                }
 /*------------------------------------------------------STORIES------------------------------------------------------*/
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@500;700&display=swap');
 
 .story-container {
-  width: 95vw;
+  width: 70%;
   height: 100%;
   margin: 2rem auto;
   padding: 1.5rem;
@@ -742,7 +779,7 @@ footer {
   line-height: 1.7;
   color: #2c3e50;
   display: flex;
-  flex-direction: rows;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -755,23 +792,30 @@ footer {
     height: 100%;
     width: 100%;
     text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+}
+.story-container-text h1 {
+    width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .story-container h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 2rem;
   color: #1a1a1a;
   text-shadow: 0 2px 4px rgba(0,0,0,0.15);
   text-align: center;
   margin-bottom: 1rem;
+
 }
 
 .story-container img {
-  max-width: 50%;
-  height: 50%;
+  max-width: 45vw;
+  max-height: 50vh;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   margin-bottom: 1.5rem;
 }
 
@@ -856,5 +900,10 @@ footer {
         bottom: 8%;
         right: 1%;
         transform: scale(0.5);
+    }
+
+    .story-container {
+        width: 99%;
+        height: 100%;
     }
 }

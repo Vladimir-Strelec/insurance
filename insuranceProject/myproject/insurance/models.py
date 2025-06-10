@@ -15,8 +15,9 @@ class MainCategory(models.Model):
         blank=True,
         null=True
     )
-    private = models.BooleanField(default=False)
+    seo_keywords = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(unique=True)
+    private = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Main Categories"
@@ -38,8 +39,9 @@ class SubCategory(models.Model):
         blank=True,
         null=True
     )
-    private = models.BooleanField(default=False)
+    seo_keywords = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(unique=True)
+    private = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.main_category.name} → {self.name}"
