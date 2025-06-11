@@ -114,7 +114,7 @@ class LeadCreateView(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.main_category = get_object_or_404(MainCategory, slug=self.kwargs['main_slug'])
-        self.subcategory = get_object_or_404(SubCategory, slug=self.kwargs['sub_slug'], main_category=self.main_category)
+        self.subcategory = get_object_or_404(SubCategory, slug=self.kwargs['sub_slug'])
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):

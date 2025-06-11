@@ -1,16 +1,15 @@
-html, body{
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    overflow-x: hidden;
+html, body {
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+
 }
 body {
-    display: flex;
-    flex-direction: column;
     pointer-events: auto;
     background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
     background-size: cover;
@@ -18,9 +17,10 @@ body {
 }
 
 .main {
+    min-height: 100vh;
     margin-bottom: 20px;
     display: flex;
-    flex: 1 0 auto;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -545,17 +545,16 @@ footer {
 
     }
 .card {
-        display: flex;
-        background: transparent;
-        position: relative;
-        flex: 1 1 300px; /* будет стараться быть 300px, но сжиматься */
-        max-width: 50%; /* не выходить за родителя */
-        height: 50vh;
-        aspect-ratio: 5 / 4; /* сохраняет пропорции */
-        min-width: 208px;
-        border-radius: 25px;
-        overflow: hidden;
-
+    display: flex;
+    background: transparent;
+    position: relative;
+    flex: 1 1 300px; /* будет стараться быть 300px, но сжиматься */
+    max-width: 50%; /* не выходить за родителя */
+    height: 50vh;
+    aspect-ratio: 5 / 4; /* сохраняет пропорции */
+    min-width: 208px;
+    border-radius: 25px;
+    overflow: hidden;
     }
 .card-inner {
           background-color: #ffcc00;
@@ -596,13 +595,16 @@ footer {
 
             .card-back {
                 display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
                 background-color: var(--primary-color);
                 color: black;
                 transform: rotateY(180deg);
                 backface-visibility: hidden;
             }
                 .subcategory-list {
-                    height: 20svh;
+                    height: 20%;
                     width: 98%;
                     display: flex;
                     flex-direction: column;
@@ -681,10 +683,10 @@ footer {
                         background: transparent;
                         position: relative;
                         flex: 1 1 208px; /* будет стараться быть 300px, но сжиматься */
-                        max-width: 50%; /* не выходить за родителя */
-                        height: 30vh;
+                        max-width: 45vw; /* не выходить за родителя */
+                        height: 53vh;
                         aspect-ratio: 3 / 4; /* сохраняет пропорции */
-                        min-width: 208px;
+                        min-width: 295px;
                         border-radius: 25px;
                         overflow: hidden;
 
@@ -776,7 +778,7 @@ footer {
   background-color: #ffcc00;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  line-height: 1.7;
+  line-height: 1.3;
   color: #2c3e50;
   display: flex;
   flex-direction: column;
@@ -790,7 +792,7 @@ footer {
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 100%;
+    width: 90%;
     text-align: center;
     white-space: normal;
     word-wrap: break-word;
@@ -903,7 +905,8 @@ footer {
     }
 
     .story-container {
-        width: 99%;
-        height: 100%;
+        width: 70%;
+        height: 70%;
+
     }
 }
