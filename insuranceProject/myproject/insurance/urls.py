@@ -14,7 +14,8 @@ sitemaps = {
 
 
 urlpatterns = [
-
+    path('impressum/', TemplateView.as_view(template_name="impressum.html"), name='impressum'),
+    path('datenschutz/', TemplateView.as_view(template_name="datenschutz.html"), name='datenschutz'),
     path('stories/', story_list, name='story_list'),
     path('story/<slug:slug>/', story_detail, name='story_detail'),
 
