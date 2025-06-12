@@ -30,7 +30,7 @@
                     <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
                         {% for main in main_categories %}
 
-                            <li><a class="dropdown-item" href="{% url 'main_category_list' %}">{{main.slug}}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'main_category_list' %}">{{main.name}}</a></li>
 
                         {% endfor %}
                     </ul>

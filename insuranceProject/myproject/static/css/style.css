@@ -2,48 +2,49 @@ html, body {
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  height: 100%;
   font-family: 'Segoe UI', sans-serif;
   overflow-x: hidden;
-
 }
-body {
-    pointer-events: auto;
-    background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center fixed;
-    background-size: cover;
-    inset: 0;
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('../images/andrew-kliatskyi-ZV79vhL6ppk-unsplash.jpg') no-repeat center center;
+  background-size: cover;
+  z-index: -1;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .main {
-    min-height: 100vh;
-    margin-bottom: 20px;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(var(--vh, 1vh) * 100);
 }
-footer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-shrink: 0;
-    text-decoration: none;
-}
-    .footer p {
-      font-size: 1.5rem;
-      color: white;
-    }
 
-   .footer a {
-      text-decoration: none;
-      background: none;
-    }
+footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.footer p {
+  font-size: 1.5rem;
+  color: white;
+}
 
 
 /*#################################################NAVBAR####################################################*/
@@ -86,7 +87,7 @@ footer {
     color: black;
     border-radius: 1px;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
     .navbar-nav ul {
@@ -429,7 +430,7 @@ footer {
                 flex: 1 1 60%;
                 max-width: 60%;
                 font-family: 'Playfair Display', serif;
-                font-size: 2rem;
+                font-size: 1.5rem;
                 color: black;
 
             }
@@ -446,13 +447,13 @@ footer {
             .container-info-block p {
                 max-width: 80%;
                 text-align: center;
-                font-size: 1.5rem;
+                font-size: 1.2rem;
 
             }
             .container-info-block-row p {
                 max-width: 80%;
                 text-align: center;
-                font-size: 1.5rem;
+                font-size: 1.2rem;
 
             }
         }
@@ -483,7 +484,7 @@ footer {
                     align-self: flex-start;
                 }
                 .container-info-block_text_row p {
-                    font-size: 2rem;
+                    font-size: 1.2rem;
                 }
 
             .container-info-block_text h3 {
@@ -517,7 +518,7 @@ footer {
                     font-size: 1.5rem;
                 }
             .container-info-block_text_row p {
-                    font-size: 1.5rem;
+                    font-size: 1.2rem;
                 }
             }
 
@@ -614,7 +615,7 @@ footer {
                 }
 
                 .card-back h1 {
-                    font-size: 1.7rem;
+                    font-size: 1.5rem;
                 }
 
                 .card-back li {
@@ -731,7 +732,7 @@ footer {
             .highlight-text h2 {
               font-family: 'Playfair Display', serif;
               letter-spacing: 1px;
-              font-size: 2rem;
+              font-size: 1.5rem;
               margin-bottom: 20px;
             }
 
@@ -739,7 +740,7 @@ footer {
 
               font-family: 'Playfair Display', serif;
               letter-spacing: 1px;
-              font-size: 1.5rem;
+              font-size: 1rem;
               margin-bottom: 20px;
 
             }
@@ -804,14 +805,27 @@ footer {
 }
 
 .story-container h1 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 98%;
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 2rem;
+  font-size: 1.5rem;
   color: #1a1a1a;
   text-shadow: 0 2px 4px rgba(0,0,0,0.15);
   text-align: center;
   margin-bottom: 1rem;
+}
 
+.story-container h2 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 98%;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .story-container img {
@@ -823,12 +837,12 @@ footer {
 
 .story-container p {
   width: 99%;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 400;
   color: black;
   text-align: center;
   max-width: 90%;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .story-container div {
@@ -837,7 +851,7 @@ footer {
 
 .story-container h3 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #222;
   margin-top: 2rem;
@@ -845,7 +859,7 @@ footer {
 }
 
 .story-container ul {
-  padding-left: 1.5rem;
+  padding-left: 1.3rem;
   font-size: 1.2rem;
 }
 
@@ -905,7 +919,7 @@ footer {
     }
 
     .story-container {
-        width: 70%;
+        width: 80%;
         height: 70%;
 
     }
