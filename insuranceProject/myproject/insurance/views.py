@@ -4,7 +4,7 @@ import os
 from django.contrib import messages
 from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
@@ -62,8 +62,6 @@ class HomeView(ListView):
         context['main_category'] = self.main_category
         context['form'] = getattr(self, 'form', LeadForm())
         return context
-
-
 
 
 class MainCategoryListView(ListView):
@@ -132,7 +130,7 @@ class LeadCreateView(CreateView):
             subcategory=self.subcategory.id
         )
 
-        return response
+        return redirect('thank-you')
 
     def get_success_url(self):
         return self.request.path + '?success=1'
@@ -208,3 +206,7 @@ def robots_txt(request):
         "Sitemap: https://inschurance.de/sitemap.xml"
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+def thank_you(request):
+    return render(request, 'thank-you.html')

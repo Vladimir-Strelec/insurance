@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import get_policy, robots_txt, story_detail, story_list, MainCategoryListView, SubCategoryListView, \
-    LeadCreateView, HomeView, SubCategoryDetailListView
+    LeadCreateView, HomeView, SubCategoryDetailListView, thank_you
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
@@ -12,10 +12,10 @@ sitemaps = {
     'subcategories': SubCategorySitemap,
 }
 
-
 urlpatterns = [
     path('impressum/', TemplateView.as_view(template_name="impressum.html"), name='impressum'),
     path('datenschutz/', TemplateView.as_view(template_name="datenschutz.html"), name='datenschutz'),
+    path('thank-you/', thank_you, name='thank-you'),
     path('stories/', story_list, name='story_list'),
     path('story/<slug:slug>/', story_detail, name='story_detail'),
 
@@ -29,6 +29,7 @@ urlpatterns = [
     path("robots.txt", robots_txt),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 
 
