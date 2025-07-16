@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
-
 {% block content %}
 
-        <!-- Плавающая кнопка -->
-    {% if main_category.slug and subcategory.slug %}
-        <a class="form-icon" href="{% url 'lead_create' main_category.slug subcategory.slug %}">
-            <i class="fas fa-comment-dots"></i>
-        </a>
-    {% endif %}
+  <!-- Плавающая кнопка -->
+  {% if main_category and subcategory and main_category.slug and subcategory.slug %}
+    <a class="form-icon" href="{% url 'lead_create' main_category.slug subcategory.slug %}" title="Kontaktformular öffnen">
+      <i class="fas fa-comment-dots"></i>
+    </a>
+  {% endif %}
 
-    {% include "hero/hero.html" %}
-
-    {% include "info-about-me/info-about-me.html" %}
-    {% include "story_list.html" %}
+  {% include "hero/hero.html" %}
+  {% include "info-about-me/info-about-me.html" %}
+  {% include "story_list.html" %}
 
 {% endblock %}

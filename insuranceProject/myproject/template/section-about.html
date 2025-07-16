@@ -1,37 +1,46 @@
 {% load static %}
 {% load cloudinary_filters %}
+
 <section class="section about">
+    <div class="container">
+        <h2 class="mb-4 text-center">Hauptkategorien</h2>
 
-    <!-- Kategorien Vorschau -->
-
-        <h2>Hauptkategorien</h2>
-        <div class="container">
+        <div class="row g-4 justify-content-center">
             {% for main in main_categories %}
-            <div class="card" id="{{ forloop.counter0 }}">
-                <div class="card-inner">
+                <div class="col-md-4 col-sm-6">
+                    <div class="card category-card h-100" id="category-{{ forloop.counter0 }}">
+                        <div class="card-inner">
 
-                    <div class="card-front">
-                        {% if main.image %}
-                        <img alt="{{ main.name }}" src="{{ main.image.url|optimize_cloudinary }}">
-                        {% else %}
-                        <img alt="Kein Bild vorhanden" src="{% static 'images/placeholder.jpg' %}">
-                        {% endif %}
-                        <h4>{{ main.name }}</h4>
-                    </div>
+                            <!-- Front -->
+                            <div class="card-front text-center">
+                                {% if main.image %}
+                                    <img src="{{ main.image.url|optimize_cloudinary }}" alt="{{ main.name }}" class="img-fluid rounded">
+                                {% else %}
+                                    <img src="{% static 'images/placeholder.jpg' %}" alt="Kein Bild vorhanden" class="img-fluid rounded">
+                                {% endif %}
+                                <h4 class="mt-2">{{ main.name }}</h4>
+                            </div>
 
-                    <div class="card-back">
-                        <h3>Unterkategorien:</h3>
-                        <ul class="subcategory-list">
-                            {% for sub in main.subcategories.all %}
-                            <li><a href="">{{ sub.name }}</a></li>
-                            {% empty %}
-                            <li class="empty">Keine Unterkategorien vorhanden</li>
-                            {% endfor %}
-                        </ul>
+                            <!-- Back -->
+                            <div class="card-back p-3">
+                                <h5 class="mb-2">Unterkategorien:</h5>
+                                <ul class="list-unstyled subcategory-list">
+                                    {% for sub in main.subcategories.all %}
+                                        <li>
+                                            <a href="{% url 'subcategory_detail' main.slug sub.slug %}" class="text-decoration-none">
+                                                {{ sub.name }}
+                                            </a>
+                                        </li>
+                                    {% empty %}
+                                        <li class="text-muted">Keine Unterkategorien vorhanden</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
-
+    </div>
 </section>
