@@ -356,12 +356,14 @@ footer {
 
 
     .overlay-image {
-        align-self: flex-start;
-        position: absolute;
-        width: 40%;
-        transform: translateY(0%); /* Только по оси Y! */
-        z-index: 97;
-        animation: fadeInLeft 1s ease-out forwards;
+      align-self: flex-start;
+      position: absolute;
+      width: 40%;
+      max-width: 600px;
+      height: auto;
+      transform: translateY(0%);
+      z-index: 97;
+      animation: fadeInLeft 1s ease-out forwards;
     }
     @keyframes fadeInLeft {
       0% {
