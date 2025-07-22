@@ -9,12 +9,12 @@ import cloudinary.api
 import cloudinary_storage
 
 load_dotenv()
-
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
-PREPEND_WWW = False
+#
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+#
+# PREPEND_WWW = False
 
 cloudinary.config(
     cloud_name=os.getenv("CLOUD_NAME"),
