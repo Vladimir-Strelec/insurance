@@ -85,6 +85,9 @@
             font-size: 1.2rem;
         }
 
+        .container-fluid {
+            background-color: black;
+        }
         /* Hero Section */
         .hero {
             background-size: cover;
@@ -119,8 +122,7 @@
             align-items: center;
             text-align: center;
             color: #fff;
-            height: 55vh;
-            animation: fadeInUp 1s ease-out forwards;
+            height: 100vh;
             z-index: 98;
         }
 
@@ -195,7 +197,7 @@
         /* Responsive Adjustments */
         @media (max-width: 760px) {
             .hero-content {
-                height: 90vh !important;
+                height: 100vh !important;
             }
 
             .hero-content p {
