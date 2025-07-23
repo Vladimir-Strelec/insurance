@@ -196,7 +196,8 @@ def story_list(request):
 
 def story_detail(request, slug):
     story = get_object_or_404(Story, slug=slug)
-    return render(request, 'story_detail.html', {'story': story})
+    main_categories = MainCategory.objects.all()
+    return render(request, 'story_detail.html', {'story': story, 'main_categories': main_categories})
 
 
 def robots_txt(request):
