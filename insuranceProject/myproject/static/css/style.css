@@ -224,7 +224,7 @@
         img {
             aspect-ratio: 16/9;
             width: 100%;
-            height: 33vh;
+            height: 30vh;
         }
 
 
@@ -263,7 +263,7 @@
 
             .container-info-block-row img {
                 max-width: 30%;
-                height: 30svh;
+                height: max-content;
                 background-color: red;
             }
 
@@ -561,7 +561,7 @@
 
         .highlight-image {
             width: 70%;
-            height: 70vh;
+            height: 100vh;
             z-index: 15;
         }
 
@@ -587,7 +587,7 @@
 
               font-family: 'Playfair Display', serif;
               letter-spacing: 1px;
-              font-size: 1rem;
+              font-size: 1.5rem;
               margin-bottom: 20px;
 
             }
@@ -611,7 +611,7 @@
                     }
                     .highlight-image {
                         width: 100%;
-                        height: 70vh;
+                        height: 30vh;
                     }
                 }
 /*------------------------------------------------------STORIES------------------------------------------------------*/
