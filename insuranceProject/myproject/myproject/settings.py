@@ -10,9 +10,40 @@ import cloudinary_storage
 
 load_dotenv()
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# --- БЕЗОПАСНОСТЬ: делаем завязку на DEBUG ---
+if DEBUG:
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+    CSRF_TRUSTED_ORIGINS = [
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+    ]
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    SECURE_HSTS_SECONDS = 0
+    SECURE_PROXY_SSL_HEADER = None
+else:
+    ALLOWED_HOSTS = [
+        "inschurance.de",
+        "www.inschurance.de",
+        "insurance-1-gt02.onrender.com.",
+    ]
+    CSRF_TRUSTED_ORIGINS = [
+        "https://inschurance.de",
+        "https://www.inschurance.de",
+    ]
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Если за прокси (Render/NGINX) — пробрасываем схему
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 PREPEND_WWW = False
 
@@ -106,15 +137,16 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'https://insurance-2-1hsc.onrender.com/'
-
-#STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+if DEBUG:
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [ BASE_DIR / 'static' ]  # где лежат твои css/js при разработке
+    STATIC_ROOT = BASE_DIR / 'staticfiles'      # не используется в dev, но пусть будет
+    WHITENOISE_AUTOREFRESH = True
+else:
+    STATIC_URL = '/static/'                     # или твой CDN-путь, если реально нужен
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATICFILES_DIRS = []                       # на проде обычно пусто
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

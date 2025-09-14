@@ -11,9 +11,8 @@ class MainCategory(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(
         storage=MediaCloudinaryStorage(),
-        upload_to='category_images',  # Cloudinary folder
-        blank=True,
-        null=True
+        upload_to='category_images',
+        blank=True, null=True
     )
     seo_keywords = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(unique=True)
@@ -21,12 +20,24 @@ class MainCategory(models.Model):
 
     class Meta:
         verbose_name_plural = "Main Categories"
+        ordering = ["name"]  # уберёт warning про unordered в sitemap
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
+        # этот name должен существовать в urls.py
         return reverse('subcategory_list', args=[self.slug])
+
+    @property
+    def image_url(self):
+        """Удобный доступ к Cloudinary URL или плейсхолдер если пусто."""
+        if self.image:
+            try:
+                return self.image.url
+            except Exception:
+                pass
+        return "https://placehold.co/600x400/png?text=Main+Category"
 
 
 class SubCategory(models.Model):
