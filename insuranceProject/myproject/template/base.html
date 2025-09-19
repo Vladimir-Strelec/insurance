@@ -24,6 +24,7 @@
     <meta name="twitter:image" content="https://res.cloudinary.com/du08um3mi/image/upload/v1747675280/category_images/c22aed97af71608984866e0ada609d06_zhgpua.png">
     <meta name="twitter:title" content="Versicherung in Nürnberg | Alexej Kondraskov">
     <meta name="twitter:description" content="ARAG Partner – Versicherung und persönliche Beratung">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
@@ -75,8 +76,8 @@
             <button onclick="acceptCookies()" style="background: #ffcc00; border: none; padding: 0.5rem 1rem; cursor: pointer;">Akzeptieren</button>
         </div>
     </div>
-  <a href="{% url 'impressum' %}">Impressum</a> |
-  <a href="{% url 'datenschutz' %}">Datenschutzerklärung</a>
+  <a href="#">Impressum</a> |
+  <a href="#">Datenschutzerklärung</a>
 </footer>
 
     <!-- Scripts -->
@@ -103,6 +104,174 @@
             }
         });
     </script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  new Swiper('.leistungen-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      992: { slidesPerView: 3 }
+    },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const form = document.getElementById('lead-wizard');
+  if(!form){ console.warn('[lead] form not found'); return; }
+
+  const baseApi = form.dataset.apiSubs || '/api/subcategories/';
+
+  function buildApiUrl(mainId){
+    try{
+      const u = new URL(baseApi, window.location.origin);
+      u.searchParams.set('main', mainId);
+      return u.toString();
+    }catch(e){
+      // если baseApi уже абсолютный
+      return `${baseApi}?main=${encodeURIComponent(mainId)}`;
+    }
+  }
+
+  const step1 = document.getElementById('step-1');
+  const step2 = document.getElementById('step-2');
+  const step3 = document.getElementById('step-3');
+  const mainSel = document.getElementById('main_category');
+  const subSel  = document.getElementById('subcategory');
+  const hiddenMain = document.getElementById('main_slug_field');
+  const hiddenSub  = document.getElementById('sub_slug_field');
+
+  function goTo(id){
+    [step1,step2,step3].forEach(s => s && s.classList.remove('active'));
+    const node = document.getElementById(id);
+    if(node) node.classList.add('active');
+  }
+
+  function setActionFromSlugs(){
+    const mainOpt = mainSel && mainSel.options[mainSel.selectedIndex];
+    const subOpt  = subSel  && subSel.options[subSel.selectedIndex];
+    const mainSlug = mainOpt && mainOpt.dataset.slug;
+    const subSlug  = subOpt  && subOpt.dataset.slug;
+    if(mainSlug && subSlug){
+      const action = `/${encodeURIComponent(mainSlug)}/${encodeURIComponent(subSlug)}/`;
+      form.setAttribute('hx-post', action);
+      if(hiddenMain) hiddenMain.value = mainSlug;
+      if(hiddenSub)  hiddenSub.value  = subSlug;
+      return true;
+    }
+    return false;
+  }
+
+  async function fetchSubs(mainId){
+    subSel.innerHTML = '<option value="">Lade…</option>';
+    subSel.disabled = true;
+    try{
+      const res = await fetch(buildApiUrl(mainId), {
+        headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' },
+        credentials:'same-origin'
+      });
+      if(!res.ok){
+        const txt = await res.text();
+        console.error('[lead] fetch subs failed:', res.status, txt);
+        subSel.innerHTML = '<option value="">Fehler beim Laden</option>';
+        return false;
+      }
+      const data = await res.json();
+      if(!Array.isArray(data) || data.length === 0){
+        subSel.innerHTML = '<option value="">Keine Unterkategorien</option>';
+        return false;
+      }
+      subSel.innerHTML = '<option value="">Bitte wählen</option>';
+      data.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.id;
+        opt.textContent = item.name;
+        opt.dataset.slug = item.slug || '';
+        subSel.appendChild(opt);
+      });
+      subSel.disabled = false;
+      return true;
+    }catch(err){
+      console.error('[lead] Subcategory load error:', err);
+      subSel.innerHTML = '<option value="">Fehler beim Laden</option>';
+      return false;
+    }
+  }
+
+  // Переходы по кнопкам: идём на шаг 2 сразу, загрузка — фоном
+  form.addEventListener('click', async (e) => {
+    const next = e.target.closest('.next-btn');
+    const prev = e.target.closest('.prev-btn');
+
+    if(next){
+      const target = next.getAttribute('data-next');
+      if(!target) return;
+
+      // Идём на шаг 2: обязательно выбран main, дальше грузим фоном
+      if(target === '#step-2'){
+        const id = mainSel && mainSel.value;
+        if(!id){ alert('Bitte eine Kategorie wählen.'); return; }
+        goTo('step-2');                 // <- переходим СРАЗУ
+        subSel.innerHTML = '<option value="">Lade…</option>';
+        subSel.disabled = true;
+        fetchSubs(id);                  // грузим не блокируя UI
+        return;
+      }
+
+      // Идём на шаг 3: должен быть выбран sub
+      if(target === '#step-3'){
+        if(!subSel.value){ alert('Bitte eine Unterkategorie wählen.'); return; }
+        goTo('step-3');
+        return;
+      }
+    }
+
+    if(prev){
+      const target = prev.getAttribute('data-prev');
+      if(target) goTo(target.substring(1));
+    }
+  });
+
+  // Если сменили main уже находясь на шаге 2 — перезагружаем список
+  mainSel && mainSel.addEventListener('change', (e) => {
+    const id = e.target.value;
+    if(!id){
+      subSel.innerHTML = '<option value="">Bitte zuerst eine Kategorie wählen</option>';
+      subSel.disabled = true;
+      return;
+    }
+    if(step2 && step2.classList.contains('active')){
+      subSel.innerHTML = '<option value="">Lade…</option>';
+      subSel.disabled = true;
+    }
+    fetchSubs(id);
+  });
+
+  subSel && subSel.addEventListener('change', setActionFromSlugs);
+
+  form.addEventListener('submit', (e) => {
+    if(!setActionFromSlugs()){
+      e.preventDefault();
+      alert('Bitte Kategorie und Unterkategorie wählen.');
+    }
+  });
+
+  // Блокируем Enter на шагах 1-2
+  form.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){
+      const active = [step1,step2,step3].find(s => s && s.classList.contains('active'));
+      if(active && active.id !== 'step-3'){ e.preventDefault(); }
+    }
+  });
+
+  console.debug('[lead] ready', { api: baseApi });
+});
+</script>
+
+
 
 </body>
 </html>

@@ -3,23 +3,32 @@ import os
 
 from django.contrib import messages
 from django.http import HttpResponse
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
+
+from django.shortcuts import render, redirect
+
 from django.views.decorators.csrf import csrf_exempt
+
 from dotenv import load_dotenv
 from twilio.rest import Client
-from django.views.generic import TemplateView
-from .models import MainCategory, SubCategory
+
+
 from .models import Story
 
-load_dotenv()
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from django.db import models
+from django.utils.text import slugify
 
 
 from django.views.generic import ListView, CreateView
 from django.shortcuts import get_object_or_404
 from .models import MainCategory, SubCategory, InsuranceLead
 from .forms import LeadForm
+
+load_dotenv()
+
+
+
 
 
 class HomeView(ListView):
@@ -211,3 +220,23 @@ def robots_txt(request):
 
 def thank_you(request):
     return render(request, 'thank-you.html')
+
+
+@require_GET
+def api_subcategories(request):
+    main_id = request.GET.get("main")
+    try:
+        main_id = int(main_id)
+    except (TypeError, ValueError):
+        return JsonResponse({"error": "missing or invalid main"}, status=400)
+
+    qs = (SubCategory.objects
+          .filter(models.Q(main_category_id=main_id) | models.Q(main_category__id=main_id))
+          .values("id", "name", "slug")
+          .order_by("name"))
+
+    data = []
+    for item in qs:
+        s = item.get("slug") or slugify(item["name"])
+        data.append({"id": item["id"], "name": item["name"], "slug": s})
+    return JsonResponse(data, safe=False)
