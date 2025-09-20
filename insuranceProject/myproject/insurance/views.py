@@ -2,11 +2,12 @@ import json
 import os
 
 from django.contrib import messages
-from django.http import HttpResponse
-
+from django.http import HttpResponse, HttpRequest, HttpResponseNotAllowed
+from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 from dotenv import load_dotenv
 from twilio.rest import Client
@@ -83,6 +84,11 @@ class SubCategoryListView(ListView):
     template_name = 'categories/subcategory_list.html'
     context_object_name = 'subcategories'
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.main_category = None
+        self.main_categories = None
+
     def get_queryset(self):
         self.main_category = get_object_or_404(MainCategory, slug=self.kwargs['main_slug'])
         self.main_categories = MainCategory.objects.all()
@@ -114,43 +120,71 @@ class SubCategoryDetailListView(ListView):
         return context
 
 
+@method_decorator(csrf_protect, name="dispatch")
 class LeadCreateView(CreateView):
     model = InsuranceLead
     form_class = LeadForm
-    template_name = 'categories/lead_form.html'
+    http_method_names = ["post"]  # никаких GET -> шаблон не нужен
 
     def dispatch(self, request, *args, **kwargs):
-        self.main_category = get_object_or_404(MainCategory, slug=self.kwargs['main_slug'])
-        self.subcategory = get_object_or_404(SubCategory, slug=self.kwargs['sub_slug'])
+        self.main_category = get_object_or_404(MainCategory, slug=kwargs["main_slug"])
+        self.subcategory = get_object_or_404(
+            SubCategory, slug=kwargs["sub_slug"], main_category=self.main_category
+        )
         return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseNotAllowed(["POST"])
+
+    # маппим name -> full_name, если фронт прислал старое имя поля
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        data = kwargs.get("data")
+        if data:
+            data = data.copy()
+            if not data.get("full_name") and data.get("name"):
+                data["full_name"] = data["name"]
+            kwargs["data"] = data
+        return kwargs
+
+    def form_invalid(self, form):
+        # ошибки — JSON 400, HTMX сам не будет ничего вставлять при hx-swap="none"
+        return JsonResponse({"ok": False, "errors": form.errors}, status=400)
 
     def form_valid(self, form):
         form.instance.subcategory = self.subcategory
-        response = super().form_valid(form)
-        messages.success(self.request, "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.")
+        if hasattr(form.instance, "main_category"):
+            form.instance.main_category = self.main_category
 
-        # 🟢 Отправка WhatsApp-сообщения
-        send_whatsapp_message(
-            name=form.cleaned_data.get('full_name'),
-            email=form.cleaned_data.get('email'),
-            phone=form.cleaned_data.get('phone'),
-            message=form.cleaned_data.get('message'),
-            main_category=self.main_category.id,
-            subcategory=self.subcategory.id
-        )
+        self.object = form.save()
 
-        return redirect('thank-you')
+        # WhatsApp не роняет ответ
+        try:
+            cd = form.cleaned_data
+            send_whatsapp_message(
+                name=cd.get("full_name") or cd.get("name") or "",
+                email=cd.get("email") or "",
+                phone=cd.get("phone") or "",
+                message=cd.get("message") or "",
+                main_category=self.main_category.id,
+                subcategory=self.subcategory.id,
+            )
+        except Exception:
+            pass
 
-    def get_success_url(self):
-        return self.request.path + '?success=1'
+        if self.request.headers.get("HX-Request"):
+            # отдаём пустой 204 и триггерим клиентское событие с полезной нагрузкой
+            payload = {
+                "name": cd.get("full_name") or cd.get("name") or "",
+                "main": self.main_category.name,
+                "sub": self.subcategory.name,
+            }
+            resp = HttpResponse(status=204)
+            resp["HX-Trigger"] = json.dumps({"lead:created": payload})
+            return resp
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['subcategory'] = self.subcategory
-        context['main_category'] = self.main_category
-        return context
-
-
+        # не-HTMX: просто JSON "ok"
+        return JsonResponse({"ok": True, "id": self.object.id})
 
 
 @csrf_exempt
@@ -218,25 +252,20 @@ def robots_txt(request):
     return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
-def thank_you(request):
-    return render(request, 'thank-you.html')
-
-
 @require_GET
-def api_subcategories(request):
-    main_id = request.GET.get("main")
+def api_subcategories(request: HttpRequest):
+    main = request.GET.get("main") or request.GET.get("main_category")
+    if not main:
+        return JsonResponse({"error": "missing main"}, status=400)
     try:
-        main_id = int(main_id)
+        main_id = int(main)
     except (TypeError, ValueError):
-        return JsonResponse({"error": "missing or invalid main"}, status=400)
+        return JsonResponse({"error": "invalid main"}, status=400)
 
     qs = (SubCategory.objects
-          .filter(models.Q(main_category_id=main_id) | models.Q(main_category__id=main_id))
+          .filter(main_category=main_id)
           .values("id", "name", "slug")
           .order_by("name"))
 
-    data = []
-    for item in qs:
-        s = item.get("slug") or slugify(item["name"])
-        data.append({"id": item["id"], "name": item["name"], "slug": s})
+    data = [{"id": r["id"], "name": r["name"], "slug": r["slug"] or slugify(r["name"])} for r in qs]
     return JsonResponse(data, safe=False)

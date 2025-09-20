@@ -143,97 +143,102 @@
                             <h2 class="label text-center mb-4 text-warning">Versicherungsvergleich</h2>
 
                             <!-- единая форма -->
-                            <form data-api-subs="{% url 'insurance:api_subcategories' %}"
-                                id="lead-wizard"
+                            <form id="lead-wizard"
+                                method="post"
+                                data-api-subs="{% url 'insurance:api_subcategories' %}"
                                 hx-post="#"
                                 hx-swap="none"
-                                hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token
-                                }}-lead"}'>
+                                hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token }}-lead"}'>
+                                {% csrf_token %}
 
-                            <!-- опционально: скрытые поля, если хочешь передавать слеги в payload -->
-                            <input id="main_slug_field" name="main_slug" type="hidden">
-                            <input id="sub_slug_field" name="sub_slug" type="hidden">
+                                <!-- опционально: скрытые поля, если хочешь передавать слеги в payload -->
+                                <input id="main_slug_field" name="main_slug" type="hidden">
+                                <input id="sub_slug_field" name="sub_slug" type="hidden">
 
-                            <!-- Шаг 1 -->
-                            <div class="form-step active" id="step-1">
-                                <label class="form-label" for="main_category">Kategorie wählen</label>
-                                <select class="form-select bg-secondary text-light border-0" id="main_category"
-                                        name="main_category" required>
-                                    {% if main_categories %}
-                                    <option disabled selected value="">Kategorie wählen</option>
-                                    {% for main in main_categories %}
-                                    <option data-slug="{{ main.slug }}" value="{{ main.id }}">{{ main.name }}</option>
-                                    {% endfor %}
-                                    {% else %}
-                                    <option disabled selected>Keine verfügbaren Kategorien</option>
-                                    {% endif %}
-                                </select>
+                                <!-- Шаг 1 -->
+                                <div class="form-step active" id="step-1">
+                                    <label class="form-label" for="main_category">Kategorie wählen</label>
+                                    <select class="form-select bg-secondary text-light border-0" id="main_category"
+                                            name="main_category" required>
+                                        {% if main_categories %}
+                                        <option disabled selected value="">Kategorie wählen</option>
+                                        {% for main in main_categories %}
+                                        <option data-slug="{{ main.slug }}" value="{{ main.id }}">{{ main.name }}
+                                        </option>
+                                        {% endfor %}
+                                        {% else %}
+                                        <option disabled selected>Keine verfügbaren Kategorien</option>
+                                        {% endif %}
+                                    </select>
 
-                                <div class="d-grid d-md-flex gap-2 justify-content-md-end mt-3">
-                                    <button class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-2"
-                                            type="button">
-                                        Weiter
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Шаг 2 -->
-                            <div class="form-step" id="step-2">
-                                <label class="form-label" for="subcategory">Unterkategorie</label>
-                                <select class="form-select bg-secondary text-light border-0"
-                                        id="subcategory" name="subcategory" required>
-                                    <option value="">Bitte zuerst eine Kategorie wählen</option>
-                                </select>
-
-                                <div class="d-flex gap-2 justify-content-between mt-3">
-                                    <button class="btn btn-outline-light prev-btn" data-prev="#step-1" type="button">
-                                        Zurück
-                                    </button>
-                                    <button class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-3"
-                                            type="button">Weiter
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Шаг 3 -->
-                            <div class="form-step" id="step-3">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label" for="name">Ihr Name</label>
-                                        <input class="form-control bg-secondary text-light border-0" id="name"
-                                               name="name" placeholder="Max Mustermann" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label" for="email">E-Mail</label>
-                                        <input class="form-control bg-secondary text-light border-0" id="email"
-                                               name="email" placeholder="max@firma.de" required type="email">
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="form-label" for="phone">Telefon</label>
-                                        <input class="form-control bg-secondary text-light border-0" id="phone"
-                                               name="phone" placeholder="+49 ..." type="tel">
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="form-label" for="message">Kurzbeschreibung</label>
-                                        <textarea class="form-control bg-secondary text-light border-0" id="message"
-                                                  name="message" placeholder="Branche, Mitarbeiter, Umsatz, besondere Risiken…"
-                                                  rows="4"></textarea>
+                                    <div class="d-grid d-md-flex gap-2 justify-content-md-end mt-3">
+                                        <button class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-2"
+                                                type="button">
+                                            Weiter
+                                        </button>
                                     </div>
                                 </div>
 
-                                <div class="d-flex gap-2 justify-content-between mt-4">
-                                    <button class="btn btn-outline-light prev-btn" data-prev="#step-2" type="button">
-                                        Zurück
-                                    </button>
-                                    <button class="btn btn-warning btn-lg text-dark fw-bold" type="submit">
-                                        <i class="fa-solid fa-paper-plane me-2"></i> Anfrage senden
-                                    </button>
-                                </div>
-                                <p class="small text-muted mt-2 text-center">Mit Absenden akzeptieren Sie die
-                                    Datenschutzhinweise.</p>
-                            </div>
+                                <!-- Шаг 2 -->
+                                <div class="form-step" id="step-2">
+                                    <label class="form-label" for="subcategory">Unterkategorie</label>
+                                    <select class="form-select bg-secondary text-light border-0"
+                                            id="subcategory" name="subcategory" required>
+                                        <option value="">Bitte zuerst eine Kategorie wählen</option>
+                                    </select>
 
-                            <div class="message text-center mt-3" hidden id="response-message"></div>
+                                    <div class="d-flex gap-2 justify-content-between mt-3">
+                                        <button class="btn btn-outline-light prev-btn" data-prev="#step-1"
+                                                type="button">
+                                            Zurück
+                                        </button>
+                                        <button class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-3"
+                                                type="button">Weiter
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Шаг 3 -->
+                                <div class="form-step" id="step-3">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="name">Ihr Name</label>
+                                            <input class="form-control bg-secondary text-light border-0" id="name"
+                                                   name="full_name" placeholder="Max Mustermann" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="email">E-Mail</label>
+                                            <input class="form-control bg-secondary text-light border-0" id="email"
+                                                   name="email" placeholder="max@firma.de" required type="email">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label" for="phone">Telefon</label>
+                                            <input class="form-control bg-secondary text-light border-0" id="phone"
+                                                   name="phone" placeholder="+49 ..." type="tel">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label" for="message">Kurzbeschreibung</label>
+                                            <textarea class="form-control bg-secondary text-light border-0" id="message"
+                                                      name="message"
+                                                      placeholder="Branche, Mitarbeiter, Umsatz, besondere Risiken…"
+                                                      rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-2 justify-content-between mt-4">
+                                        <button class="btn btn-outline-light prev-btn" data-prev="#step-2"
+                                                type="button">
+                                            Zurück
+                                        </button>
+                                        <button class="btn btn-warning btn-lg text-dark fw-bold" type="submit">
+                                            <i class="fa-solid fa-paper-plane me-2"></i> Anfrage senden
+                                        </button>
+                                    </div>
+                                    <p class="small text-muted mt-2 text-center">Mit Absenden akzeptieren Sie die
+                                        Datenschutzhinweise.</p>
+                                </div>
+
+                                <div class="message text-center mt-3" hidden id="response-message"></div>
                             </form>
                         </div>
                     </div>
@@ -249,7 +254,8 @@
         <div class="row align-items-center g-4">
             <div class="col-lg-5">
                 <img alt="Beratung"
-                     class="img-fluid rounded shadow" src="{% static 'images/ADC59DA4-0F83-4B58-BF04-59F113459FE0_1_102_o.jpeg' %}">
+                     class="img-fluid rounded shadow"
+                     src="{% static 'images/ADC59DA4-0F83-4B58-BF04-59F113459FE0_1_102_o.jpeg' %}">
             </div>
             <div class="col-lg-7">
                 <div class="p-3 border-start border-3 border-warning bg-black rounded h-100 shadow-sm">
@@ -326,71 +332,79 @@
     </div>
 </section>
 
-<section id="stories" class="py-5 bg-black text-light">
-  <div class="container">
-    <div class="d-flex align-items-end justify-content-between mb-3">
-      <h2 class="m-0 text-warning">Aktuelle Stories</h2>
-      <a class="btn btn-sm btn-outline-light" href="#">Alle Stories</a>
-    </div>
+<section class="py-5 bg-black text-light" id="stories">
+    <div class="container">
+        <div class="d-flex align-items-end justify-content-between mb-3">
+            <h2 class="m-0 text-warning">Aktuelle Stories</h2>
+            <a class="btn btn-sm btn-outline-light" href="#">Alle Stories</a>
+        </div>
 
-    <div id="storiesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000" data-bs-touch="true" data-bs-pause="hover">
-      <!-- Индикаторы -->
-      <div class="carousel-indicators">
-        {% for story in stories %}
-          <button type="button"
-                  data-bs-target="#storiesCarousel"
-                  data-bs-slide-to="{{ forloop.counter0 }}"
-                  class="{% if forloop.first %}active{% endif %}"
-                  {% if forloop.first %}aria-current="true"{% endif %}
-                  aria-label="Slide {{ forloop.counter }}"></button>
-        {% endfor %}
-      </div>
+        <div class="carousel slide" data-bs-interval="7000" data-bs-pause="hover" data-bs-ride="carousel"
+             data-bs-touch="true" id="storiesCarousel">
+            <!-- Индикаторы -->
+            <div class="carousel-indicators">
+                {% for story in stories %}
+                <button %}
+                        %}aria-current="true"
+                        aria-label="Slide {{ forloop.counter }}"
+                        class="{% if forloop.first %}active{% endif %}"
+                        data-bs-slide-to="{{ forloop.counter0 }}" data-bs-target="#storiesCarousel" endif forloop.first
+                        if type="button" {%
+                        {%></button>
+                {% endfor %}
+            </div>
 
-      <!-- Слайды -->
-      <div class="carousel-inner">
-        {% for story in stories %}
-          <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <article class="story-slide card border-0 bg-dark shadow position-relative overflow-hidden">
-              <a href="#" class="stretched-link" aria-label="{{ story.title }}"></a>
+            <!-- Слайды -->
+            <div class="carousel-inner">
+                {% for story in stories %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <article class="story-slide card border-0 bg-dark shadow position-relative overflow-hidden">
+                        <a aria-label="{{ story.title }}" class="stretched-link" href="#"></a>
 
-              <div class="ratio ratio-21x9 story-media">
-                <img
-                  src="{{ story.image.url }}"
-                  alt="{{ story.title }}"
-                  class="w-100 h-100"
-                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                  {% if forloop.first %}fetchpriority="high"{% endif %}>
-              </div>
+                        <div class="ratio ratio-21x9 story-media">
+                            <img
+                                    %}
+                                    %}fetchpriority="high"
+                                    alt="{{ story.title }}"
+                                    class="w-100 h-100"
+                                    endif forloop.first if
+                                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                                    src="{{ story.image.url }}" {% {%>
+                        </div>
 
-              <div class="story-gradient" aria-hidden="true"></div>
+                        <div aria-hidden="true" class="story-gradient"></div>
 
-              <div class="story-caption p-4 p-md-5">
-                {% if story.category %}
-                  <span class="badge bg-warning text-dark mb-2">{{ story.category.name }}</span>
-                {% endif %}
-                <h3 class="h4 mb-2">{{ story.title }}</h3>
-                <p class="text-muted mb-0 line-clamp-2">
-                  {{ story.snippet|default:story.content|truncatewords:22 }}
-                </p>
-                <div class="meta small text-muted mt-2">
-                  {% if story.published_at %}{{ story.published_at|date:"d.m.Y" }}{% endif %}
-                  {% if story.read_time %} · {{ story.read_time }} Min Lesezeit{% endif %}
+                        <div class="story-caption p-4 p-md-5">
+                            {% if story.category %}
+                            <span class="badge bg-warning text-dark mb-2">{{ story.category.name }}</span>
+                            {% endif %}
+                            <h3 class="h4 mb-2">{{ story.title }}</h3>
+                            <p class="text-muted mb-0 line-clamp-2">
+                                {{ story.snippet|default:story.content|truncatewords:22 }}
+                            </p>
+                            <div class="meta small text-muted mt-2">
+                                {% if story.published_at %}{{ story.published_at|date:"d.m.Y" }}{% endif %}
+                                {% if story.read_time %} · {{ story.read_time }} Min Lesezeit{% endif %}
+                            </div>
+                        </div>
+                    </article>
                 </div>
-              </div>
-            </article>
-          </div>
-        {% endfor %}
-      </div>
+                {% endfor %}
+            </div>
 
-      <!-- Навигация -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#storiesCarousel" data-bs-slide="prev" aria-label="Zurück">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#storiesCarousel" data-bs-slide="next" aria-label="Weiter">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      </button>
+            <!-- Навигация -->
+            <button aria-label="Zurück" class="carousel-control-prev" data-bs-slide="prev"
+                    data-bs-target="#storiesCarousel"
+                    type="button">
+                <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+            </button>
+            <button aria-label="Weiter" class="carousel-control-next" data-bs-slide="next"
+                    data-bs-target="#storiesCarousel"
+                    type="button">
+                <span aria-hidden="true" class="carousel-control-next-icon"></span>
+            </button>
+        </div>
     </div>
-  </div>
 </section>
 
 {% endblock %}

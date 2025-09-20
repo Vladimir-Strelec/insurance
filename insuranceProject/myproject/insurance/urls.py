@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import get_policy, robots_txt, story_detail, story_list, MainCategoryListView, SubCategoryListView, \
-    LeadCreateView, HomeView, SubCategoryDetailListView, thank_you, api_subcategories
+    LeadCreateView, HomeView, SubCategoryDetailListView, api_subcategories
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
@@ -13,9 +13,9 @@ sitemaps = {
 }
 app_name = "insurance"
 urlpatterns = [
+    path("api/subcategories/", api_subcategories, name="api_subcategories"),
     path('impressum/', TemplateView.as_view(template_name="impressum.html"), name='impressum'),
     path('datenschutz/', TemplateView.as_view(template_name="datenschutz.html"), name='datenschutz'),
-    path('thank-you/', thank_you, name='thank-you'),
     path('stories/', story_list, name='story_list'),
     path('story/<slug:slug>/', story_detail, name='story_detail'),
 
@@ -24,7 +24,7 @@ urlpatterns = [
     path('<slug:main_slug>/', SubCategoryListView.as_view(), name='subcategory_list'),
     path('<slug:main_slug>/<slug:sub_slug>/detail/', SubCategoryDetailListView.as_view(), name='subcategory_detail'),
     path('<slug:main_slug>/<slug:sub_slug>/', LeadCreateView.as_view(), name='lead_create'),
-    path("api/subcategories/", api_subcategories, name="api_subcategories"),
+
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path("robots.txt", robots_txt),
