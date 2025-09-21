@@ -122,12 +122,7 @@ class Story(models.Model):
     slug = models.SlugField(unique=True)
     snippet = models.TextField()
     content = models.TextField()
-    image = models.ImageField(
-        storage=MediaCloudinaryStorage(),
-        upload_to='category_images',  # Cloudinary folder
-        blank=True,
-        null=True
-    )
+    image = models.URLField(max_length=500, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

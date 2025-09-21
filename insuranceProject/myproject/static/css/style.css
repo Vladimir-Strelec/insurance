@@ -224,7 +224,7 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
 .list-bullet li{ position:relative; padding-left:18px }
 .list-bullet li::before{ content:"•"; position:absolute; left:0; color:var(--brand) }
 
-.prose{ line-height:1.65 }
+.prose{ line-height:1.65; color: antiquewhite; }
 .prose h1,.prose h2,.prose h3{ margin-top:.8em }
 .prose a{ color:var(--text); text-decoration:underline }
 
@@ -274,7 +274,7 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
 /* Если хочешь оставить именно «приглушённые» куски — используй .muted точечно */
 .sub-hero .muted,
 .card-neo .muted {
-  color: #e3e6eb !important;          /* читаемый светло-серый */
+  color: antiquewhite; !important;          /* читаемый светло-серый */
   opacity: .95;                        /* без сильного побледнения */
 }
 
@@ -425,3 +425,82 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
   line-height:1;
   color:var(--brand);
 }
+
+/* Соотношение сторон */
+.ratio-story{
+  --bs-aspect-ratio: 38%;     /* ~2.63:1 */
+  max-height: 460px;
+}
+@media (max-width: 992px){
+  .ratio-story{
+    --bs-aspect-ratio: 56.25%; /* 16:9 — было 86.25%, это ошибка */
+    max-height: 360px;
+  }
+}
+
+/* Контейнер */
+.story-media{ position:relative; overflow:hidden; background:#0b0b0b; }
+
+/* Базово — картинка заполняет кадр (может обрезаться) */
+.story-media img.media-img{
+  position:absolute; inset:0;
+  width:100% !important; height:100% !important;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transform:none;              /* не уменьшаем по умолчанию */
+}
+
+/* Режим: показать всю картинку без обрезки */
+.media-img--contain{
+  object-fit:contain !important;
+  background:#0b0b0b;         /* «письма счастья» по краям — чёрные поля */
+}
+
+/* Если вдруг нужен «чуть меньше внутри кадра» — без обрезки */
+.media-img--shrink{
+  object-fit:contain !important;
+  transform:scale(.9);
+  transform-origin:center;
+}
+
+
+
+/* ===== Story detail (аккуратная обложка + читабельный текст) ===== */
+.story-detail { padding-top: 8px; }
+
+.story-hero {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #0b0b0b; /* на случай пустой картинки */
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+/* Картинка заполняет рамку баннера, но НЕ растягивает страницу */
+.story-hero__img{
+  position: absolute; /* внутри .ratio */
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* можно заменить на contain, если хочешь видеть 100% картинки */
+  object-position: center;
+  display: block;
+}
+
+/* Тело статьи */
+.story-article h1, .story-article h2, .story-article h3, .story-article h4,
+.story-article b, .story-article strong, .story-article span {
+  color: var(--text);
+}
+.story-article p { color: white; }
+
+/* Ссылки внутри статьи видны на тёмном фоне */
+.story-article a { color: var(--brand); text-decoration: underline; }
+.story-article a:hover { color: white; }
+
+/* Немного воздуха на мобилках */
+@media (max-width: 560px){
+  .story-hero { margin-bottom: 12px; }
+}
+

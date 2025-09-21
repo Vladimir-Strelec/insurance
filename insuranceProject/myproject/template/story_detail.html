@@ -1,25 +1,45 @@
 {% extends "base.html" %}
+{% load static %}
 
+{% block title %}{{ story.title }}{% endblock %}
+{% block meta_description %}{{ story.snippet|default:"Aktuelle Story" }}{% endblock %}
 
 {% block content %}
-{% load static %}
-{% load cloudinary_filters %}
+<section class="story-detail">
+  <div class="wrap">
+    <!-- Хлебные крошки (опционально) -->
+    <nav class="crumbs mb-2">
+      <a href="/">Startseite</a><span>/</span><a href="/stories/">Stories</a><span>/</span><strong>{{ story.title }}</strong>
+    </nav>
 
-<div class="story-container">
-  <img src="{{ story.image.url }}" alt="{{ story.title }}" />
-  <div class="story-container-text">
-    <h1>{{ story.title }}</h1>
-    <p>{{ story.snippet }}</p>
-    <p>{{ story.content|safe }}</p>
-    {% if story.external_links.all %}
-      <h3>Thematisch verwandte Links:</h3>
-      <ul>
+    <!-- Обложка: аккуратный баннер, не «во всю страницу» -->
+    <figure class="story-hero ratio ratio-21x9">
+      <img
+        class="story-hero__img"
+        src="{% if story.image %}{{ story.image }}{% else %}{% static 'images/placeholder-21x9.jpg' %}{% endif %}"
+        alt="{{ story.title }}"
+        loading="eager"
+        fetchpriority="high">
+    </figure>
+
+    <!-- Текст -->
+    <article class="card-neo story-article">
+      <h1 class="mb-2">{{ story.title }}</h1>
+      {% if story.snippet %}<p class="muted">{{ story.snippet }}</p>{% endif %}
+      <div class="prose mt-3">
+        {{ story.content|safe }}
+      </div>
+
+      {% if story.external_links.all %}
+      <hr class="my-4" />
+      <h3 class="mb-2">Thematisch verwandte Links</h3>
+      <ul class="list-bullet">
         {% for link in story.external_links.all %}
           <li><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.title }}</a></li>
         {% endfor %}
       </ul>
-    {% endif %}
+      {% endif %}
+    </article>
   </div>
-</div>
-
+</section>
 {% endblock %}
