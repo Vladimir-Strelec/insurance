@@ -29,21 +29,16 @@ from .forms import LeadForm
 load_dotenv()
 
 
-
-
-
 class HomeView(ListView):
     model = MainCategory
     template_name = "home.html"
     context_object_name = 'main_categories'
-
 
     def get_queryset(self):
         self.main_categories = MainCategory.objects.all()
         self.main_category = MainCategory.objects.first()
         self.subcategory = SubCategory.objects.first()
         self.stories = Story.objects.all().order_by('-created_at')
-        return self.stories
 
     def post(self, request, *args, **kwargs):
         form = LeadForm(request.POST)
@@ -102,7 +97,7 @@ class SubCategoryListView(ListView):
 
 
 class SubCategoryDetailListView(ListView):
-    template_name = 'categories/subcategory_detail.html'
+    template_name = 'subcategory_detail.html'
     context_object_name = 'subcategory'
 
     def get_queryset(self):
@@ -124,7 +119,7 @@ class SubCategoryDetailListView(ListView):
 class LeadCreateView(CreateView):
     model = InsuranceLead
     form_class = LeadForm
-    http_method_names = ["post"]  # никаких GET -> шаблон не нужен
+    http_method_names = ["post"]  # никакого GET -> шаблон не нужен
 
     def dispatch(self, request, *args, **kwargs):
         self.main_category = get_object_or_404(MainCategory, slug=kwargs["main_slug"])
@@ -136,7 +131,7 @@ class LeadCreateView(CreateView):
     def get(self, request, *args, **kwargs):
         return HttpResponseNotAllowed(["POST"])
 
-    # маппим name -> full_name, если фронт прислал старое имя поля
+    # поддержка старого имени поля: name -> full_name
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         data = kwargs.get("data")
@@ -148,7 +143,7 @@ class LeadCreateView(CreateView):
         return kwargs
 
     def form_invalid(self, form):
-        # ошибки — JSON 400, HTMX сам не будет ничего вставлять при hx-swap="none"
+        # HTMX и обычный фронт понимают JSON 400
         return JsonResponse({"ok": False, "errors": form.errors}, status=400)
 
     def form_valid(self, form):
@@ -158,7 +153,7 @@ class LeadCreateView(CreateView):
 
         self.object = form.save()
 
-        # WhatsApp не роняет ответ
+        # WhatsApp — не роняем запрос, если что-то пошло не так
         try:
             cd = form.cleaned_data
             send_whatsapp_message(
@@ -172,8 +167,8 @@ class LeadCreateView(CreateView):
         except Exception:
             pass
 
+        # HTMX: пустой 204 + клиентский триггер
         if self.request.headers.get("HX-Request"):
-            # отдаём пустой 204 и триггерим клиентское событие с полезной нагрузкой
             payload = {
                 "name": cd.get("full_name") or cd.get("name") or "",
                 "main": self.main_category.name,
@@ -183,7 +178,7 @@ class LeadCreateView(CreateView):
             resp["HX-Trigger"] = json.dumps({"lead:created": payload})
             return resp
 
-        # не-HTMX: просто JSON "ok"
+        # Обычный POST (без HTMX): JSON, без редиректов
         return JsonResponse({"ok": True, "id": self.object.id})
 
 

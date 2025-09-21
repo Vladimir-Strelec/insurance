@@ -142,176 +142,7 @@
     });
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function(){
-      const form = document.getElementById('lead-wizard');
-      if(!form){ console.warn('[lead] form not found'); return; }
 
-      const baseApi = form.dataset.apiSubs || '/api/subcategories/';
-      const step1 = document.getElementById('step-1');
-      const step2 = document.getElementById('step-2');
-      const step3 = document.getElementById('step-3');
-      const mainSel = document.getElementById('main_category');
-      const subSel  = document.getElementById('subcategory');
-      const hiddenMain = document.getElementById('main_slug_field');
-      const hiddenSub  = document.getElementById('sub_slug_field');
-      const nextToStep2 = step1?.querySelector('.next-btn');
-      const nextToStep3 = step2?.querySelector('.next-btn');
-      const subsCache = new Map();
-
-      function buildApiUrl(mainId){
-        try{ const u = new URL(baseApi, window.location.origin); u.searchParams.set('main', mainId); return u.toString(); }
-        catch(e){ return `${baseApi}?main=${encodeURIComponent(mainId)}`; }
-      }
-      function goTo(id){
-        [step1,step2,step3].forEach(s => s && s.classList.remove('active'));
-        document.getElementById(id)?.classList.add('active');
-      }
-      function updateAction(){
-      const mainOpt = mainSel?.options[mainSel.selectedIndex];
-      const subOpt  = subSel?.options[subSel.selectedIndex];
-      const mainSlug = mainOpt?.dataset.slug;
-      const subSlug  = subOpt?.dataset.slug;
-      if(mainSlug && subSlug){
-        const url = `/${encodeURIComponent(mainSlug)}/${encodeURIComponent(subSlug)}/`;
-        form.setAttribute('hx-post', url);
-        form.action = url;            // ← добавили
-        if(hiddenMain) hiddenMain.value = mainSlug;
-        if(hiddenSub)  hiddenSub.value  = subSlug;
-      } else {
-        form.removeAttribute('hx-post');
-        form.removeAttribute('action'); // ← добавили
-        if(hiddenMain) hiddenMain.value = '';
-        if(hiddenSub)  hiddenSub.value  = '';
-      }
-        }
-      function toggleNext1(){ if(nextToStep2) nextToStep2.disabled = !mainSel?.value; }
-      function toggleNext2(){ if(nextToStep3) nextToStep3.disabled = !subSel?.value; }
-
-      function renderSubs(data){
-        if(!Array.isArray(data) || data.length === 0){
-          subSel.innerHTML = '<option value="">Keine Unterkategorien</option>';
-          subSel.disabled = true;
-          toggleNext2(); updateAction();
-          return;
-        }
-        subSel.innerHTML = '<option value="">Bitte wählen</option>';
-        for(const item of data){
-          const o = document.createElement('option');
-          o.value = item.id; o.textContent = item.name; o.dataset.slug = item.slug || '';
-          subSel.appendChild(o);
-        }
-        subSel.disabled = false;
-        if(data.length === 1){
-          subSel.value = data[0].id;
-          subSel.dispatchEvent(new Event('change', {bubbles:true}));
-        }
-        toggleNext2(); updateAction();
-      }
-
-      async function fetchSubs(mainId){
-        if(subsCache.has(mainId)){ renderSubs(subsCache.get(mainId)); return true; }
-        subSel.setAttribute('aria-busy','true');
-        subSel.innerHTML = '<option value="">Lade…</option>';
-        subSel.disabled = true;
-        try{
-          const url = buildApiUrl(mainId);
-          console.debug('[lead] GET', url);
-          const res = await fetch(url, { headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }, credentials: 'same-origin' });
-          if(!res.ok){ const txt = await res.text(); console.error('[lead] subs failed:', res.status, txt);
-            subSel.innerHTML = '<option value="">Fehler beim Laden</option>'; subSel.disabled = true; toggleNext2(); updateAction(); return false; }
-          const data = await res.json();
-          subsCache.set(mainId, data);
-          renderSubs(data);
-          return Array.isArray(data) && data.length > 0;
-        }catch(err){
-          console.error('[lead] subs error:', err);
-          subSel.innerHTML = '<option value="">Fehler beim Laden</option>';
-          subSel.disabled = true; toggleNext2(); updateAction();
-          return false;
-        }finally{ subSel.removeAttribute('aria-busy'); }
-      }
-
-      // Переходы по шагам
-      form.addEventListener('click', async (e) => {
-        const next = e.target.closest('.next-btn');
-        const prev = e.target.closest('.prev-btn');
-
-        if(next){
-          const target = next.getAttribute('data-next');
-          if(!target) return;
-
-          if(target === '#step-2'){
-            const id = mainSel?.value;
-            if(!id){ alert('Bitte eine Kategorie wählen.'); return; }
-            goTo('step-2');
-            subSel.innerHTML = '<option value="">Lade…</option>';
-            subSel.disabled = true;
-            subSel.focus();
-            fetchSubs(id);
-            return;
-          }
-          if(target === '#step-3'){
-            if(!subSel.value){ alert('Bitte eine Unterkategorie wählen.'); return; }
-            goTo('step-3');
-            return;
-          }
-        }
-
-        if(prev){
-          const target = prev.getAttribute('data-prev');
-          if(target) goTo(target.substring(1));
-        }
-      });
-
-      // Изменения выборов
-      mainSel?.addEventListener('change', (e) => {
-        const id = e.target.value;
-        toggleNext1();
-        subSel.innerHTML = '<option value="">Bitte zuerst eine Kategorie wählen</option>';
-        subSel.disabled = true;
-        updateAction(); toggleNext2();
-        if(step2?.classList.contains('active') && id){
-          subSel.innerHTML = '<option value="">Lade…</option>';
-          subSel.disabled = true;
-          fetchSubs(id).then(()=> subSel.focus());
-        }
-      });
-      subSel?.addEventListener('change', () => { toggleNext2(); updateAction(); });
-
-      // Сабмит: фолбэк на случай отсутствия HTMX
-      form.addEventListener('submit', (e) => {
-        updateAction();
-        const url = form.getAttribute('hx-post');
-        if(!url){
-          e.preventDefault();
-          alert('Bitte Kategorie und Unterkategorie wählen.');
-          return;
-        }
-        if(!window.htmx){
-          // HTMX не подключён: шлём обычный POST
-          form.action = url;
-          form.method = 'post';
-          // не предотвращаем — пусть уйдёт стандартный POST
-        } else {
-          // HTMX сам перехватит hx-post и отправит AJAX
-        }
-      });
-
-      // Блок Enter на шагах 1–2
-      form.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter'){
-          const active = [step1,step2,step3].find(s => s && s.classList.contains('active'));
-          if(active && active.id !== 'step-3'){ e.preventDefault(); }
-        }
-      });
-
-      // init
-      toggleNext1(); toggleNext2(); updateAction();
-      console.debug('[lead] ready', { api: baseApi, htmx: !!window.htmx });
-    });
-
-</script>
 
 <script>
     (function(){
@@ -365,6 +196,270 @@
     })();
 </script>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/htmx.org@1.9.12" crossorigin="anonymous"></script>
+    <!-- ВНИМАНИЕ: если в static/js/script.js есть свои слушатели submit — временно отключи -->
+    <!-- <script src="{% static 'js/script.js' %}"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script>
+      // Cookie banner logic (оставил как у тебя)
+      (function(){
+        window.addEventListener('load', function () {
+          if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookie-banner')?.style.setProperty('display','block');
+          }
+        });
+        window.acceptCookies = function(){
+          localStorage.setItem('cookiesAccepted', 'true');
+          const el = document.getElementById('cookie-banner'); if(el){ el.style.display='none'; }
+        };
+      })();
+    </script>
+
+    <!-- Мастер-скрипт для формы лида -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const form = document.getElementById('lead-wizard');
+      if(!form){ console.debug('[lead] no form on this page'); return; }
+
+      const baseApi = form.dataset.apiSubs || '/api/subcategories/';
+      const step1 = document.getElementById('step-1');
+      const step2 = document.getElementById('step-2');
+      const step3 = document.getElementById('step-3');
+      const mainSel = document.getElementById('main_category');
+      const subSel  = document.getElementById('subcategory');
+      const hiddenMain = document.getElementById('main_slug_field');
+      const hiddenSub  = document.getElementById('sub_slug_field');
+      const nextToStep2 = step1?.querySelector('.next-btn');
+      const nextToStep3 = step2?.querySelector('.next-btn');
+      const subsCache = new Map();
+
+      function buildApiUrl(mainId){
+        try{ const u = new URL(baseApi, window.location.origin); u.searchParams.set('main', mainId); return u.toString(); }
+        catch(e){ return `${baseApi}?main=${encodeURIComponent(mainId)}`; }
+      }
+      function goTo(id){
+        [step1,step2,step3].forEach(s => s && s.classList.remove('active'));
+        document.getElementById(id)?.classList.add('active');
+      }
+      function updateAction(){
+        const mainOpt = mainSel?.options[mainSel.selectedIndex];
+        const subOpt  = subSel?.options[subSel.selectedIndex];
+        const mainSlug = mainOpt?.dataset.slug;
+        const subSlug  = subOpt?.dataset.slug;
+        if(mainSlug && subSlug){
+          const url = `/${encodeURIComponent(mainSlug)}/${encodeURIComponent(subSlug)}/`;
+          form.setAttribute('hx-post', url);
+          form.action = url; // страховка для не-HTMX
+          if(hiddenMain) hiddenMain.value = mainSlug;
+          if(hiddenSub)  hiddenSub.value  = subSlug;
+        } else {
+          form.removeAttribute('hx-post');
+          form.removeAttribute('action');
+          if(hiddenMain) hiddenMain.value = '';
+          if(hiddenSub)  hiddenSub.value  = '';
+        }
+      }
+      function toggleNext1(){ if(nextToStep2) nextToStep2.disabled = !mainSel?.value; }
+      function toggleNext2(){ if(nextToStep3) nextToStep3.disabled = !subSel?.value; }
+
+      function renderSubs(data){
+        if(!Array.isArray(data) || data.length === 0){
+          subSel.innerHTML = '<option value="">Keine Unterkategorien</option>';
+          subSel.disabled = true;
+          toggleNext2(); updateAction();
+          return;
+        }
+        subSel.innerHTML = '<option value="">Bitte wählen</option>';
+        for(const item of data){
+          const o = document.createElement('option');
+          o.value = item.id; o.textContent = item.name; o.dataset.slug = item.slug || '';
+          subSel.appendChild(o);
+        }
+        subSel.disabled = false;
+        if(data.length === 1){
+          subSel.value = data[0].id;
+          subSel.dispatchEvent(new Event('change', {bubbles:true}));
+        }
+        toggleNext2(); updateAction();
+      }
+
+      async function fetchSubs(mainId){
+        if(subsCache.has(mainId)){ renderSubs(subsCache.get(mainId)); return true; }
+        subSel.setAttribute('aria-busy','true');
+        subSel.innerHTML = '<option value="">Lade…</option>';
+        subSel.disabled = true;
+        try{
+          const url = buildApiUrl(mainId);
+          const res = await fetch(url, { headers: { 'X-Requested-With':'XMLHttpRequest', 'Accept':'application/json' }, credentials: 'same-origin' });
+          if(!res.ok){
+            subSel.innerHTML = '<option value="">Fehler beim Laden</option>'; subSel.disabled = true; toggleNext2(); updateAction(); return false;
+          }
+          const data = await res.json();
+          subsCache.set(mainId, data);
+          renderSubs(data);
+          return Array.isArray(data) && data.length > 0;
+        }catch(err){
+          console.error('[lead] subs error:', err);
+          subSel.innerHTML = '<option value="">Fehler beim Laden</option>';
+          subSel.disabled = true; toggleNext2(); updateAction();
+          return false;
+        }finally{ subSel.removeAttribute('aria-busy'); }
+      }
+
+      // Навигация по шагам
+      form.addEventListener('click', async (e) => {
+        const next = e.target.closest('.next-btn');
+        const prev = e.target.closest('.prev-btn');
+
+        if(next){
+          const target = next.getAttribute('data-next');
+          if(!target) return;
+
+          if(target === '#step-2'){
+            const id = mainSel?.value;
+            if(!id){ alert('Bitte eine Kategorie wählen.'); return; }
+            goTo('step-2');
+            subSel.innerHTML = '<option value="">Lade…</option>';
+            subSel.disabled = true;
+            subSel.focus();
+            fetchSubs(id);
+            return;
+          }
+          if(target === '#step-3'){
+            if(!subSel.value){ alert('Bitte eine Unterkategorie wählen.'); return; }
+            goTo('step-3');
+            return;
+          }
+        }
+
+        if(prev){
+          const target = prev.getAttribute('data-prev');
+          if(target) goTo(target.substring(1));
+        }
+      });
+
+      // Слушатели селектов
+      mainSel?.addEventListener('change', (e) => {
+        const id = e.target.value;
+        toggleNext1();
+        subSel.innerHTML = '<option value="">Bitte zuerst eine Kategorie wählen</option>';
+        subSel.disabled = true;
+        updateAction(); toggleNext2();
+        if(step2?.classList.contains('active') && id){
+          subSel.innerHTML = '<option value="">Lade…</option>';
+          subSel.disabled = true;
+          fetchSubs(id).then(()=> subSel.focus());
+        }
+      });
+      subSel?.addEventListener('change', () => { toggleNext2(); updateAction(); });
+
+      // Сабмит: ВСЕГДА перехватываем, сами решаем чем отправлять
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        updateAction();
+        const url = form.getAttribute('hx-post');
+        if(!url){ alert('Bitte Kategorie und Unterkategorie wählen.'); return; }
+
+        // HTMX-путь
+        if(window.htmx && typeof htmx.ajax === 'function'){
+          try{
+            await htmx.ajax('POST', url, {
+              source: form,
+              target: form,
+              swap: 'none',
+              values: new FormData(form),
+              headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            // если сервер вернул 204 с HX-Trigger — дальше всё сделает слушатель
+            // подстраховка: если триггера нет, сами сэмулируем "lead:created"
+            setTimeout(() => {
+              const shown = document.querySelector('.alert-thanks');
+              if(!shown){
+                document.body.dispatchEvent(new CustomEvent('lead:created', { detail: {} }));
+              }
+            }, 50);
+            return;
+          }catch(err){
+            console.error('[lead] htmx.ajax error', err);
+          }
+        }
+
+        // Фолбэк: fetch
+        try{
+          const fd = new FormData(form);
+          const res = await fetch(url, { method:'POST', body:fd, headers:{ 'X-Requested-With':'XMLHttpRequest' } });
+          if(res.ok){
+            let detail = {};
+            try{ const j = await res.json(); if(j && j.ok){ detail = j; } }catch(_){}
+            document.body.dispatchEvent(new CustomEvent('lead:created', { detail }));
+          } else {
+            let msg = 'Fehler beim Senden. Versuchen Sie es später erneut.';
+            try{ const j = await res.json(); if(j && j.errors){ msg = 'Bitte prüfen Sie die Eingaben.'; } }catch(_){}
+            alert(msg);
+          }
+        }catch(err){
+          console.error('[lead] submit fetch error', err);
+          alert('Netzwerkfehler. Versuchen Sie es später erneut.');
+        }
+      });
+
+      // Блок Enter на шагах 1–2
+      form.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter'){
+          const active = [step1,step2,step3].find(s => s && s.classList.contains('active'));
+          if(active && active.id !== 'step-3'){ e.preventDefault(); }
+        }
+      });
+
+      // Инициализация
+      toggleNext1(); toggleNext2(); updateAction();
+
+      // Диагностика HTMX
+      document.body.addEventListener('htmx:responseError', e => console.error('[htmx] error', e));
+      console.debug('[lead] ready', { api: baseApi, htmx: !!window.htmx });
+    });
+    </script>
+
+    <!-- Показ благодарности по событию от сервера или фолбэка -->
+    <script>
+    (function(){
+      const form  = document.getElementById('lead-wizard');
+      const msg   = document.getElementById('response-message');
+      const step1 = document.getElementById('step-1');
+      const step2 = document.getElementById('step-2');
+      const step3 = document.getElementById('step-3');
+      const subSel= document.getElementById('subcategory');
+
+      function showThanks(detail){
+        if(!msg) return;
+        const name = detail && (detail.name || detail.full_name) ? `, ${detail.name || detail.full_name}` : '';
+        msg.innerHTML = `
+          <div class="alert-thanks">
+            <span class="icon">✅</span>
+            <div>
+              <strong>Danke${name}!</strong>
+              <div>Ihre Anfrage wurde gesendet. Wir melden uns in Kürze.</div>
+            </div>
+          </div>`;
+        msg.hidden = false;
+        msg.scrollIntoView({behavior:'smooth', block:'center'});
+        setTimeout(()=>{ msg.hidden = true; }, 8000);
+      }
+
+      document.body.addEventListener('lead:created', function(e){
+        try{ form?.reset(); }catch(_){}
+        if(subSel){
+          subSel.innerHTML = '<option value="">Bitte zuerst eine Kategorie wählen</option>';
+          subSel.disabled = true;
+        }
+        [step1,step2,step3].forEach(s => s && s.classList.remove('active'));
+        step1?.classList.add('active');
+        showThanks(e.detail || null);
+      });
+    })();
+    </script>
 
 </body>
 </html>

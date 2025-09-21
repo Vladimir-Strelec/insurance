@@ -22,7 +22,9 @@
         <h2 class="mb-4 text-warning">Unsere Schwerpunkte</h2>
         <div class="swiper leistungen-swiper">
             <div class="swiper-wrapper">
+
                 <!-- Card 1 -->
+                {% for main in main_categories %}
                 <div class="swiper-slide">
                     <div class="flip-card">
                         <div class="flip-inner">
@@ -30,7 +32,7 @@
                             <div class="flip-front card bg-dark text-light shadow h-100 d-flex align-items-center justify-content-center p-4">
                                 <div>
                                     <i class="fa-solid fa-shield-halved fa-2x text-warning mb-3"></i>
-                                    <h5>Betriebshaftpflicht</h5>
+                                    <h5>{{ main.name }}</h5>
                                     <p>Absicherung bei Personen- und Sachschäden.</p>
                                 </div>
                             </div>
@@ -39,98 +41,29 @@
                                 <div>
                                     <h6>Kategorien:</h6>
                                     <ul class="list-unstyled">
-                                        <li>Kleinunternehmen</li>
-                                        <li>Handwerk</li>
-                                        <li>Gastronomie</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        {% for sub in main.subcategories.all %}
+                                        <li>
+                                            <a class="link-inline"
+                                               href="{% url 'insurance:subcategory_detail' main_slug=main.slug sub_slug=sub.slug %}">
+                                                {{ sub.name }}
+                                            </a>
 
-                <!-- Card 2 -->
-                <div class="swiper-slide">
-                    <div class="flip-card">
-                        <div class="flip-inner">
-                            <!-- front -->
-                            <div class="flip-front card bg-dark text-light shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <i class="fa-solid fa-shield-halved fa-2x text-warning mb-3"></i>
-                                    <h5>Betriebshaftpflicht</h5>
-                                    <p>Absicherung bei Personen- und Sachschäden.</p>
-                                </div>
-                            </div>
-                            <!-- back -->
-                            <div class="flip-back card bg-warning text-dark shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <h6>Kategorien:</h6>
-                                    <ul class="list-unstyled">
-                                        <li>Kleinunternehmen</li>
-                                        <li>Handwerk</li>
-                                        <li>Gastronomie</li>
+                                        </li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
 
-                <!-- Card 3 -->
-                <div class="swiper-slide">
-                    <div class="flip-card">
-                        <div class="flip-inner">
-                            <div class="flip-front card bg-dark text-light shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <i class="fa-solid fa-building fa-2x text-warning mb-3"></i>
-                                    <h5>Inhaltsversicherung</h5>
-                                    <p>Schutz für Inventar und Ertragsausfälle.</p>
-                                </div>
-                            </div>
-                            <div class="flip-back card bg-warning text-dark shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <h6>Kategorien:</h6>
-                                    <ul class="list-unstyled">
-                                        <li>Büros</li>
-                                        <li>Einzelhandel</li>
-                                        <li>Werkstätten</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div class="swiper-slide">
-                    <div class="flip-card">
-                        <div class="flip-inner">
-                            <div class="flip-front card bg-dark text-light shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <i class="fa-solid fa-network-wired fa-2x text-warning mb-3"></i>
-                                    <h5>Cyberversicherung</h5>
-                                    <p>Schutz bei IT-Ausfällen und Datenpannen.</p>
-                                </div>
-                            </div>
-                            <div class="flip-back card bg-warning text-dark shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <h6>Kategorien:</h6>
-                                    <ul class="list-unstyled">
-                                        <li>Freiberufler</li>
-                                        <li>Online-Shops</li>
-                                        <li>Start-Ups</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- навигация -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination mt-3"></div>
             </div>
-            <!-- навигация -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination mt-3"></div>
         </div>
-    </div>
 </section>
 
 <section class="py-5 position-relative" id="leadform" style="background:#0b0b0b;">
@@ -143,12 +76,9 @@
                             <h2 class="label text-center mb-4 text-warning">Versicherungsvergleich</h2>
 
                             <!-- единая форма -->
-                            <form id="lead-wizard"
-                                method="post"
-                                data-api-subs="{% url 'insurance:api_subcategories' %}"
-                                hx-post="#"
-                                hx-swap="none"
-                                hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token }}-lead"}'>
+                            <form data-api-subs="{% url 'insurance:api_subcategories' %}"
+                                  hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token }}-lead"}'
+                                  hx-post="#" hx-swap="none" id="lead-wizard" method="post">
                                 {% csrf_token %}
 
                                 <!-- опционально: скрытые поля, если хочешь передавать слеги в payload -->
@@ -203,8 +133,9 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label" for="name">Ihr Name</label>
-                                            <input class="form-control bg-secondary text-light border-0" id="name"
-                                                   name="full_name" placeholder="Max Mustermann" required>
+                                            <input class="form-control bg-secondary text-light border-0"
+                                                   id="name" name="full_name"
+                                                   placeholder="Max Mustermann" required>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="email">E-Mail</label>

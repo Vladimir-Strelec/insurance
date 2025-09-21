@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}{{ subcategory.name }} | {{ main_category.name }}{% endblock %}
+{% block meta_description %}{{ subcategory.seo_keywords|default:"Individuelle Absicherung mit persönlicher Beratung." }}{% endblock %}
+
+{% block content %}
+
+{% if subcategory.image %}
+<section class="sub-hero" style="--hero-img:url('{{ subcategory.image.url }}')">
+{% else %}
+<section class="sub-hero" style="--hero-img:url('{% static "images/hero-default.jpg" %}')">
+{% endif %}
+  <!-- твой контент -->
+</section>
+
+  <div class="wrap">
+    <nav class="crumbs">
+      <a href="/">Startseite</a>
+      <span>/</span>
+      <span>{{ main_category.name }}</span>
+      <span>/</span>
+      <strong>{{ subcategory.name }}</strong>
+    </nav>
+
+    <div class="sub-hero-grid">
+      <div class="sub-hero-text">
+        <span class="pill">Kategorie • {{ main_category.name }}</span>
+        <h1 class="u-underline">{{ subcategory.name }}</h1>
+        <p class="muted">
+          {{ subcategory.description|default:"Maßgeschneiderter Schutz für Unternehmen und Selbständige. Transparent, skalierbar, ohne überflüssigen Ballast." }}
+        </p>
+        <div class="cta-row">
+          <a href="#lead-mini" class="btn btn-primary">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Kostenlose Beratung
+          </a>
+          <a class="btn btn-ghost" href="https://wa.me/4915773673851" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+        <ul class="kpis small">
+          <li class="kpi"><b>200+</b><span>Kunden</span></li>
+          <li class="kpi"><b>4+ Jahre</b><span>Erfahrung</span></li>
+          <li class="kpi"><b>24h</b><span>Antwort</span></li>
+          <li class="kpi"><b>100%</b><span>Transparent</span></li>
+        </ul>
+      </div>
+
+      <div class="sub-hero-card card">
+        <div class="badge-dot"></div>
+        <h3 class="mb-2">Warum diese Absicherung?</h3>
+        <p class="muted mb-3">Wesentliche Vorteile in Kürze:</p>
+        <ul class="list-check">
+          <li>Schutz vor finanziellen Risiken</li>
+          <li>Individuelle Deckung für Ihre Branche</li>
+          <li>Schnelle Schadenabwicklung</li>
+          <li>Skalierbar für Wachstum</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="grid-2">
+    <!-- твой основной контент как есть ... -->
+
+    <aside class="stack gap-16">
+      <!-- Мини-форма -->
+      <div id="lead-mini" class="card-neo">
+        <h4 class="mb-2">Unverbindliche Anfrage</h4>
+        <form method="post"
+              hx-post="{% url 'insurance:lead_create' main_slug=main_category.slug sub_slug=subcategory.slug %}"
+              hx-swap="none"
+              hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token }}-lead-mini"}'>
+          {% csrf_token %}
+          <div class="form-grid">
+            <label>
+              <span>Ihr Name</span>
+              <input class="form-control bg-secondary text-light border-0" name="full_name" required placeholder="Max Mustermann">
+            </label>
+            <label>
+              <span>E-Mail</span>
+              <input class="form-control bg-secondary text-light border-0" name="email" type="email" required placeholder="max@firma.de">
+            </label>
+            <label class="span-2">
+              <span>Telefon</span>
+              <input class="form-control bg-secondary text-light border-0" name="phone" type="tel" placeholder="+49 ...">
+            </label>
+            <label class="span-2">
+              <span>Kurzbeschreibung</span>
+              <textarea class="form-control bg-secondary text-light border-0" name="message" rows="3" placeholder="Branche, Mitarbeiter, Umsatz, besondere Risiken…"></textarea>
+            </label>
+          </div>
+          <div class="actions mt-3">
+            <button class="btn btn-primary" type="submit">
+              <i class="fa-solid fa-paper-plane"></i> Anfrage senden
+            </button>
+            <a class="btn btn-ghost" href="https://wa.me/4915773673851" target="_blank" rel="noopener">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+          </div>
+          <p class="small muted mt-2">Mit Absenden akzeptieren Sie die Datenschutzhinweise.</p>
+          <div class="message mt-2" id="response-message" hidden></div>
+        </form>
+      </div>
+      <!-- остальной сайдбар... -->
+    </aside>
+  </div>
+</section>
+
+{% endblock %}

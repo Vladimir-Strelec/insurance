@@ -51,8 +51,20 @@ class SubCategory(models.Model):
         null=True
     )
     seo_keywords = models.CharField(max_length=255, blank=True, null=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     private = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = slugify(self.name) or f"sub-{self.pk or ''}".strip('-')
+            s = base
+            i = 1
+            # гарантируем уникальность
+            while SubCategory.objects.filter(slug=s).exclude(pk=self.pk).exists():
+                i += 1
+                s = f"{base}-{i}"
+            self.slug = s
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.main_category.name} → {self.name}"
