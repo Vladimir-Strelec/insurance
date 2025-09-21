@@ -20,35 +20,43 @@
 <section class="py-5" id="leistungen">
     <div class="container text-center">
         <h2 class="mb-4 text-warning">Unsere Schwerpunkte</h2>
+
         <div class="swiper leistungen-swiper">
             <div class="swiper-wrapper">
-
-                <!-- Card 1 -->
                 {% for main in main_categories %}
                 <div class="swiper-slide">
                     <div class="flip-card">
                         <div class="flip-inner">
                             <!-- front -->
                             <div class="flip-front card bg-dark text-light shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <i class="fa-solid fa-shield-halved fa-2x text-warning mb-3"></i>
-                                    <h5>{{ main.name }}</h5>
-                                    <p>Absicherung bei Personen- und Sachschäden.</p>
+                                <div class="text-center">
+                                    <div class="cat-badge">
+                                        {% if main.image %}
+                                        <img alt="{{ main.name }}" class="cat-thumb" height="72" loading="lazy"
+                                             src="{{ main.image }}" width="72">
+                                        {% else %}
+                                        <i aria-hidden="true" class="fa-solid fa-shield-halved cat-icon"></i>
+                                        {% endif %}
+                                    </div>
+
+                                    <h5 class="mb-1">{{ main.name }}</h5>
+                                    <p class="m-0 small text-muted">Absicherung bei Personen- und Sachschäden.</p>
                                 </div>
                             </div>
                             <!-- back -->
                             <div class="flip-back card bg-warning text-dark shadow h-100 d-flex align-items-center justify-content-center p-4">
                                 <div>
                                     <h6>Kategorien:</h6>
-                                    <ul class="list-unstyled">
+                                    <ul class="list-unstyled mb-0">
                                         {% for sub in main.subcategories.all %}
-                                        <li>
+                                        <li class="mb-1">
                                             <a class="link-inline"
                                                href="{% url 'insurance:subcategory_detail' main_slug=main.slug sub_slug=sub.slug %}">
                                                 {{ sub.name }}
                                             </a>
-
                                         </li>
+                                        {% empty %}
+                                        <li class="text-dark-50">—</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -57,13 +65,14 @@
                     </div>
                 </div>
                 {% endfor %}
-
-                <!-- навигация -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-pagination mt-3"></div>
             </div>
+
+            <!-- ВНЕ wrapper -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination mt-3"></div>
         </div>
+    </div>
 </section>
 
 <section class="py-5 position-relative" id="leadform" style="background:#0b0b0b;">
@@ -267,21 +276,26 @@
     <div class="container">
         <div class="d-flex align-items-end justify-content-between mb-3">
             <h2 class="m-0 text-warning">Aktuelle Stories</h2>
-            <a class="btn btn-sm btn-outline-light" href="#">Alle Stories</a>
+            <a class="btn btn-sm btn-outline-light" href="{% url 'insurance:story_list' %}">Alle Stories</a>
         </div>
 
-        <div class="carousel slide" data-bs-interval="7000" data-bs-pause="hover" data-bs-ride="carousel"
-             data-bs-touch="true" id="storiesCarousel">
+        {% if stories %}
+        <div class="carousel slide"
+             data-bs-interval="7000"
+             data-bs-pause="hover"
+             data-bs-ride="carousel"
+             data-bs-touch="true"
+             id="storiesCarousel">
+
             <!-- Индикаторы -->
             <div class="carousel-indicators">
                 {% for story in stories %}
-                <button %}
-                        %}aria-current="true"
+                <button aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
                         aria-label="Slide {{ forloop.counter }}"
                         class="{% if forloop.first %}active{% endif %}"
-                        data-bs-slide-to="{{ forloop.counter0 }}" data-bs-target="#storiesCarousel" endif forloop.first
-                        if type="button" {%
-                        {%></button>
+                        data-bs-slide-to="{{ forloop.counter0 }}"
+                        data-bs-target="#storiesCarousel"
+                        type="button"></button>
                 {% endfor %}
             </div>
 
@@ -290,17 +304,25 @@
                 {% for story in stories %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <article class="story-slide card border-0 bg-dark shadow position-relative overflow-hidden">
-                        <a aria-label="{{ story.title }}" class="stretched-link" href="#"></a>
+                        <a aria-label="{{ story.title }}" class="stretched-link"
+                           href="{% url 'insurance:story_detail' story.slug %}"></a>
 
                         <div class="ratio ratio-21x9 story-media">
+                            {% if story.image %}
                             <img
-                                    %}
-                                    %}fetchpriority="high"
                                     alt="{{ story.title }}"
                                     class="w-100 h-100"
-                                    endif forloop.first if
+                                    fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
                                     loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                                    src="{{ story.image.url }}" {% {%>
+                                    src="{{ story.image.url }}">
+                            {% else %}
+                            <img
+                                    alt="{{ story.title }}"
+                                    class="w-100 h-100"
+                                    fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
+                                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                                    src="{% static 'images/placeholder-21x9.jpg' %}">
+                            {% endif %}
                         </div>
 
                         <div aria-hidden="true" class="story-gradient"></div>
@@ -335,7 +357,11 @@
                 <span aria-hidden="true" class="carousel-control-next-icon"></span>
             </button>
         </div>
+        {% else %}
+        <p class="text-muted">Noch keine Stories.</p>
+        {% endif %}
     </div>
 </section>
+
 
 {% endblock %}

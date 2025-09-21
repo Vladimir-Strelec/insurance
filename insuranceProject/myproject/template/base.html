@@ -49,54 +49,108 @@
     {% endblock %}
 </main>
 
-<footer class="footer">
-    <section id="kontakt" style="color: #ffcc00; padding: 2rem 1rem;">
-        <div style="max-width: 960px; margin: auto;">
-            <p><strong>Adresse:</strong> ARAG Nürnberg Süd, Rothenburgerstr. 245, 90439 Nürnberg, Deutschland</p>
-            <p><strong>Telefon:</strong> <a href="tel:+4915773673851" style="color: #ffcc00; text-decoration: none;">+49
-                1577 3673851</a></p>
-            <p><strong>E-Mail:</strong> <a href="mailto:alexej.kondraskov@arag-partner.de"
-                                           style="color: #ffcc00; text-decoration: none;">alexej.kondraskov@arag-partner.de</a>
+<footer class="footer-neo">
+    <div class="wrap footer-neo__grid">
+        <!-- Бренд + CTA -->
+        <div class="footer-neo__brand">
+            <a aria-label="Startseite" class="logo" href="/">
+                <span aria-hidden="true" class="logo-dot"></span>
+                <span>ARAG Nürnberg Süd</span>
+            </a>
+            <p class="footer-neo__tag muted">
+                Persönliche Beratung und passgenaue Absicherung für Selbständige und Unternehmen.
             </p>
-
-            <div style="margin-top: 1rem; font-size: 1.5rem;">
-                <div style="margin-top: 1rem; font-size: 1.7rem;">
-                    <a href="https://wa.me/4915773673851" rel="noopener noreferrer" style="color: #ffcc00;"
-                       target="_blank" title="WhatsApp">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                </div>
-                <a href="https://www.facebook.com/profile.php?id=100077205721116"
-                   rel="noopener noreferrer" style="margin-right: 1rem; color: #ffcc00;" target="_blank"
-                   title="Facebook">
-                    <i class="fab fa-facebook-f"></i>
+            <div class="footer-neo__cta">
+                <a class="btn btn-primary" href="https://wa.me/4915773673851" rel="noopener" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
                 </a>
-                <a aria-label="Standort auf Google Maps öffnen" href="https://maps.app.goo.gl/qTMrT81MqE95Zcw57" rel="noopener noreferrer"
-                   style="display: inline-block; text-decoration: none;" target="_blank">
-                    <svg fill="none" height="40" stroke="#ffcc00" stroke-linecap="round" stroke-linejoin="round"
-                         stroke-width="2" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                    </svg>
+                <a class="btn btn-ghost" href="tel:+4915773673851">
+                    <i class="fa-solid fa-phone"></i> Anrufen
                 </a>
             </div>
         </div>
-    </section>
 
-    <!-- Cookie-Banner -->
-    <div id="cookie-banner"
-         style="position: fixed; bottom: 0; left: 0; right: 0; background: #222; color: #fff; padding: 1rem; z-index: 9999; display: none;">
-        <div style="max-width: 960px; margin: auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-            <p style="margin: 0;">Wir verwenden Cookies, um die Nutzung der Website zu verbessern. <a href="datenschutz"
-                                                                                                      style="color: #ffcc00;">Datenschutzerklärung</a>.
-            </p>
-            <button onclick="acceptCookies()"
-                    style="background: #ffcc00; border: none; padding: 0.5rem 1rem; cursor: pointer;">Akzeptieren
-            </button>
+        <!-- Контакты -->
+        <address class="footer-neo__contact not-italic">
+            <h4>Kontakt</h4>
+            <ul class="footer-neo__list">
+                <li>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>ARAG Nürnberg Süd, Rothenburgerstr. 245, 90439 Nürnberg</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-phone"></i>
+                    <a href="tel:+4915773673851">+49 1577 3673851</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:alexej.kondraskov@arag-partner.de">alexej.kondraskov@arag-partner.de</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-map"></i>
+                    <a href="https://maps.app.goo.gl/qTMrT81MqE95Zcw57" rel="noopener" target="_blank">Standort auf
+                        Karte</a>
+                </li>
+            </ul>
+        </address>
+
+        <!-- Быстрые ссылки -->
+        <nav aria-label="Schnelle Links" class="footer-neo__links">
+            <h4>Links</h4>
+            <ul class="footer-neo__list">
+                <li><a href="{% url 'insurance:impressum' %}">Impressum</a></li>
+                <li><a href="{% url 'insurance:datenschutz' %}">Datenschutzerklärung</a></li>
+                <li><a href="/#leistungen">Leistungen</a></li>
+                <li><a href="/#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+
+        <!-- Соцсети -->
+        <div class="footer-neo__social">
+            <h4>Folgen</h4>
+            <ul class="footer-neo__social-list">
+                <li>
+                    <a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=100077205721116" rel="noopener"
+                       target="_blank">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                </li>
+                <li>
+                    <a aria-label="WhatsApp" href="https://wa.me/4915773673851" rel="noopener" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                </li>
+                <li>
+                    <a aria-label="Maps" href="https://maps.app.goo.gl/qTMrT81MqE95Zcw57" rel="noopener"
+                       target="_blank">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-    <a href="#">Impressum</a> |
-    <a href="#">Datenschutzerklärung</a>
+
+    <!-- Нижняя плашка -->
+    <div class="footer-neo__bottom">
+        <div class="wrap footer-neo__bottom-inner">
+            <p class="small muted">© {% now "Y" %} ARAG Nürnberg Süd · Alexej Kondraskov</p>
+            <div class="footer-neo__legal">
+                <a href="/impressum">Impressum</a>
+                <span aria-hidden="true">•</span>
+                <a href="/datenschutz">Datenschutzerklärung</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie-Banner (оставляем твой JS acceptCookies) -->
+    <div class="cookie-banner" id="cookie-banner" style="display:none;">
+        <div class="wrap cookie-banner__inner">
+            <p class="small">
+                Wir verwenden Cookies, um die Nutzung der Website zu verbessern. <a href="/datenschutz">Datenschutzerklärung</a>.
+            </p>
+            <button class="btn btn-primary cookie-accept" onclick="acceptCookies()">Akzeptieren</button>
+        </div>
+    </div>
 </footer>
 
 <!-- Scripts -->
@@ -141,7 +195,6 @@
       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
     });
 </script>
-
 
 
 <script>
@@ -196,29 +249,30 @@
     })();
 </script>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/htmx.org@1.9.12" crossorigin="anonymous"></script>
-    <!-- ВНИМАНИЕ: если в static/js/script.js есть свои слушатели submit — временно отключи -->
-    <!-- <script src="{% static 'js/script.js' %}"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<!-- Scripts -->
+<script crossorigin="anonymous" src="https://unpkg.com/htmx.org@1.9.12"></script>
+<!-- ВНИМАНИЕ: если в static/js/script.js есть свои слушатели submit — временно отключи -->
+<!-- <script src="{% static 'js/script.js' %}"></script> -->
+<script crossorigin="anonymous"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-      // Cookie banner logic (оставил как у тебя)
-      (function(){
-        window.addEventListener('load', function () {
-          if (!localStorage.getItem('cookiesAccepted')) {
-            document.getElementById('cookie-banner')?.style.setProperty('display','block');
-          }
-        });
-        window.acceptCookies = function(){
-          localStorage.setItem('cookiesAccepted', 'true');
-          const el = document.getElementById('cookie-banner'); if(el){ el.style.display='none'; }
-        };
-      })();
-    </script>
+<script>
+    // Cookie banner logic (оставил как у тебя)
+    (function(){
+      window.addEventListener('load', function () {
+        if (!localStorage.getItem('cookiesAccepted')) {
+          document.getElementById('cookie-banner')?.style.setProperty('display','block');
+        }
+      });
+      window.acceptCookies = function(){
+        localStorage.setItem('cookiesAccepted', 'true');
+        const el = document.getElementById('cookie-banner'); if(el){ el.style.display='none'; }
+      };
+    })();
+</script>
 
-    <!-- Мастер-скрипт для формы лида -->
-    <script>
+<!-- Мастер-скрипт для формы лида -->
+<script>
     document.addEventListener('DOMContentLoaded', function(){
       const form = document.getElementById('lead-wizard');
       if(!form){ console.debug('[lead] no form on this page'); return; }
@@ -420,10 +474,10 @@
       document.body.addEventListener('htmx:responseError', e => console.error('[htmx] error', e));
       console.debug('[lead] ready', { api: baseApi, htmx: !!window.htmx });
     });
-    </script>
+</script>
 
-    <!-- Показ благодарности по событию от сервера или фолбэка -->
-    <script>
+<!-- Показ благодарности по событию от сервера или фолбэка -->
+<script>
     (function(){
       const form  = document.getElementById('lead-wizard');
       const msg   = document.getElementById('response-message');
@@ -459,7 +513,7 @@
         showThanks(e.detail || null);
       });
     })();
-    </script>
+</script>
 
 </body>
 </html>

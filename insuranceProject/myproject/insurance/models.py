@@ -1,43 +1,58 @@
 from django.db import models
 from django.utils.text import slugify
 from cloudinary_storage.storage import MediaCloudinaryStorage
-
+from urllib.parse import urljoin, urlparse
 
 from django.db import models
 from django.urls import reverse
 
+PLACEHOLDER_MAIN = "https://placehold.co/600x400/png?text=Main+Category"
+
 
 class MainCategory(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(
-        storage=MediaCloudinaryStorage(),
-        upload_to='category_images',
-        blank=True, null=True
-    )
+    image = models.URLField(max_length=500, blank=True, null=True)
     seo_keywords = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(unique=True)
     private = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Main Categories"
-        ordering = ["name"]  # уберёт warning про unordered в sitemap
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        # этот name должен существовать в urls.py
-        return reverse('subcategory_list', args=[self.slug])
+        return reverse("insurance:subcategory_list", args=[self.slug])
 
     @property
-    def image_url(self):
-        """Удобный доступ к Cloudinary URL или плейсхолдер если пусто."""
-        if self.image:
+    def image_url(self) -> str:
+        """
+        Возвращает пригодный к использованию URL картинки для категории.
+        Работает и с URLField (строка), и с File/ImageField (если вернёте его в будущем).
+        """
+        v = getattr(self, "image", None)
+        if not v:
+            return PLACEHOLDER_MAIN
+
+        # Если когда-нибудь снова будет ImageField/FileField
+        if hasattr(v, "url"):
             try:
-                return self.image.url
+                return v.url
             except Exception:
-                pass
-        return "https://placehold.co/600x400/png?text=Main+Category"
+                return PLACEHOLDER_MAIN
+
+        # Строка
+        if isinstance(v, str):
+            # Абсолютный URL?
+            if urlparse(v).scheme in ("http", "https"):
+                return v
+            # Относительный – сделаем относительно MEDIA_URL
+            from myproject import settings
+            return urljoin(settings.MEDIA_URL, v.lstrip("/"))
+
+        return PLACEHOLDER_MAIN
 
 
 class SubCategory(models.Model):
