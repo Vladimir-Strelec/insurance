@@ -154,13 +154,11 @@
 </footer>
 
 <!-- Scripts -->
-
-<script crossorigin="anonymous"
-        integrity="sha384-MQ7lN9c4b7l7C8Wq7iJ3pQKx6b8Cj5m0h5h2z3lw7pYqA7w9Wg2X0yQqT0yQqJ9R"
-        src="https://unpkg.com/htmx.org@1.9.12"></script>
+<script src="https://unpkg.com/htmx.org@1.9.12" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="{% static 'js/script.js' %}"></script>
-<script crossorigin="anonymous"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
 
 
 <script>
@@ -181,7 +179,7 @@
         }
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
 <script>
     new Swiper('.leistungen-swiper', {
@@ -249,12 +247,6 @@
     })();
 </script>
 
-<!-- Scripts -->
-<script crossorigin="anonymous" src="https://unpkg.com/htmx.org@1.9.12"></script>
-<!-- ВНИМАНИЕ: если в static/js/script.js есть свои слушатели submit — временно отключи -->
-<!-- <script src="{% static 'js/script.js' %}"></script> -->
-<script crossorigin="anonymous"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
     // Cookie banner logic (оставил как у тебя)
