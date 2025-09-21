@@ -1,50 +1,26 @@
-{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+  <div class="container">
+    <a class="navbar-brand" href="/">inschurance</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-black">
-    <div class="container-fluid">
-        <!-- Логотип -->
-        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-            <div class="logo-circle text-white fw-bold">ALEX</div>
-        </a>
-
-        <!-- Бургер-меню -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Navigation umschalten">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Меню -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!-- Главная -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Startseite</a>
-                </li>
-
-                <!-- О нас -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#kontakt">Über uns</a>
-                </li>
-
-                <!-- Dropdown Versicherungen -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Versicherungen
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for main in main_categories %}
-                            <li><a class="dropdown-item" href="{% url 'main_category_list' %}">{{ main.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            </ul>
-
-            <!-- Поиск -->
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Suchen" aria-label="Suche">
-                <button class="btn btn-outline-warning" type="submit">Suchen</button>
-            </form>
-        </div>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/#leistungen">Leistungen</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#prozess">Prozess</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#kontakt">Kontakt</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-warning text-dark ms-lg-3" href="/#leadform">Anfrage</a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>

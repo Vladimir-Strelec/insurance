@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ subcategory.name }} | {{ main_category.name }}{% endblock %}
+{% block meta_description %}{{ subcategory.seo_keywords|default:"Individuelle Absicherung mit persönlicher Beratung." }}{% endblock %}
+
+{% block content %}
+
+{# Герой с параллаксом: если есть картинка у сабкатегории — используем её, иначе дефолт из статики #}
+
+<section class="sub-hero fixed-bg"
+         style="--hero-img: url('{% static 'images/luca-bravo-9l_326FISzk-unsplash (1).jpg' %}');">
+  <div class="wrap">
+    <nav class="crumbs">
+      <a href="/">Startseite</a>
+      <span>/</span>
+      <span>{{ main_category.name }}</span>
+      <span>/</span>
+      <strong>{{ subcategory.name }}</strong>
+    </nav>
+
+    <div class="sub-hero-grid">
+      <div class="sub-hero-text">
+        <span class="pill">Kategorie • {{ main_category.name }}</span>
+        <h1 class="u-underline">{{ subcategory.name }}</h1>
+        <p class="muted">
+          {{ sub_category.description|default:"Maßgeschneiderter Schutz für Unternehmen und Selbständige. Transparent, skalierbar, ohne überflüssigen Ballast." }}
+        </p>
+        <div class="cta-row">
+          <a href="#lead-mini" class="btn btn-primary">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Kostenlose Beratung
+          </a>
+          <a class="btn btn-ghost" href="https://wa.me/4915773673851" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+        <ul class="kpis small">
+          <li class="kpi"><b>200+</b><span>Kunden</span></li>
+          <li class="kpi"><b>4+ Jahre</b><span>Erfahrung</span></li>
+          <li class="kpi"><b>24h</b><span>Antwort</span></li>
+          <li class="kpi"><b>100%</b><span>Transparent</span></li>
+        </ul>
+      </div>
+
+      <div class="sub-hero-card card">
+        <div class="badge-dot"></div>
+        <h3 class="mb-2">Warum diese Absicherung?</h3>
+        <p class="muted mb-3">Wesentliche Vorteile in Kürze:</p>
+        <ul class="list-check">
+          <li>Schutz vor finanziellen Risiken</li>
+          <li>Individuelle Deckung für Ihre Branche</li>
+          <li>Schnelle Schadenabwicklung</li>
+          <li>Skalierbar für Wachstum</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="grid-2">
+    <!-- Основной контент -->
+    <div class="stack gap-16">
+      <div class="card-neo">
+        <h3 class="mb-2">Was ist abgedeckt?</h3>
+        <div class="coverage-grid">
+          <div class="cov">
+            <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+              <b>Haftpflicht</b>
+              <p class="muted small">Personen- &amp; Sachschäden, Abwehr unberechtigter Ansprüche.</p>
+            </div>
+          </div>
+          <div class="cov">
+            <div class="icon-box"><i class="fa-solid fa-building"></i></div>
+            <div>
+              <b>Inhalt &amp; Ertrag</b>
+              <p class="muted small">Inventar, Betriebsunterbrechung, Ertragsausfall.</p>
+            </div>
+          </div>
+          <div class="cov">
+            <div class="icon-box"><i class="fa-solid fa-network-wired"></i></div>
+            <div>
+              <b>Cyber</b>
+              <p class="muted small">Datenpannen, IT-Ausfall, forensische Kosten.</p>
+            </div>
+          </div>
+          <div class="cov">
+            <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div>
+              <b>Rechtsschutz</b>
+              <p class="muted small">Vertrags-, Arbeits-, Steuerrechtsfälle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-neo">
+        <h3 class="mb-2">Für wen geeignet?</h3>
+        <div class="chips">
+          <span class="chip">Gastronomie</span>
+          <span class="chip">Architektur</span>
+          <span class="chip">Gesundheitswesen</span>
+          <span class="chip">Kosmetik</span>
+          <span class="chip">IT &amp; Agenturen</span>
+        </div>
+      </div>
+
+      <div class="card-neo">
+        <h3 class="mb-2">Häufige Fragen</h3>
+        <div class="accordion" id="faq">
+          <div class="accordion-item bg-dark text-light border-0">
+            <h2 class="accordion-header" id="q1">
+              <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#a1">
+                Welche Deckungssummen sind üblich?
+              </button>
+            </h2>
+            <div id="a1" class="accordion-collapse collapse" data-bs-parent="#faq">
+              <div class="accordion-body text-muted">Abhängig von Branche und Risiko. Wir empfehlen nach Analyse mindestens 3–5 Tausend € für Haftpflicht.</div>
+            </div>
+          </div>
+          <div class="accordion-item bg-dark text-light border-0">
+            <h2 class="accordion-header" id="q2">
+              <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#a2">
+                Wie schnell kann ich starten?
+              </button>
+            </h2>
+            <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faq">
+              <div class="accordion-body text-muted">In der Regel innerhalb von 24–48 Stunden nach Datenerfassung und Angebotsfreigabe.</div>
+            </div>
+          </div>
+          <div class="accordion-item bg-dark text-light border-0">
+            <h2 class="accordion-header" id="q3">
+              <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#a3">
+                Gibt es spezielle Konditionen für Gründer?
+              </button>
+            </h2>
+            <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faq">
+              <div class="accordion-body text-muted">Ja. Für Start-ups und Existenzgründer gibt es angepasste Tarife und Nachlässe.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if subcategory.content %}
+      <div class="card-neo">
+        <h3 class="mb-2">Mehr Details</h3>
+        <div class="prose">{{ subcategory.content|linebreaksbr }}</div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Сайдбар -->
+    <aside class="stack gap-16">
+      <div class="card-neo">
+        <h4 class="mb-2">Dokumente &amp; Infos</h4>
+        <ul class="list-bullet small">
+          <li>Risiko-Checkliste</li>
+          <li>Betriebsdaten (Umsatz, Mitarbeiter, Tätigkeit)</li>
+          <li>Schadenhistorie (falls vorhanden)</li>
+        </ul>
+      </div>
+
+      <!-- Мини-форма лида с фиксированным URL по слугам -->
+      <div id="lead-mini" class="card-neo">
+        <h4 class="mb-2">Unverbindliche Anfrage</h4>
+        <form method="post"
+              hx-post="{% url 'insurance:lead_create' main_slug=main_category.slug sub_slug=sub_category.slug %}"
+              hx-swap="none"
+              hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token }}-lead-mini"}'>
+          {% csrf_token %}
+          <div class="form-grid">
+            <label>
+              <span>Ihr Name</span>
+              <input class="form-control bg-secondary text-light border-0" name="full_name" required placeholder="Max Mustermann">
+            </label>
+            <label>
+              <span>E-Mail</span>
+              <input class="form-control bg-secondary text-light border-0" name="email" type="email" required placeholder="max@firma.de">
+            </label>
+            <label class="span-2">
+              <span>Telefon</span>
+              <input class="form-control bg-secondary text-light border-0" name="phone" type="tel" placeholder="+49 ...">
+            </label>
+            <label class="span-2">
+              <span>Kurzbeschreibung</span>
+              <textarea class="form-control bg-secondary text-light border-0" name="message" rows="3" placeholder="Branche, Mitarbeiter, Umsatz, besondere Risiken…"></textarea>
+            </label>
+          </div>
+          <div class="actions mt-3">
+            <button class="btn btn-primary" type="submit">
+              <i class="fa-solid fa-paper-plane"></i> Anfrage senden
+            </button>
+            <a class="btn btn-ghost" href="https://wa.me/4915773673851" target="_blank" rel="noopener">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+          </div>
+          <p class="small muted mt-2">Mit Absenden akzeptieren Sie die Datenschutzhinweise.</p>
+          <div class="message mt-2" id="response-message" hidden></div>
+        </form>
+      </div>
+
+      <div class="card-neo">
+        <h4 class="mb-2">Brauchen Sie Hilfe?</h4>
+        <p class="muted small">Direkttermin per Telefon:</p>
+        <a class="btn btn-ghost w-100" href="tel:+4915773673851">
+          <i class="fa-solid fa-phone"></i> +49 1577 3673851
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+{% endblock %}
