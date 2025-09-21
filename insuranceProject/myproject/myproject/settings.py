@@ -13,12 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-very-secret-key-for-local-dev")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# Домен(а) продакшена
 PROD_HOSTS = ["inschurance.de", "www.inschurance.de", "insurance-1-gt02.onrender.com"]
-
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"] if DEBUG else PROD_HOSTS
 
-# CSRF + прокси
 if DEBUG:
     CSRF_TRUSTED_ORIGINS = [
         "http://127.0.0.1:8000",
@@ -30,7 +27,6 @@ if DEBUG:
     SECURE_HSTS_SECONDS = 0
     SECURE_PROXY_SSL_HEADER = None
 else:
-    # ВАЖНО: сюда обязательно добавь все прод-домены С HTTPS
     CSRF_TRUSTED_ORIGINS = [
         "https://inschurance.de",
         "https://www.inschurance.de",
@@ -40,6 +36,8 @@ else:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 PREPEND_WWW = False
@@ -67,7 +65,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # WhiteNoise ДОЛЖЕН идти сразу после SecurityMiddleware
+    # ВАЖНО: WhiteNoise сразу после SecurityMiddleware
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -83,8 +81,7 @@ ROOT_URLCONF = "myproject.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # у тебя папка называется 'template' — оставляем
-        "DIRS": [BASE_DIR / "template"],
+        "DIRS": [BASE_DIR / "template"],  # у тебя папка называется 'template'
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -98,7 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "myproject.wsgi.application"
 
-# БД
 DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
@@ -112,18 +108,24 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Статика
+# --- Статика ---
+STATIC_URL = "/static/"
 if DEBUG:
-    STATIC_URL = "/static/"
     STATICFILES_DIRS = [BASE_DIR / "static"]
     STATIC_ROOT = BASE_DIR / "staticfiles"
     WHITENOISE_AUTOREFRESH = True
 else:
-    STATIC_URL = "/static/"
+    STATICFILES_DIRS = []                # на проде пусто
     STATIC_ROOT = BASE_DIR / "staticfiles"
-    STATICFILES_DIRS = []  # в проде обычно пусто
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# Django 5 рекомендуемый блок STORAGES
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+}
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

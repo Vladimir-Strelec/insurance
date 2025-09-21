@@ -106,7 +106,7 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
 
 /* Parallax контейнер (для другой секции, не sub-hero) */
 .parallax-container{
-  background:url("/static/images/luca-bravo-9l_326FISzk-unsplash (1).jpg") center/cover no-repeat fixed;
+  background:url("/static/images/luca-bravo-9l_326FISzk-unsplash.jpg") center/cover no-repeat fixed;
   position:relative; min-height:60vh; display:grid; place-items:center
 }
 .parallax-container .overlay{
