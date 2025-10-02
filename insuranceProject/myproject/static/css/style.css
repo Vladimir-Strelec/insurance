@@ -56,7 +56,13 @@ body.page{background:var(--bg); color:var(--text); font-family:ui-sans-serif,sys
 .form-grid label span{display:block; font-weight:800; margin-bottom:6px}
 .form-grid input,.form-grid select,.form-grid textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:rgba(15,15,18,.7); color:var(--text)}
 .form-grid .span-2{grid-column:span 2}
-.actions{display:flex; align-items:center; gap:12px}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;     /* ← разрешает перенос */
+  max-width: 100%;
+}
 
 .site-footer{border-top:1px solid var(--border); margin-top:28px}
 .footer-grid{display:flex; align-items:center; justify-content:space-between}
@@ -114,10 +120,87 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
 }
 
 /* Wizard */
-.form-wrapper .form-step{ display:none }
-.form-wrapper .form-step.active{ display:block }
-.form-wrapper .label{ font-family:'Poppins',sans-serif; font-weight:700 }
-.form-wrapper .next-btn,.form-wrapper .prev-btn{ min-width:160px }
+/* Базовая безопасность */
+.form-wrapper {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+.form-wrapper * { box-sizing: border-box; }
+.form-wrapper form {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Пошаговая форма */
+.form-wrapper .form-step { display: none; }
+.form-wrapper .form-step.active { display: block; }
+
+/* Подписи и длинные тексты не ломают макет */
+.form-wrapper .label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  overflow-wrap: anywhere; /* или word-break: break-word */
+}
+
+/* Сетка полей: 1 колонка на мобиле, 2+ на шире */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  min-width: 0; /* критично для сжатия контента */
+}
+@media (min-width: 768px) {
+  .form-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Ячейки формы умеют сжиматься */
+.form-field { min-width: 0; }
+
+/* Поля не вылезают за контейнер */
+.form-wrapper input,
+.form-wrapper select,
+.form-wrapper textarea {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Блок с кнопками: перенос и сжатие */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;   /* разрешаем перенос */
+  max-width: 100%;
+}
+
+/* Убери жёсткий min-width на узких экранах */
+.form-wrapper .next-btn,
+.form-wrapper .prev-btn {
+  /* не фиксируем 160px на всех экранах */
+  min-width: auto;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Мобайл: кнопки в столбик, на всю ширину */
+@media (max-width: 480px) {
+  .form-wrapper .next-btn,
+  .form-wrapper .prev-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Если очень хочется оставить 160px, то только с умом: */
+/*
+.form-wrapper .next-btn,
+.form-wrapper .prev-btn {
+  min-width: clamp(120px, 40vw, 160px);
+}
+*/
+
 #lead-wizard::before{
   content:""; display:block; height:4px;
   background:linear-gradient(90deg,#ffcc00 0%, #ffe866 50%, rgba(255,255,255,.15) 50%);
@@ -201,7 +284,8 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
 }
 
 .grid-2{ display:grid; grid-template-columns:2fr 1fr; gap:16px }
-.stack{ display:flex; flex-direction:column }
+.stack{ display:flex; flex-direction:column; min-width: 0;
+  max-width: 100%; }
 .gap-16{ gap:16px }
 .card-neo{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:var(--shadow) }
 
@@ -213,7 +297,11 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
   box-shadow:0 0 0 3px rgba(0,0,0,.25)
 }
 
-.coverage-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px }
+.coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
 .cov{ display:flex; gap:12px; align-items:flex-start; padding:12px; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.02) }
 .icon-box{ width:40px;height:40px; border-radius:10px; display:grid; place-items:center; background:rgba(250,204,21,.14); border:1px solid rgba(250,204,21,.32) }
 
@@ -235,7 +323,9 @@ form .form-control:focus, form .form-select:focus{ box-shadow:0 0 0 0.25rem rgba
 /* ========== Responsive ========== */
 @media (max-width:980px){
   .hero{grid-template-columns:1fr}
-  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpis{display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;}
   .services{grid-template-columns:repeat(2,1fr)}
   .process{grid-template-columns:repeat(2,1fr)}
   .form-grid{grid-template-columns:1fr}
