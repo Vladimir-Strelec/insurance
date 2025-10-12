@@ -4,355 +4,421 @@
 {% block title %}Versicherung in Nürnberg | Anfrage{% endblock %}
 
 {% block content %}
+{# Мини-структура, чтобы слайды не падали в столбик до загрузки основного CSS #}
+<style>
+  .swiper{position:relative;overflow:hidden}
+  .swiper-wrapper{display:flex;transition-property:transform}
+  /* до инициализации показываем по 1 слайду, чтобы не «залипали» три сразу */
+  .swiper-slide{flex-shrink:0;display:flex;width:100%}
+
+  /* Флип-карточки — надёжный 3D-стек */
+  .flip-card{position:relative;width:100%;height:300px;perspective:1000px}
+  @media (min-width:768px){.flip-card{height:340px}}
+  .flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s ease}
+  .flip-front,.flip-back{position:absolute;inset:0;display:flex;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:.75rem;margin:0}
+  .flip-back{transform:rotateY(180deg)}
+  .flip-card:hover .flip-inner,
+  .flip-card:focus-within .flip-inner,
+  .flip-card.is-flipped .flip-inner{transform:rotateY(180deg)}
+  .cat-badge{margin-bottom:.5rem}
+  .cat-thumb{width:72px;height:72px;object-fit:cover;border-radius:12px}
+  .cat-icon{font-size:44px;color:#ffcc00}
+</style>
+
 <section class="hero-section text-center text-light py-5" style="background:#0b0b0b;">
-    <div class="container">
-        <span class="badge bg-warning text-dark mb-3">Beratung • DE / RU</span>
-        <h1 class="display-5 fw-bold">Sichere Zukunft. <span class="highlight-text">Weniger Risiko</span>.</h1>
-        <p class="lead text-muted">Individuelle Versicherungen für Selbständige, Freiberufler und Unternehmen in
-            Nürnberg.</p>
-        <div class="mt-4">
-            <a class="btn btn-warning btn-lg me-2 text-dark" href="#leadform">Kostenlos anfragen</a>
-            <a class="btn btn-outline-light btn-lg" href="#leistungen">Mehr erfahren</a>
-        </div>
+  <div class="container">
+    <span class="badge bg-warning text-dark mb-3">Beratung • DE / RU</span>
+    <h1 class="display-5 fw-bold">Sichere Zukunft. <span class="highlight-text">Weniger Risiko</span>.</h1>
+    <p class="lead text-muted">Individuelle Versicherungen für Selbständige, Freiberufler und Unternehmen in Nürnberg.</p>
+    <div class="mt-4">
+      <a class="btn btn-warning btn-lg me-2 text-dark" href="#leadform">Kostenlos anfragen</a>
+      <a class="btn btn-outline-light btn-lg" href="#leistungen">Mehr erfahren</a>
     </div>
+  </div>
 </section>
 
 <section class="py-5" id="leistungen">
-    <div class="container text-center">
-        <h2 class="mb-4 text-warning">Unsere Schwerpunkte</h2>
+  <div class="container text-center">
+    <h2 class="mb-4 text-warning">Unsere Schwerpunkte</h2>
 
-        <div class="swiper leistungen-swiper">
-            <div class="swiper-wrapper">
-                {% for main in main_categories %}
-                <div class="swiper-slide">
-                    <div class="flip-card">
-                        <div class="flip-inner">
-                            <!-- front -->
-                            <div class="flip-front card bg-dark text-light shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div class="text-center">
-                                    <div class="cat-badge">
-                                        {% if main.image %}
-                                        <img alt="{{ main.name }}" class="cat-thumb" height="72" loading="lazy"
-                                             src="{{ main.image }}" width="72">
-                                        {% else %}
-                                        <i aria-hidden="true" class="fa-solid fa-shield-halved cat-icon"></i>
-                                        {% endif %}
-                                    </div>
-
-                                    <h5 class="mb-1">{{ main.name }}</h5>
-                                    <p class="m-0 small text-muted">Absicherung bei Personen- und Sachschäden.</p>
-                                </div>
-                            </div>
-                            <!-- back -->
-                            <div class="flip-back card bg-warning text-dark shadow h-100 d-flex align-items-center justify-content-center p-4">
-                                <div>
-                                    <h6>Kategorien:</h6>
-                                    <ul class="list-unstyled mb-0">
-                                        {% for sub in main.subcategories.all %}
-                                        <li class="mb-1">
-                                            <a class="link-inline"
-                                               href="{% url 'insurance:subcategory_detail' main_slug=main.slug sub_slug=sub.slug %}">
-                                                {{ sub.name }}
-                                            </a>
-                                        </li>
-                                        {% empty %}
-                                        <li class="text-dark-50">—</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="swiper leistungen-swiper">
+      <div class="swiper-wrapper">
+        {% for main in main_categories %}
+        <div class="swiper-slide">
+          <div class="flip-card" tabindex="0" aria-label="{{ main.name }}">
+            <div class="flip-inner">
+              <!-- front -->
+              <div class="flip-front card bg-dark text-light shadow h-100 d-flex align-items-center justify-content-center p-4">
+                <div class="text-center">
+                  <div class="cat-badge">
+                    {% if main.image %}
+                      <img alt="{{ main.name }}" class="cat-thumb" src="{{ main.image }}" width="72" height="72" loading="lazy">
+                    {% else %}
+                      <i class="fa-solid fa-shield-halved cat-icon" aria-hidden="true"></i>
+                    {% endif %}
+                  </div>
+                  <h5 class="mb-1">{{ main.name }}</h5>
+                  <p class="m-0 small text-muted">Absicherung bei Personen- und Sachschäden.</p>
                 </div>
-                {% endfor %}
-            </div>
-
-            <!-- ВНЕ wrapper -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination mt-3"></div>
+              </div>
+              <!-- back -->
+              <div class="flip-back card bg-warning text-dark shadow h-100 d-flex align-items-center justify-content-center p-4">
+                <div>
+                  <h6>Kategorien:</h6>
+                  <ul class="list-unstyled mb-0">
+                    {% for sub in main.subcategories.all %}
+                      <li class="mb-1">
+                        <a class="link-inline" href="{% url 'insurance:subcategory_detail' main_slug=main.slug sub_slug=sub.slug %}">
+                          {{ sub.name }}
+                        </a>
+                      </li>
+                    {% empty %}
+                      <li class="text-dark-50">—</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div><!-- /.flip-inner -->
+          </div><!-- /.flip-card -->
         </div>
+        {% endfor %}
+      </div>
+
+      <!-- Навигация/пагинация -->
+      <div class="swiper-button-prev" aria-label="Zurück"></div>
+      <div class="swiper-button-next" aria-label="Weiter"></div>
+      <div class="swiper-pagination mt-3"></div>
     </div>
+  </div>
 </section>
 
 <section class="py-5 position-relative" id="leadform" style="background:#0b0b0b;">
-    <div class="parallax-container">
-        <div class="overlay">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="form-wrapper bg-dark text-light p-4 p-md-5 rounded shadow">
-                            <h2 class="label text-center mb-4 text-warning">Versicherungsvergleich</h2>
+  <div class="parallax-container">
+    <div class="overlay">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="form-wrapper bg-dark text-light p-4 p-md-5 rounded shadow">
+              <h2 class="label text-center mb-4 text-warning">Versicherungsvergleich</h2>
 
-                            <!-- единая форма -->
-                            <form data-api-subs="{% url 'insurance:api_subcategories' %}"
-                                  hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token }}-lead"}'
-                                  hx-post="#" hx-swap="none" id="lead-wizard" method="post">
-                                {% csrf_token %}
+              <form
+                id="lead-wizard"
+                method="post"
+                hx-post="#"
+                hx-swap="none"
+                data-api-subs="{% url 'insurance:api_subcategories' %}"
+                hx-headers='{"X-Idempotency-Key":"{{ request.META.CSRF_COOKIE|default_if_none:csrf_token }}-lead"}'>
+                {% csrf_token %}
 
-                                <!-- опционально: скрытые поля, если хочешь передавать слеги в payload -->
-                                <input id="main_slug_field" name="main_slug" type="hidden">
-                                <input id="sub_slug_field" name="sub_slug" type="hidden">
+                <input id="main_slug_field" name="main_slug" type="hidden">
+                <input id="sub_slug_field" name="sub_slug" type="hidden">
 
-                                <!-- Шаг 1 -->
-                                <div class="form-step active" id="step-1">
-                                    <label class="form-label" for="main_category">Kategorie wählen</label>
-                                    <select class="form-select bg-secondary text-light border-0" id="main_category"
-                                            name="main_category" required>
-                                        {% if main_categories %}
-                                        <option disabled selected value="">Kategorie wählen</option>
-                                        {% for main in main_categories %}
-                                        <option data-slug="{{ main.slug }}" value="{{ main.id }}">{{ main.name }}
-                                        </option>
-                                        {% endfor %}
-                                        {% else %}
-                                        <option disabled selected>Keine verfügbaren Kategorien</option>
-                                        {% endif %}
-                                    </select>
+                <!-- Шаг 1 -->
+                <div class="form-step active" id="step-1">
+                  <label class="form-label" for="main_category">Kategorie wählen</label>
+                  <select class="form-select bg-secondary text-light border-0" id="main_category" name="main_category" required>
+                    {% if main_categories %}
+                      <option value="" selected disabled>Kategorie wählen</option>
+                      {% for main in main_categories %}
+                        <option value="{{ main.id }}" data-slug="{{ main.slug }}">{{ main.name }}</option>
+                      {% endfor %}
+                    {% else %}
+                      <option selected disabled>Keine verfügbaren Kategorien</option>
+                    {% endif %}
+                  </select>
 
-                                    <div class="d-grid d-md-flex gap-2 justify-content-md-end mt-3">
-                                        <button class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-2"
-                                                type="button">
-                                            Weiter
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Шаг 2 -->
-                                <div class="form-step" id="step-2">
-                                    <label class="form-label" for="subcategory">Unterkategorie</label>
-                                    <select class="form-select bg-secondary text-light border-0"
-                                            id="subcategory" name="subcategory" required>
-                                        <option value="">Bitte zuerst eine Kategorie wählen</option>
-                                    </select>
-
-                                    <div class="d-flex gap-2 justify-content-between mt-3">
-                                        <button class="btn btn-outline-light prev-btn" data-prev="#step-1"
-                                                type="button">
-                                            Zurück
-                                        </button>
-                                        <button class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-3"
-                                                type="button">Weiter
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Шаг 3 -->
-                                <div class="form-step" id="step-3">
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="name">Ihr Name</label>
-                                            <input class="form-control bg-secondary text-light border-0"
-                                                   id="name" name="full_name"
-                                                   placeholder="Max Mustermann" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="email">E-Mail</label>
-                                            <input class="form-control bg-secondary text-light border-0" id="email"
-                                                   name="email" placeholder="max@firma.de" required type="email">
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label" for="phone">Telefon</label>
-                                            <input class="form-control bg-secondary text-light border-0" id="phone"
-                                                   name="phone" placeholder="+49 ..." type="tel">
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label" for="message">Kurzbeschreibung</label>
-                                            <textarea class="form-control bg-secondary text-light border-0" id="message"
-                                                      name="message"
-                                                      placeholder="Branche, Mitarbeiter, Umsatz, besondere Risiken…"
-                                                      rows="4"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex gap-2 justify-content-between mt-4">
-                                        <button class="btn btn-outline-light prev-btn" data-prev="#step-2"
-                                                type="button">
-                                            Zurück
-                                        </button>
-                                        <button class="btn btn-warning btn-lg text-dark fw-bold" type="submit">
-                                            <i class="fa-solid fa-paper-plane me-2"></i> Anfrage senden
-                                        </button>
-                                    </div>
-                                    <p class="small text-muted mt-2 text-center">Mit Absenden akzeptieren Sie die
-                                        Datenschutzhinweise.</p>
-                                </div>
-
-                                <div class="message text-center mt-3" hidden id="response-message"></div>
-                            </form>
-                        </div>
-                    </div>
+                  <div class="d-grid d-md-flex gap-2 justify-content-md-end mt-3">
+                    <button type="button" class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-2">Weiter</button>
+                  </div>
                 </div>
-            </div><!-- /.container -->
-        </div><!-- /.overlay -->
-    </div><!-- /.parallax-container -->
+
+                <!-- Шаг 2 -->
+                <div class="form-step" id="step-2">
+                  <label class="form-label" for="subcategory">Unterkategorie</label>
+                  <select class="form-select bg-secondary text-light border-0" id="subcategory" name="subcategory" required>
+                    <option value="">Bitte zuerst eine Kategorie wählen</option>
+                  </select>
+
+                  <div class="d-flex gap-2 justify-content-between mt-3">
+                    <button type="button" class="btn btn-outline-light prev-btn" data-prev="#step-1">Zurück</button>
+                    <button type="button" class="btn btn-warning text-dark fw-bold next-btn" data-next="#step-3">Weiter</button>
+                  </div>
+                </div>
+
+                <!-- Шаг 3 -->
+                <div class="form-step" id="step-3">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label" for="name">Ihr Name</label>
+                      <input class="form-control bg-secondary text-light border-0" id="name" name="full_name" placeholder="Max Mustermann" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="email">E-Mail</label>
+                      <input class="form-control bg-secondary text-light border-0" id="email" type="email" name="email" placeholder="max@firma.de" required>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label" for="phone">Telefon</label>
+                      <input class="form-control bg-secondary text-light border-0" id="phone" type="tel" name="phone" placeholder="+49 ...">
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label" for="message">Kurzbeschreibung</label>
+                      <textarea class="form-control bg-secondary text-light border-0" id="message" name="message" rows="4" placeholder="Branche, Mitarbeiter, Umsatz, besondere Risiken…"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="d-flex gap-2 justify-content-between mt-4">
+                    <button type="button" class="btn btn-outline-light prev-btn" data-prev="#step-2">Zurück</button>
+                    <button type="submit" class="btn btn-warning btn-lg text-dark fw-bold">
+                      <i class="fa-solid fa-paper-plane me-2"></i> Anfrage senden
+                    </button>
+                  </div>
+                  <p class="small text-muted mt-2 text-center">Mit Absenden akzeptieren Sie die Datenschutzhinweise.</p>
+                </div>
+
+                <div class="message text-center mt-3" id="response-message" hidden></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container -->
+    </div><!-- /.overlay -->
+  </div><!-- /.parallax-container -->
 </section>
 
-
 <section class="py-5 bg-dark text-light" id="prozess">
-    <div class="container">
-        <div class="row align-items-center g-4">
-            <div class="col-lg-5">
-                <img alt="Beratung"
-                     class="img-fluid rounded shadow"
-                     src="{% static 'images/ADC59DA4-0F83-4B58-BF04-59F113459FE0_1_102_o.jpeg' %}">
-            </div>
-            <div class="col-lg-7">
-                <div class="p-3 border-start border-3 border-warning bg-black rounded h-100 shadow-sm">
-                    <p>
-                        Seit über vier Jahren bin ich als Versicherungsberater tätig und habe dabei mehr als 200
-                        Unternehmen erfolgreich betreut.
-                        Mit meiner Spezialisierung auf die Absicherung von Selbständigen und Firmen habe ich mir ein
-                        tiefes Verständnis für die Herausforderungen erarbeitet, die Unternehmer täglich bewältigen
-                        müssen.
-                    </p>
-                    <p>
-                        Was mich von anderen unterscheidet, ist meine transparente, lösungsorientierte Beratung, bei der
-                        das Vertrauen meiner Kunden an erster Stelle steht.
-                        Ich setze auf eine nachhaltige Absicherung, die sowohl aktuelle Bedürfnisse abdeckt als auch
-                        langfristige Sicherheit und Wachstum ermöglicht.
-                    </p>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-5">
+        <img alt="Beratung" class="img-fluid rounded shadow" src="{% static 'images/ADC59DA4-0F83-4B58-BF04-59F113459FE0_1_102_o.jpeg' %}">
+      </div>
+      <div class="col-lg-7">
+        <div class="p-3 border-start border-3 border-warning bg-black rounded h-100 shadow-sm">
+          <p>Seit über vier Jahren bin ich als Versicherungsberater tätig und habe dabei mehr als 200 Unternehmen erfolgreich betreut. Mit meiner Spezialisierung auf die Absicherung von Selbständigen und Firmen habe ich mir ein tiefes Verständnis für die Herausforderungen erarbeitet, die Unternehmer täglich bewältigen müssen.</p>
+          <p>Was mich von anderen unterscheidet, ist meine transparente, lösungsorientierte Beratung, bei der das Vertrauen meiner Kunden an erster Stelle steht. Ich setze auf eine nachhaltige Absicherung, die sowohl aktuelle Bedürfnisse abdeckt als auch langfristige Sicherheit und Wachstum ermöglicht.</p>
         </div>
-
-        <div class="mt-5">
-            <h3 class="text-warning mb-3">Meine Schwerpunkte sind:</h3>
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <div class="card bg-black text-light border border-secondary h-100">
-                        <div class="card-body d-flex align-items-start">
-                            <i class="fa-solid fa-shield-halved text-warning me-3"></i>
-                            <p class="mb-0">Gewerbeabsicherung (Inhalt, Betriebshaftpflicht, Ertragsausfall,
-                                Rechtsschutz)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card bg-black text-light border border-secondary h-100">
-                        <div class="card-body d-flex align-items-start">
-                            <i class="fa-solid fa-user-tie text-warning me-3"></i>
-                            <p class="mb-0">Freiberufler-Versicherungen (Berufshaftpflicht, D&O,
-                                Vermögensschaden-Haftpflicht)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card bg-black text-light border border-secondary h-100">
-                        <div class="card-body d-flex align-items-start">
-                            <i class="fa-solid fa-rocket text-warning me-3"></i>
-                            <p class="mb-0">Existenzgründer (Betriebshaftpflicht, Cyber, Vermögensschaden)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card bg-black text-light border border-secondary h-100">
-                        <div class="card-body d-flex align-items-start">
-                            <i class="fa-solid fa-heart text-warning me-3"></i>
-                            <p class="mb-0">Private Absicherung (PKV, BU, private Rente)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="alert alert-dark border border-warning text-center mt-4">
-                Nachhaltige Lösungen, die nicht nur vor Risiken schützen, sondern auch Werte sichern und das Vertrauen
-                der Mitarbeiter stärken.
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <p>
-                Ich arbeite besonders eng mit Unternehmern aus den Bereichen Gastronomie, Kosmetik, Architektur,
-                Ingenieurwesen und Gesundheitswesen zusammen
-                und biete Lösungen, die genau auf diese Branchen abgestimmt sind.
-                <strong class="text-warning">Lassen Sie uns gemeinsam Ihre Risiken minimieren und Ihre Ziele sicher
-                    erreichen.</strong>
-            </p>
-        </div>
+      </div>
     </div>
+
+    <div class="mt-5">
+      <h3 class="text-warning mb-3">Meine Schwerpunkte sind:</h3>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card bg-black text-light border border-secondary h-100">
+            <div class="card-body d-flex align-items-start">
+              <i class="fa-solid fa-shield-halved text-warning me-3"></i>
+              <p class="mb-0">Gewerbeabsicherung (Inhalt, Betriebshaftpflicht, Ertragsausfall, Rechtsschutz)</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-black text-light border border-secondary h-100">
+            <div class="card-body d-flex align-items-start">
+              <i class="fa-solid fa-user-tie text-warning me-3"></i>
+              <p class="mb-0">Freiberufler-Versicherungen (Berufshaftpflicht, D&O, Vermögensschaden-Haftpflicht)</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-black text-light border border-secondary h-100">
+            <div class="card-body d-flex align-items-start">
+              <i class="fa-solid fa-rocket text-warning me-3"></i>
+              <p class="mb-0">Existenzgründer (Betriebshaftpflicht, Cyber, Vermögensschaden)</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-black text-light border border-secondary h-100">
+            <div class="card-body d-flex align-items-start">
+              <i class="fa-solid fa-heart text-warning me-3"></i>
+              <p class="mb-0">Private Absicherung (PKV, BU, private Rente)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-dark border border-warning text-center mt-4">
+        Nachhaltige Lösungen, die nicht nur vor Risiken schützen, sondern auch Werte sichern und das Vertrauen der Mitarbeiter stärken.
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <p>Ich arbeite besonders eng mit Unternehmern aus den Bereichen Gastronomie, Kosmetik, Architektur, Ingenieurwesen und Gesundheitswesen zusammen und biete Lösungen, die genau auf diese Branchen abgestimmt sind. <strong class="text-warning">Lassen Sie uns gemeinsam Ihre Risiken minimieren und Ihre Ziele sicher erreichen.</strong></p>
+    </div>
+  </div>
 </section>
 
 <section class="py-5 bg-black text-light" id="stories">
-    <div class="container">
-        <div class="d-flex align-items-end justify-content-between mb-3">
-            <h2 class="m-0 text-warning">Aktuelle Stories</h2>
-            <a class="btn btn-sm btn-outline-light" href="{% url 'insurance:story_list' %}">Alle Stories</a>
-        </div>
-
-        {% if stories %}
-        <div class="carousel slide"
-             data-bs-interval="7000"
-             data-bs-pause="hover"
-             data-bs-ride="carousel"
-             data-bs-touch="true"
-             id="storiesCarousel">
-
-            <!-- Индикаторы -->
-            <div class="carousel-indicators">
-                {% for story in stories %}
-                <button aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
-                        aria-label="Slide {{ forloop.counter }}"
-                        class="{% if forloop.first %}active{% endif %}"
-                        data-bs-slide-to="{{ forloop.counter0 }}"
-                        data-bs-target="#storiesCarousel"
-                        type="button"></button>
-                {% endfor %}
-            </div>
-
-            <!-- Слайды -->
-            <div class="carousel-inner">
-                {% for story in stories %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <article class="story-slide card border-0 bg-dark shadow position-relative overflow-hidden">
-                        <a aria-label="{{ story.title }}" class="stretched-link"
-                           href="{% url 'insurance:story_detail' story.slug %}"></a>
-
-                        <div class="ratio ratio-story story-media">
-                            <img
-                                    alt="{{ story.title }}"
-                                    class="media-img media-img--shrink"
-                                    fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
-                                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                                    src="{% if story.image %}{{ story.image }}{% else %}{% static 'images/placeholder-21x9.jpg' %}{% endif %}">
-                        </div>
-
-                        <div aria-hidden="true" class="story-gradient"></div>
-
-                        <div class="story-caption p-4 p-md-5">
-                            {% if story.category %}
-                            <span class="badge bg-warning text-dark mb-2">{{ story.category.name }}</span>
-                            {% endif %}
-                            <h3 class="h4 mb-2">{{ story.title }}</h3>
-                            <p class="text-muted mb-0 line-clamp-2">
-                                {{ story.snippet|default:story.content|truncatewords:22 }}
-                            </p>
-                            <div class="meta small text-muted mt-2">
-                                {% if story.published_at %}{{ story.published_at|date:"d.m.Y" }}{% endif %}
-                                {% if story.read_time %} · {{ story.read_time }} Min Lesezeit{% endif %}
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Навигация -->
-            <button aria-label="Zurück" class="carousel-control-prev" data-bs-slide="prev"
-                    data-bs-target="#storiesCarousel"
-                    type="button">
-                <span aria-hidden="true" class="carousel-control-prev-icon"></span>
-            </button>
-            <button aria-label="Weiter" class="carousel-control-next" data-bs-slide="next"
-                    data-bs-target="#storiesCarousel"
-                    type="button">
-                <span aria-hidden="true" class="carousel-control-next-icon"></span>
-            </button>
-        </div>
-        {% else %}
-        <p class="text-muted">Noch keine Stories.</p>
-        {% endif %}
+  <div class="container">
+    <div class="d-flex align-items-end justify-content-between mb-3">
+      <h2 class="m-0 text-warning">Aktuelle Stories</h2>
+      <a class="btn btn-sm btn-outline-light" href="{% url 'insurance:story_list' %}">Alle Stories</a>
     </div>
+
+    {% if stories %}
+    <div class="carousel slide" id="storiesCarousel" data-bs-ride="carousel" data-bs-interval="7000" data-bs-touch="true" data-bs-pause="hover">
+      <div class="carousel-indicators">
+        {% for story in stories %}
+          <button type="button" data-bs-target="#storiesCarousel" data-bs-slide-to="{{ forloop.counter0 }}" aria-label="Slide {{ forloop.counter }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>
+        {% endfor %}
+      </div>
+
+      <div class="carousel-inner">
+        {% for story in stories %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <article class="story-slide card border-0 bg-dark shadow position-relative overflow-hidden">
+            <a class="stretched-link" aria-label="{{ story.title }}" href="{% url 'insurance:story_detail' story.slug %}"></a>
+            <div class="ratio ratio-story story-media">
+              <img class="media-img media-img--shrink"
+                   src="{% if story.image %}{{ story.image }}{% else %}{% static 'images/placeholder-21x9.jpg' %}{% endif %}"
+                   alt="{{ story.title }}"
+                   loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                   fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}">
+            </div>
+            <div class="story-gradient" aria-hidden="true"></div>
+            <div class="story-caption p-4 p-md-5">
+              {% if story.category %}<span class="badge bg-warning text-dark mb-2">{{ story.category.name }}</span>{% endif %}
+              <h3 class="h4 mb-2">{{ story.title }}</h3>
+              <p class="text-muted mb-0 line-clamp-2">{{ story.snippet|default:story.content|truncatewords:22 }}</p>
+              <div class="meta small text-muted mt-2">
+                {% if story.published_at %}{{ story.published_at|date:"d.m.Y" }}{% endif %}
+                {% if story.read_time %} · {{ story.read_time }} Min Lesezeit{% endif %}
+              </div>
+            </div>
+          </article>
+        </div>
+        {% endfor %}
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#storiesCarousel" data-bs-slide="prev" aria-label="Zurück">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#storiesCarousel" data-bs-slide="next" aria-label="Weiter">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    {% else %}
+      <p class="text-muted">Noch keine Stories.</p>
+    {% endif %}
+  </div>
 </section>
+{% endblock %}
 
+{% block scripts %}
+  {{ block.super }}
+  <script>
+    // 1) Грузим CSS Swiper, если его нет
+    (function ensureSwiperCSS(){
+      var ok = false;
+      try {
+        ok = [].some.call(document.styleSheets, function(s){
+          try { return s.href && s.href.indexOf('swiper-bundle') !== -1; } catch(e){ return false; }
+        });
+      } catch(e){}
+      if (ok) return;
+      var l = document.createElement('link');
+      l.rel = 'preload';
+      l.as  = 'style';
+      l.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      l.onload = function(){ this.rel = 'stylesheet'; };
+      document.head.appendChild(l);
+      var no = document.createElement('noscript');
+      no.innerHTML = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">';
+      document.head.appendChild(no);
+    })();
 
+    // 2) Грузим JS Swiper при необходимости и инициализируем ровно один раз
+    (function bootSwiper(){
+      var inited = false;
+      function init(){
+        if (inited) return;
+        if (typeof Swiper !== 'function') return;
+        var el = document.querySelector('.leistungen-swiper');
+        if (!el) return;
+        inited = true;
+        new Swiper('.leistungen-swiper', {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          breakpoints: { 768:{slidesPerView:2}, 992:{slidesPerView:3} },
+          pagination: { el: '.swiper-pagination', clickable: true },
+          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+        });
+      }
+
+      function ensureJSThenInit(){
+        if (typeof Swiper === 'function') { init(); return; }
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+        s.defer = true;
+        s.onload = init;
+        document.head.appendChild(s);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', ensureJSThenInit);
+      } else {
+        ensureJSThenInit();
+      }
+      // страховочные попытки, если CDN притормаживает
+      setTimeout(init, 800);
+      setTimeout(init, 1600);
+    })();
+
+    // 3) Тач-флип (тап по карточке). Ссылкам не мешаем.
+    document.addEventListener('click', function(e){
+      var card = e.target.closest('.flip-card');
+      if(!card) return;
+      if(e.target.closest('a')) return;
+      card.classList.toggle('is-flipped');
+    }, {passive:true});
+  </script>
+
+   <script>
+    (function () {
+      var form = document.getElementById('lead-wizard');
+      if (!form) return;
+
+      var mainSel = document.getElementById('main_category');
+      var subSel  = document.getElementById('subcategory');
+      var hidMain = document.getElementById('main_slug_field');
+      var hidSub  = document.getElementById('sub_slug_field');
+
+      function setEndpoint() {
+        var mainOpt = mainSel && mainSel.options[mainSel.selectedIndex];
+        var subOpt  = subSel && subSel.options[subSel.selectedIndex];
+        var mainSlug = mainOpt ? mainOpt.getAttribute('data-slug') : '';
+        var subSlug  = subOpt  ? subOpt.getAttribute('data-slug')  : '';
+
+        if (hidMain) hidMain.value = mainSlug || '';
+        if (hidSub)  hidSub.value  = subSlug  || '';
+
+        if (mainSlug && subSlug) {
+          var url = '/' + encodeURIComponent(mainSlug) + '/' + encodeURIComponent(subSlug) + '/';
+          form.setAttribute('hx-post', url);
+          form.action = url;             // fallback если htmx не сработает
+        } else {
+          form.removeAttribute('hx-post');
+          form.removeAttribute('action');
+        }
+      }
+
+      // подкатегории подгружаются — на change проставляем data-slug и endpoint
+      mainSel && mainSel.addEventListener('change', function () {
+        // сбрасываем саб-селект и endpoint, пока не загрузятся новые опции
+        form.removeAttribute('hx-post'); form.removeAttribute('action');
+        if (subSel) { subSel.value = ''; }
+        setEndpoint();
+      });
+
+      subSel && subSel.addEventListener('change', setEndpoint);
+
+      // страховка: перед отправкой проверяем, что endpoint есть
+      form.addEventListener('submit', function (e) {
+        setEndpoint();
+        if (!form.getAttribute('hx-post')) {
+          e.preventDefault();
+          alert('Bitte wählen Sie Kategorie und Unterkategorie.');
+          return false;
+        }
+      });
+    })();
+  </script>
 {% endblock %}

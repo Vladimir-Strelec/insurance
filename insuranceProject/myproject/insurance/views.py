@@ -147,11 +147,14 @@ class LeadCreateView(CreateView):
         return JsonResponse({"ok": False, "errors": form.errors}, status=400)
 
     def form_valid(self, form):
-        form.instance.subcategory = self.subcategory
-        if hasattr(form.instance, "main_category"):
-            form.instance.main_category = self.main_category
+        # не рискуем с побочными сохранениями — только commit=False
+        obj = form.save(commit=False)
+        obj.subcategory = self.subcategory
+        if hasattr(obj, "main_category"):
+            obj.main_category = self.main_category
 
-        self.object = form.save()
+        obj.save()
+        self.object = obj
 
         # WhatsApp — не роняем запрос, если что-то пошло не так
         try:
