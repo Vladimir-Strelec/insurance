@@ -26,34 +26,29 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = [
         "inschurance.de", "www.inschurance.de",
-        "inschurance.online", "www.inschurance.online",
-        "insurance-1-gt02.onrender.com",  # без точки в начале
+        "insurance-1-gt02.onrender.com",
     ]
     CSRF_TRUSTED_ORIGINS = [
         "https://inschurance.de",
         "https://www.inschurance.de",
-        "https://inschurance.online",
-        "https://www.inschurance.online",
         "https://insurance-1-gt02.onrender.com",
+        "https://*.inschurance.de",
     ]
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SAMESITE = "Lax"   # если форма и пост на одном домене
-    # Если когда-нибудь будет кросс-доменная форма: CSRF_COOKIE_SAMESITE = "None"
+    SESSION_COOKIE_SAMESITE = "Lax"
+
+
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_HSTS_PRELOAD = False
     SECURE_REFERRER_POLICY = "same-origin"
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Если читаешь csrftoken из document.cookie, HttpOnly НЕ ставим
-# CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = os.getenv("CSRF_COOKIE_SAMESITE", "Lax")
-
 PREPEND_WWW = False
-USE_X_FORWARDED_HOST = True  # корректные host/scheme за прокси
-
+USE_X_FORWARDED_HOST = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",

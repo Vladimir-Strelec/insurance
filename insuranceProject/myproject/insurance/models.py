@@ -82,7 +82,7 @@ class SubCategory(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.main_category.name} → {self.name}"
+        return f" → {self.name}"
 
     def get_absolute_url(self):
         return reverse('lead_create', args=[self.main_category.slug, self.slug])
