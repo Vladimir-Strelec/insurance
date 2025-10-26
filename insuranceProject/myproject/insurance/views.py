@@ -117,14 +117,19 @@ class SubCategoryDetailListView(ListView):
 
 @method_decorator(csrf_protect, name="dispatch")
 class LeadCreateView(CreateView):
+    main_category = None
+    subcategory = None
     model = InsuranceLead
     form_class = LeadForm
     http_method_names = ["post"]  # никакого GET -> шаблон не нужен
 
     def dispatch(self, request, *args, **kwargs):
-        self.main_category = get_object_or_404(MainCategory, slug=kwargs["main_slug"])
+        self.main_category = get_object_or_404(MainCategory, slug=kwargs.get("main_slug"))
         self.subcategory = get_object_or_404(
-            SubCategory, slug=kwargs["sub_slug"], main_category=self.main_category
+            SubCategory.objects.filter(
+                slug=kwargs["sub_slug"],
+                main_category=self.main_category
+            )
         )
         return super().dispatch(request, *args, **kwargs)
 
