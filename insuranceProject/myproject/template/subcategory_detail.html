@@ -6,8 +6,6 @@
 
 {% block content %}
 
-{# Герой с параллаксом: если есть картинка у сабкатегории — используем её, иначе дефолт из статики #}
-
 <section class="sub-hero fixed-bg"
          style="--hero-img: url('{% static 'images/luca-bravo-9l_326FISzk-unsplash.jpg' %}');">
   <div class="wrap">
@@ -33,9 +31,16 @@
             </svg>
             Kostenlose Beratung
           </a>
-          <a class="btn btn-ghost" href="https://wa.me/4915773673851" target="_blank" rel="noopener">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          <a class="btn btn-primary" href="https://wa.me/4915773673851" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp custom-black-icon"></i> WhatsApp
           </a>
+          {% if sub_category.file.url %}
+
+           <a class="btn btn-primary" href="{{ sub_category.file.url }}" target="_blank" rel="noopener" download>
+
+            PDF herunterladen
+          </a>
+          {% endif %}
         </div>
         <ul class="kpis small">
           <li class="kpi"><b>200+</b><span>Kunden</span></li>
@@ -153,6 +158,8 @@
       {% endif %}
     </div>
 
+
+
     <!-- Сайдбар -->
     <aside class="stack gap-16">
       <div class="card-neo">
@@ -198,9 +205,26 @@
               <i class="fa-brands fa-whatsapp"></i> WhatsApp
             </a>
           </div>
+
           <p class="small muted mt-2">Mit Absenden akzeptieren Sie die Datenschutzhinweise.</p>
           <div class="message mt-2" id="response-message" hidden></div>
         </form>
+
+        <div class="card-neo">
+          <h4 class="mb-2">Dokumente &amp; Infos</h4>
+          <ul class="list-bullet small">
+            <li>Risiko-Checkliste</li>
+            <li>Betriebsdaten (Umsatz, Mitarbeiter, Tätigkeit)</li>
+            <li>Schadenhistorie (falls vorhanden)</li>
+            {% if sub_category.file.url %}
+            <li>
+              <a class="btn btn-primary" download href="{{ subcategory.file.url }}">PDF herunterladen
+                <i class="fa-solid fa-file-arrow-down"></i> {{ subcategory.file.name|slice:"12:" }}
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
       <div class="card-neo">

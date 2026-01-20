@@ -59,15 +59,15 @@ class SubCategory(models.Model):
     main_category = models.ManyToManyField(MainCategory, related_name='subcategories')
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    image = models.ImageField(
-        storage=MediaCloudinaryStorage(),
-        upload_to='category_images',  # Cloudinary folder
-        blank=True,
-        null=True
-    )
     seo_keywords = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     private = models.BooleanField(default=False)
+    file = models.FileField(
+        storage=MediaCloudinaryStorage(resource_type='raw'),
+        upload_to='subcategory_files',
+        blank=True,
+        null=True
+    )
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -85,7 +85,9 @@ class SubCategory(models.Model):
         return f" → {self.name}"
 
     def get_absolute_url(self):
-        return reverse('lead_create', args=[self.main_category.slug, self.slug])
+        # Если есть хотя бы одна категория, берем первую
+        main_slug = self.main_category.first().slug if self.main_category.exists() else ''
+        return reverse('lead_create', args=[main_slug, self.slug])
 
 
 class InsuranceLead(models.Model):
