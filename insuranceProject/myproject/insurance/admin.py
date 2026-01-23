@@ -1,22 +1,16 @@
-from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import MainCategory, SubCategory, InsuranceLead
+from .models import MainCategory, InsuranceLead, SubCategory
 from .models import Story, Category, Tag, ExternalLink
+from django.contrib import admin
 
 admin.site.register(InsuranceLead)
 
 
 @admin.register(SubCategory)
-class InsuranceSubCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'file')
-
-    # def image_preview(self, obj):
-    #     if obj.image:
-    #         return format_html('<img src="{}" style="max-height: 50px;" />', obj.image.url)
-    #     return "Нет изображения"
-    #
-    # image_preview.short_description = 'Превью'
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'pdf_link')
+    readonly_fields = ('pdf_link',)
 
 
 @admin.register(MainCategory)

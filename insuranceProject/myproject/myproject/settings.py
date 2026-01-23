@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
+import cloudinary
 
 load_dotenv()
 
@@ -127,6 +128,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CLOUDINARY_STORAGE = {
     'RESOURCE_TYPE': 'raw',
 }
+cloudinary.config(
+    secure=True,
+)
+
 CLOUDINARY_URL = os.getenv("CLOUDINARY_URL")
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+

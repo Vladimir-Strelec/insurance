@@ -1,0 +1,37 @@
+version: ""
+
+services:
+  web:
+    build: .
+    command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./myproject:/app/myproject
+      - ./media:/app/media
+      - ./static:/app/static
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./media:/vol/media
+      - ./static:/vol/static
+    depends_on:
+      - web
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: insurance
+      POSTGRES_USER: insurance
+      POSTGRES_PASSWORD: insurance
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+
+volumes:
+  db_data:

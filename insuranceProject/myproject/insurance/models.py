@@ -1,8 +1,9 @@
 from django.db import models
+from django.utils.html import format_html
 from django.utils.text import slugify
 from cloudinary_storage.storage import MediaCloudinaryStorage
 from urllib.parse import urljoin, urlparse
-
+import cloudinary.uploader
 from django.db import models
 from django.urls import reverse
 
@@ -28,15 +29,10 @@ class MainCategory(models.Model):
 
     @property
     def image_url(self) -> str:
-        """
-        Возвращает пригодный к использованию URL картинки для категории.
-        Работает и с URLField (строка), и с File/ImageField (если вернёте его в будущем).
-        """
         v = getattr(self, "image", None)
         if not v:
             return PLACEHOLDER_MAIN
 
-        # Если когда-нибудь снова будет ImageField/FileField
         if hasattr(v, "url"):
             try:
                 return v.url
@@ -48,7 +44,6 @@ class MainCategory(models.Model):
             # Абсолютный URL?
             if urlparse(v).scheme in ("http", "https"):
                 return v
-            # Относительный – сделаем относительно MEDIA_URL
             from myproject import settings
             return urljoin(settings.MEDIA_URL, v.lstrip("/"))
 
@@ -59,35 +54,36 @@ class SubCategory(models.Model):
     main_category = models.ManyToManyField(MainCategory, related_name='subcategories')
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    seo_keywords = models.CharField(max_length=255, blank=True, null=True)
-    slug = models.SlugField(max_length=255, unique=True, blank=True)
-    private = models.BooleanField(default=False)
-    file = models.FileField(
-        storage=MediaCloudinaryStorage(resource_type='raw'),
-        upload_to='subcategory_files',
-        blank=True,
-        null=True
-    )
+    slug = models.SlugField(unique=True, blank=True)
+
+    file = models.FileField(upload_to='subcategory_files', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base = slugify(self.name) or f"sub-{self.pk or ''}".strip('-')
-            s = base
+            base = slugify(self.name) or "subcategory"
+            slug = base
             i = 1
-            # гарантируем уникальность
-            while SubCategory.objects.filter(slug=s).exclude(pk=self.pk).exists():
+            while SubCategory.objects.filter(slug=slug).exclude(pk=self.pk).exists():
                 i += 1
-                s = f"{base}-{i}"
-            self.slug = s
+                slug = f"{base}-{i}"
+            self.slug = slug
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return f" → {self.name}"
+    def pdf_link(self):
+        if self.file:
+            return format_html('<a href="{}" target="_blank">PDF öffnen</a>', self.file.url)
+        return "-"
+    pdf_link.short_description = "PDF"
 
     def get_absolute_url(self):
-        # Если есть хотя бы одна категория, берем первую
         main_slug = self.main_category.first().slug if self.main_category.exists() else ''
         return reverse('lead_create', args=[main_slug, self.slug])
+
+    def __str__(self):
+        return self.name
+
+
+
 
 
 class InsuranceLead(models.Model):
