@@ -1,4 +1,4 @@
-version: ""
+version: "3.9"
 
 services:
   web:
@@ -6,7 +6,7 @@ services:
     command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./myproject:/app/myproject
-      - ./media:/app/media
+      - media_volume:/app/media
       - ./static:/app/static
     ports:
       - "8000:8000"
@@ -19,8 +19,8 @@ services:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./media:/vol/media
-      - ./static:/vol/static
+      - media_volume:/app/media:ro
+      - ./static:/app/static:ro
     depends_on:
       - web
 
@@ -35,3 +35,4 @@ services:
 
 volumes:
   db_data:
+  media_volume:
