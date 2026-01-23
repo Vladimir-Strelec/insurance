@@ -1,18 +1,17 @@
-# Используем Python
 FROM python:3.12.3
 
-# Создаем рабочую папку
 WORKDIR /app
 
-# Копируем зависимости
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y nginx
 
-# Копируем проект
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
 COPY . .
 
-# Собираем статические файлы
-RUN python manage.py collectstatic --noinput
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Команда запуска (для gunicorn)
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8000"]
+RUN mkdir -p /app/media /app/static
+
+CMD service nginx start && gunicorn myproject.wsgi:application --bind 127.0.0.1:8000
+
