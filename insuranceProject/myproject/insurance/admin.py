@@ -9,16 +9,8 @@ admin.site.register(InsuranceLead)
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "pdf_link")
-
-    def pdf_link(self, obj):
-        if obj.file:
-            return format_html(
-                '<a href="{}" target="_blank">PDF öffnen</a>',
-                obj.file.url
-            )
-        return "-"
-
+    list_display = ('name', 'pdf_link')
+    readonly_fields = ('pdf_link',)
 
 
 @admin.register(MainCategory)
