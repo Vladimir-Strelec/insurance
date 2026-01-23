@@ -135,5 +135,5 @@ cloudinary.config(
 CLOUDINARY_URL = os.getenv("CLOUDINARY_URL")
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = "/var/data"
+MEDIA_ROOT = "/app/media"
 
