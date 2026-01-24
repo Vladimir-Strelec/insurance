@@ -37,7 +37,6 @@ urlpatterns = [
     path("<slug:main_slug>/", SubCategoryListView.as_view(), name="subcategory_list"),
     path("<slug:main_slug>/<slug:sub_slug>/detail/", SubCategoryDetailListView.as_view(), name="subcategory_detail"),
     path("<slug:main_slug>/<slug:sub_slug>/", LeadCreateView.as_view(), name="lead_create"),
-
     # Sitemap / robots
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("robots.txt", robots_txt),

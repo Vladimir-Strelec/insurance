@@ -1,6 +1,6 @@
 from django.utils.html import format_html
 
-from .models import MainCategory, InsuranceLead, SubCategory
+from .models import MainCategory, InsuranceLead, SubCategory, Video
 from .models import Story, Category, Tag, ExternalLink
 from django.contrib import admin
 
@@ -23,6 +23,11 @@ class InsuranceMainCategoryAdmin(admin.ModelAdmin):
         return "Нет изображения"
 
     image_preview.short_description = 'Превью'
+
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'uploaded_at')
 
 
 class ExternalLinkInline(admin.TabularInline):

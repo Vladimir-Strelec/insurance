@@ -12,14 +12,12 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from dotenv import load_dotenv
 from twilio.rest import Client
 
-
-from .models import Story
+from .models import Story, Video
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.db import models
 from django.utils.text import slugify
-
 
 from django.views.generic import ListView, CreateView
 from django.shortcuts import get_object_or_404
@@ -102,8 +100,10 @@ class SubCategoryDetailListView(ListView):
 
     def get_queryset(self):
         self.main_category = get_object_or_404(MainCategory, slug=self.kwargs['main_slug'])
-        self.sub_category = get_object_or_404(SubCategory, main_category=self.main_category, slug=self.kwargs['sub_slug'])
+        self.sub_category = get_object_or_404(SubCategory, main_category=self.main_category,
+                                              slug=self.kwargs['sub_slug'])
         self.main_categories = MainCategory.objects.all()
+        self.video = get_object_or_404(Video, sub_category=self.sub_category.id)
 
         return self.main_category, self.sub_category
 
@@ -112,6 +112,7 @@ class SubCategoryDetailListView(ListView):
         context['main_category'] = self.main_category
         context['sub_category'] = self.sub_category
         context['main_categories'] = self.main_categories
+        context['video'] = self.video
         return context
 
 

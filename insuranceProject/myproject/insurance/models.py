@@ -83,9 +83,6 @@ class SubCategory(models.Model):
         return self.name
 
 
-
-
-
 class InsuranceLead(models.Model):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='leads')
     full_name = models.CharField(max_length=200)
@@ -137,3 +134,13 @@ class ExternalLink(models.Model):
     def __str__(self):
         return f"{self.title} → {self.url}"
 
+
+class Video(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    file = models.FileField(upload_to='videos/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    sub_category = models.ForeignKey(SubCategory, related_name='video', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
