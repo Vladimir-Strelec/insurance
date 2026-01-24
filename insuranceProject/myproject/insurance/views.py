@@ -99,11 +99,24 @@ class SubCategoryDetailListView(ListView):
     context_object_name = 'subcategory'
 
     def get_queryset(self):
-        self.main_category = get_object_or_404(MainCategory, slug=self.kwargs['main_slug'])
-        self.sub_category = get_object_or_404(SubCategory, main_category=self.main_category,
-                                              slug=self.kwargs['sub_slug'])
         self.main_categories = MainCategory.objects.all()
-        self.video = get_object_or_404(Video, sub_category=self.sub_category.id)
+
+        self.main_category = get_object_or_404(
+            MainCategory,
+            slug=self.kwargs['main_slug']
+        )
+
+        self.sub_category = get_object_or_404(
+            SubCategory,
+            main_category=self.main_category,
+            slug=self.kwargs['sub_slug']
+        )
+
+        self.video = (
+            Video.objects
+            .filter(sub_category=self.sub_category)
+            .first()
+        )
 
         return self.main_category, self.sub_category
 
